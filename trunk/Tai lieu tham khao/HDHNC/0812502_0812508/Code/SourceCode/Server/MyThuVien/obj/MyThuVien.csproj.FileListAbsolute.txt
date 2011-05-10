@@ -1,0 +1,63 @@
+C:\Users\Thong\Desktop\Server-CSharp\MyThuVien\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Thong\Desktop\Server-CSharp\MyThuVien\bin\Debug\MyThuVien.dll
+C:\Users\Thong\Desktop\Server-CSharp\MyThuVien\bin\Debug\MyThuVien.pdb
+C:\Users\Thong\Desktop\Server-CSharp\MyThuVien\bin\Debug\File.dll
+C:\Users\Thong\Desktop\Server-CSharp\MyThuVien\bin\Debug\User.dll
+C:\Users\Thong\Desktop\Server-CSharp\MyThuVien\bin\Debug\User.pdb
+C:\Users\Thong\Desktop\Server-CSharp\MyThuVien\bin\Debug\File.pdb
+C:\Users\Thong\Desktop\Server-CSharp\MyThuVien\obj\Debug\MyThuVien.dll
+C:\Users\Thong\Desktop\Server-CSharp\MyThuVien\obj\Debug\MyThuVien.pdb
+D:\HOCTAP\Học kì 4\hệ điều hành nâng cao\thực hành\c Sharp\Server-CSharp\MyThuVien\bin\Debug\MyThuVien.dll
+D:\HOCTAP\Học kì 4\hệ điều hành nâng cao\thực hành\c Sharp\Server-CSharp\MyThuVien\bin\Debug\MyThuVien.pdb
+D:\HOCTAP\Học kì 4\hệ điều hành nâng cao\thực hành\c Sharp\Server-CSharp\MyThuVien\bin\Debug\File.dll
+D:\HOCTAP\Học kì 4\hệ điều hành nâng cao\thực hành\c Sharp\Server-CSharp\MyThuVien\bin\Debug\User.dll
+D:\HOCTAP\Học kì 4\hệ điều hành nâng cao\thực hành\c Sharp\Server-CSharp\MyThuVien\bin\Debug\User.pdb
+D:\HOCTAP\Học kì 4\hệ điều hành nâng cao\thực hành\c Sharp\Server-CSharp\MyThuVien\bin\Debug\File.pdb
+D:\HOCTAP\Học kì 4\hệ điều hành nâng cao\thực hành\c Sharp\Server-CSharp\MyThuVien\obj\Debug\ResolveAssemblyReference.cache
+D:\HOCTAP\Học kì 4\hệ điều hành nâng cao\thực hành\c Sharp\Server-CSharp\MyThuVien\obj\Debug\MyThuVien.dll
+D:\HOCTAP\Học kì 4\hệ điều hành nâng cao\thực hành\c Sharp\Server-CSharp\MyThuVien\obj\Debug\MyThuVien.pdb
+I:\Server-CSharp\MyThuVien\bin\Debug\MyThuVien.dll
+I:\Server-CSharp\MyThuVien\bin\Debug\MyThuVien.pdb
+I:\Server-CSharp\MyThuVien\bin\Debug\File.dll
+I:\Server-CSharp\MyThuVien\bin\Debug\User.dll
+I:\Server-CSharp\MyThuVien\bin\Debug\User.pdb
+I:\Server-CSharp\MyThuVien\bin\Debug\File.pdb
+I:\Server-CSharp\MyThuVien\obj\Debug\ResolveAssemblyReference.cache
+I:\Server-CSharp\MyThuVien\obj\Debug\MyThuVien.dll
+I:\Server-CSharp\MyThuVien\obj\Debug\MyThuVien.pdb
+E:\HKII Nam 2\He Dieu Hanh Nang Cao\Server-CSharp\MyThuVien\bin\Debug\MyThuVien.dll
+E:\HKII Nam 2\He Dieu Hanh Nang Cao\Server-CSharp\MyThuVien\bin\Debug\MyThuVien.pdb
+E:\HKII Nam 2\He Dieu Hanh Nang Cao\Server-CSharp\MyThuVien\bin\Debug\File.dll
+E:\HKII Nam 2\He Dieu Hanh Nang Cao\Server-CSharp\MyThuVien\bin\Debug\User.dll
+E:\HKII Nam 2\He Dieu Hanh Nang Cao\Server-CSharp\MyThuVien\bin\Debug\User.pdb
+E:\HKII Nam 2\He Dieu Hanh Nang Cao\Server-CSharp\MyThuVien\bin\Debug\File.pdb
+E:\HKII Nam 2\He Dieu Hanh Nang Cao\Server-CSharp\MyThuVien\obj\Debug\ResolveAssemblyReference.cache
+E:\HKII Nam 2\He Dieu Hanh Nang Cao\Server-CSharp\MyThuVien\obj\Debug\MyThuVien.dll
+E:\HKII Nam 2\He Dieu Hanh Nang Cao\Server-CSharp\MyThuVien\obj\Debug\MyThuVien.pdb
+C:\Users\USER\Desktop\Server-CSharp\MyThuVien\bin\Debug\MyThuVien.dll
+C:\Users\USER\Desktop\Server-CSharp\MyThuVien\bin\Debug\MyThuVien.pdb
+C:\Users\USER\Desktop\Server-CSharp\MyThuVien\bin\Debug\File.dll
+C:\Users\USER\Desktop\Server-CSharp\MyThuVien\bin\Debug\User.dll
+C:\Users\USER\Desktop\Server-CSharp\MyThuVien\bin\Debug\User.pdb
+C:\Users\USER\Desktop\Server-CSharp\MyThuVien\bin\Debug\File.pdb
+C:\Users\USER\Desktop\Server-CSharp\MyThuVien\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\USER\Desktop\Server-CSharp\MyThuVien\obj\Debug\MyThuVien.dll
+C:\Users\USER\Desktop\Server-CSharp\MyThuVien\obj\Debug\MyThuVien.pdb
+C:\Users\Thong\Desktop\Nop HDH\Server-CSharp\MyThuVien\bin\Debug\MyThuVien.dll
+C:\Users\Thong\Desktop\Nop HDH\Server-CSharp\MyThuVien\bin\Debug\MyThuVien.pdb
+C:\Users\Thong\Desktop\Nop HDH\Server-CSharp\MyThuVien\bin\Debug\File.dll
+C:\Users\Thong\Desktop\Nop HDH\Server-CSharp\MyThuVien\bin\Debug\User.dll
+C:\Users\Thong\Desktop\Nop HDH\Server-CSharp\MyThuVien\bin\Debug\User.pdb
+C:\Users\Thong\Desktop\Nop HDH\Server-CSharp\MyThuVien\bin\Debug\File.pdb
+C:\Users\Thong\Desktop\Nop HDH\Server-CSharp\MyThuVien\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Thong\Desktop\Nop HDH\Server-CSharp\MyThuVien\obj\Debug\MyThuVien.dll
+C:\Users\Thong\Desktop\Nop HDH\Server-CSharp\MyThuVien\obj\Debug\MyThuVien.pdb
+H:\Nop HDH\Server-CSharp\MyThuVien\bin\Debug\MyThuVien.dll
+H:\Nop HDH\Server-CSharp\MyThuVien\bin\Debug\MyThuVien.pdb
+H:\Nop HDH\Server-CSharp\MyThuVien\bin\Debug\File.dll
+H:\Nop HDH\Server-CSharp\MyThuVien\bin\Debug\User.dll
+H:\Nop HDH\Server-CSharp\MyThuVien\bin\Debug\User.pdb
+H:\Nop HDH\Server-CSharp\MyThuVien\bin\Debug\File.pdb
+H:\Nop HDH\Server-CSharp\MyThuVien\obj\Debug\ResolveAssemblyReference.cache
+H:\Nop HDH\Server-CSharp\MyThuVien\obj\Debug\MyThuVien.dll
+H:\Nop HDH\Server-CSharp\MyThuVien\obj\Debug\MyThuVien.pdb

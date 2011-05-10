@@ -1,0 +1,35 @@
+C:\Users\Thong\Desktop\Server-CSharp\File\bin\Debug\File.dll
+C:\Users\Thong\Desktop\Server-CSharp\File\bin\Debug\File.pdb
+C:\Users\Thong\Desktop\Server-CSharp\File\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Thong\Desktop\Server-CSharp\File\obj\Debug\File.dll
+C:\Users\Thong\Desktop\Server-CSharp\File\obj\Debug\File.pdb
+D:\HOCTAP\Học kì 4\hệ điều hành nâng cao\thực hành\c Sharp\Server-CSharp\File\bin\Debug\File.dll
+D:\HOCTAP\Học kì 4\hệ điều hành nâng cao\thực hành\c Sharp\Server-CSharp\File\bin\Debug\File.pdb
+D:\HOCTAP\Học kì 4\hệ điều hành nâng cao\thực hành\c Sharp\Server-CSharp\File\obj\Debug\ResolveAssemblyReference.cache
+D:\HOCTAP\Học kì 4\hệ điều hành nâng cao\thực hành\c Sharp\Server-CSharp\File\obj\Debug\File.dll
+D:\HOCTAP\Học kì 4\hệ điều hành nâng cao\thực hành\c Sharp\Server-CSharp\File\obj\Debug\File.pdb
+I:\Server-CSharp\File\bin\Debug\File.dll
+I:\Server-CSharp\File\bin\Debug\File.pdb
+I:\Server-CSharp\File\obj\Debug\ResolveAssemblyReference.cache
+I:\Server-CSharp\File\obj\Debug\File.dll
+I:\Server-CSharp\File\obj\Debug\File.pdb
+E:\HKII Nam 2\He Dieu Hanh Nang Cao\Server-CSharp\File\bin\Debug\File.dll
+E:\HKII Nam 2\He Dieu Hanh Nang Cao\Server-CSharp\File\bin\Debug\File.pdb
+E:\HKII Nam 2\He Dieu Hanh Nang Cao\Server-CSharp\File\obj\Debug\ResolveAssemblyReference.cache
+E:\HKII Nam 2\He Dieu Hanh Nang Cao\Server-CSharp\File\obj\Debug\File.dll
+E:\HKII Nam 2\He Dieu Hanh Nang Cao\Server-CSharp\File\obj\Debug\File.pdb
+C:\Users\USER\Desktop\Server-CSharp\File\bin\Debug\File.dll
+C:\Users\USER\Desktop\Server-CSharp\File\bin\Debug\File.pdb
+C:\Users\USER\Desktop\Server-CSharp\File\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\USER\Desktop\Server-CSharp\File\obj\Debug\File.dll
+C:\Users\USER\Desktop\Server-CSharp\File\obj\Debug\File.pdb
+C:\Users\Thong\Desktop\Nop HDH\Server-CSharp\File\bin\Debug\File.dll
+C:\Users\Thong\Desktop\Nop HDH\Server-CSharp\File\bin\Debug\File.pdb
+C:\Users\Thong\Desktop\Nop HDH\Server-CSharp\File\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Thong\Desktop\Nop HDH\Server-CSharp\File\obj\Debug\File.dll
+C:\Users\Thong\Desktop\Nop HDH\Server-CSharp\File\obj\Debug\File.pdb
+H:\Nop HDH\Server-CSharp\File\bin\Debug\File.dll
+H:\Nop HDH\Server-CSharp\File\bin\Debug\File.pdb
+H:\Nop HDH\Server-CSharp\File\obj\Debug\ResolveAssemblyReference.cache
+H:\Nop HDH\Server-CSharp\File\obj\Debug\File.dll
+H:\Nop HDH\Server-CSharp\File\obj\Debug\File.pdb

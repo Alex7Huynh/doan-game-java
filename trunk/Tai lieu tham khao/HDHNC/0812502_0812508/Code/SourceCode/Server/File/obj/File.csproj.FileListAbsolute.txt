@@ -1,0 +1,5 @@
+C:\Users\Thong\Desktop\Server-CSharp\File\bin\Debug\File.dll
+C:\Users\Thong\Desktop\Server-CSharp\File\bin\Debug\File.pdb
+C:\Users\Thong\Desktop\Server-CSharp\File\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Thong\Desktop\Server-CSharp\File\obj\Debug\File.dll
+C:\Users\Thong\Desktop\Server-CSharp\File\obj\Debug\File.pdb

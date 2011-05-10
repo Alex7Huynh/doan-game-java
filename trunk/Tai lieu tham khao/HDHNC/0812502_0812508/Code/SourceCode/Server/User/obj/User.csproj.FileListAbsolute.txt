@@ -1,0 +1,5 @@
+C:\Users\Thong\Desktop\Server-CSharp\User\bin\Debug\User.dll
+C:\Users\Thong\Desktop\Server-CSharp\User\bin\Debug\User.pdb
+C:\Users\Thong\Desktop\Server-CSharp\User\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Thong\Desktop\Server-CSharp\User\obj\Debug\User.dll
+C:\Users\Thong\Desktop\Server-CSharp\User\obj\Debug\User.pdb

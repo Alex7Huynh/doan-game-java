@@ -1,0 +1,84 @@
+E:\HKII Nam 2\He Dieu Hanh Nang Cao\Solution1\presentation\bin\Debug\presentation.exe
+E:\HKII Nam 2\He Dieu Hanh Nang Cao\Solution1\presentation\bin\Debug\presentation.pdb
+E:\HKII Nam 2\He Dieu Hanh Nang Cao\Solution1\presentation\obj\Debug\ResolveAssemblyReference.cache
+E:\HKII Nam 2\He Dieu Hanh Nang Cao\Solution1\presentation\obj\Debug\presentation.Properties.Resources.resources
+E:\HKII Nam 2\He Dieu Hanh Nang Cao\Solution1\presentation\obj\Debug\presentation.csproj.GenerateResource.Cache
+E:\HKII Nam 2\He Dieu Hanh Nang Cao\Solution1\presentation\obj\Debug\presentation.exe
+E:\HKII Nam 2\He Dieu Hanh Nang Cao\Solution1\presentation\obj\Debug\presentation.pdb
+E:\HKII Nam 2\He Dieu Hanh Nang Cao\Solution1\presentation\bin\Debug\ClassLibrary1.dll
+E:\HKII Nam 2\He Dieu Hanh Nang Cao\Solution1\presentation\bin\Debug\ClassLibrary1.pdb
+E:\HKII Nam 2\He Dieu Hanh Nang Cao\Solution1\presentation\obj\Debug\presentation.FormKetNoi.resources
+E:\HKII Nam 2\He Dieu Hanh Nang Cao\Solution1\presentation\obj\Debug\presentation.FormDangNhap.resources
+E:\HKII Nam 2\He Dieu Hanh Nang Cao\Solution1\presentation\obj\Debug\presentation.FormDangKy.resources
+E:\HKII Nam 2\He Dieu Hanh Nang Cao\Solution1\presentation\obj\Debug\presentation.FormMain.resources
+E:\HKII Nam 2\He Dieu Hanh Nang Cao\Solution1\presentation\obj\Debug\presentation.FormChiaSeFile.resources
+C:\Users\Thong\Desktop\Solution1\presentation\obj\Debug\presentation.exe
+C:\Users\Thong\Desktop\Solution1\presentation\obj\Debug\presentation.pdb
+C:\Users\Thong\Desktop\Solution1\presentation\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Thong\Desktop\Solution1\presentation\obj\Debug\presentation.FormChiaSeFile.resources
+C:\Users\Thong\Desktop\Solution1\presentation\obj\Debug\presentation.FormDangKy.resources
+C:\Users\Thong\Desktop\Solution1\presentation\obj\Debug\presentation.FormDangNhap.resources
+C:\Users\Thong\Desktop\Solution1\presentation\obj\Debug\presentation.FormKetNoi.resources
+C:\Users\Thong\Desktop\Solution1\presentation\obj\Debug\presentation.FormMain.resources
+C:\Users\Thong\Desktop\Solution1\presentation\obj\Debug\presentation.Properties.Resources.resources
+C:\Users\Thong\Desktop\Solution1\presentation\obj\Debug\presentation.csproj.GenerateResource.Cache
+C:\Users\Thong\Desktop\Solution1\presentation\bin\Debug\presentation.exe
+C:\Users\Thong\Desktop\Solution1\presentation\bin\Debug\presentation.pdb
+C:\Users\Thong\Desktop\Solution1\presentation\bin\Debug\ClassLibrary1.dll
+C:\Users\Thong\Desktop\Solution1\presentation\bin\Debug\ClassLibrary1.pdb
+C:\Users\USER\Desktop\Solution1\presentation\obj\Debug\presentation.exe
+C:\Users\USER\Desktop\Solution1\presentation\obj\Debug\presentation.pdb
+C:\Users\USER\Desktop\Solution1\presentation\bin\Debug\presentation.exe
+C:\Users\USER\Desktop\Solution1\presentation\bin\Debug\presentation.pdb
+C:\Users\USER\Desktop\Solution1\presentation\bin\Debug\ClassLibrary1.dll
+C:\Users\USER\Desktop\Solution1\presentation\bin\Debug\ClassLibrary1.pdb
+C:\Users\USER\Desktop\Solution1\presentation\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\USER\Desktop\Solution1\presentation\obj\Debug\presentation.FormChiaSeFile.resources
+C:\Users\USER\Desktop\Solution1\presentation\obj\Debug\presentation.FormDangKy.resources
+C:\Users\USER\Desktop\Solution1\presentation\obj\Debug\presentation.FormDangNhap.resources
+C:\Users\USER\Desktop\Solution1\presentation\obj\Debug\presentation.FormKetNoi.resources
+C:\Users\USER\Desktop\Solution1\presentation\obj\Debug\presentation.FormMain.resources
+C:\Users\USER\Desktop\Solution1\presentation\obj\Debug\presentation.Properties.Resources.resources
+C:\Users\USER\Desktop\Solution1\presentation\obj\Debug\presentation.csproj.GenerateResource.Cache
+C:\Users\USER\Desktop\Client-CSharp\presentation\obj\Debug\presentation.exe
+C:\Users\USER\Desktop\Client-CSharp\presentation\obj\Debug\presentation.pdb
+C:\Users\USER\Desktop\Client-CSharp\presentation\bin\Debug\presentation.exe
+C:\Users\USER\Desktop\Client-CSharp\presentation\bin\Debug\presentation.pdb
+C:\Users\USER\Desktop\Client-CSharp\presentation\bin\Debug\ClassLibrary1.dll
+C:\Users\USER\Desktop\Client-CSharp\presentation\bin\Debug\ClassLibrary1.pdb
+C:\Users\USER\Desktop\Client-CSharp\presentation\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\USER\Desktop\Client-CSharp\presentation\obj\Debug\presentation.FormChiaSeFile.resources
+C:\Users\USER\Desktop\Client-CSharp\presentation\obj\Debug\presentation.FormDangKy.resources
+C:\Users\USER\Desktop\Client-CSharp\presentation\obj\Debug\presentation.FormDangNhap.resources
+C:\Users\USER\Desktop\Client-CSharp\presentation\obj\Debug\presentation.FormKetNoi.resources
+C:\Users\USER\Desktop\Client-CSharp\presentation\obj\Debug\presentation.FormMain.resources
+C:\Users\USER\Desktop\Client-CSharp\presentation\obj\Debug\presentation.Properties.Resources.resources
+C:\Users\USER\Desktop\Client-CSharp\presentation\obj\Debug\presentation.csproj.GenerateResource.Cache
+C:\Users\Thong\Desktop\Nop HDH\Client-CSharp\presentation\obj\Debug\presentation.exe
+C:\Users\Thong\Desktop\Nop HDH\Client-CSharp\presentation\obj\Debug\presentation.pdb
+C:\Users\Thong\Desktop\Nop HDH\Client-CSharp\presentation\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Thong\Desktop\Nop HDH\Client-CSharp\presentation\obj\Debug\presentation.FormChiaSeFile.resources
+C:\Users\Thong\Desktop\Nop HDH\Client-CSharp\presentation\obj\Debug\presentation.FormDangKy.resources
+C:\Users\Thong\Desktop\Nop HDH\Client-CSharp\presentation\obj\Debug\presentation.FormDangNhap.resources
+C:\Users\Thong\Desktop\Nop HDH\Client-CSharp\presentation\obj\Debug\presentation.FormKetNoi.resources
+C:\Users\Thong\Desktop\Nop HDH\Client-CSharp\presentation\obj\Debug\presentation.FormMain.resources
+C:\Users\Thong\Desktop\Nop HDH\Client-CSharp\presentation\obj\Debug\presentation.Properties.Resources.resources
+C:\Users\Thong\Desktop\Nop HDH\Client-CSharp\presentation\obj\Debug\presentation.csproj.GenerateResource.Cache
+C:\Users\Thong\Desktop\Nop HDH\Client-CSharp\presentation\bin\Debug\presentation.exe
+C:\Users\Thong\Desktop\Nop HDH\Client-CSharp\presentation\bin\Debug\presentation.pdb
+C:\Users\Thong\Desktop\Nop HDH\Client-CSharp\presentation\bin\Debug\ClassLibrary1.dll
+C:\Users\Thong\Desktop\Nop HDH\Client-CSharp\presentation\bin\Debug\ClassLibrary1.pdb
+H:\Nop HDH\Client-CSharp\presentation\obj\Debug\presentation.exe
+H:\Nop HDH\Client-CSharp\presentation\obj\Debug\presentation.pdb
+H:\Nop HDH\Client-CSharp\presentation\bin\Debug\presentation.exe
+H:\Nop HDH\Client-CSharp\presentation\bin\Debug\presentation.pdb
+H:\Nop HDH\Client-CSharp\presentation\bin\Debug\ClassLibrary1.dll
+H:\Nop HDH\Client-CSharp\presentation\bin\Debug\ClassLibrary1.pdb
+H:\Nop HDH\Client-CSharp\presentation\obj\Debug\ResolveAssemblyReference.cache
+H:\Nop HDH\Client-CSharp\presentation\obj\Debug\presentation.FormChiaSeFile.resources
+H:\Nop HDH\Client-CSharp\presentation\obj\Debug\presentation.FormDangKy.resources
+H:\Nop HDH\Client-CSharp\presentation\obj\Debug\presentation.FormDangNhap.resources
+H:\Nop HDH\Client-CSharp\presentation\obj\Debug\presentation.FormKetNoi.resources
+H:\Nop HDH\Client-CSharp\presentation\obj\Debug\presentation.FormMain.resources
+H:\Nop HDH\Client-CSharp\presentation\obj\Debug\presentation.Properties.Resources.resources
+H:\Nop HDH\Client-CSharp\presentation\obj\Debug\presentation.csproj.GenerateResource.Cache
