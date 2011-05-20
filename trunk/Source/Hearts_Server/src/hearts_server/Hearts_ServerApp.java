@@ -1,9 +1,11 @@
 /*
  * Hearts_ServerApp.java
+ * 0812508-0812515-0812527
  */
 
 package hearts_server;
 
+import mypackage.Player;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;
 
@@ -39,6 +41,13 @@ public class Hearts_ServerApp extends SingleFrameApplication {
      * Main method launching the application.
      */
     public static void main(String[] args) {
-        launch(Hearts_ServerApp.class, args);
+        //launch(Hearts_ServerApp.class, args);
+        int a = Player.LaySo("3_Chuon.jpg");
+        int b = Player.LayDiem("3_Co.jpg");
+        int c = Player.LaySo("12_Bich.jpg");
+        int d = Player.LayDiem("12_Bich.jpg");
+        int x = Player.SoSanhBai("3_Chuon.jpg", "3_Co.jpg", "12_Bich.jpg", "12_Bich.jpg");
+        int y = Player.SoSanhBai("3_Chuon.jpg", "6_Chuon.jpg", "12_Bich.jpg", "12_Bich.jpg");
+        int z = Player.SoSanhBai("3_Chuon.jpg", "3_Co.jpg", "14_Chuon.jpg", "12_Chuon.jpg");        
     }
 }
