@@ -9,6 +9,6 @@ package Data;
  *
  * @author TienPhan
  */
-public class Main {
+public class ClientManager {
 
 }
