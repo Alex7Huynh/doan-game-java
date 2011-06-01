@@ -12,7 +12,7 @@ import java.util.Random;
  * @author TienPhan
  */
 public class Card extends DTOConstantCard {
-   // Cho biết 4 nước trong lá bài
+   
    private int face; // Con bài thứ mấy trong bộ bài
    private int suit; // Loại bài gì: Spade, club, diamond, heart
 
