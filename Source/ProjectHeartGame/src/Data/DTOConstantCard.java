@@ -33,5 +33,5 @@ public class DTOConstantCard {
    // Qui định con bài Ace = trọng số là 12 để sử lý (con cao nhất)
    // Cho biết 4 nước trong lá bài
    public static final int SUIT_SPADE = 0; //Bích
-   public static final String[] Suit = {"SPADE", "CLUB", "DIAMOND", "HEART"};
+   public static final String[] Suit = {"SPADE", "CLUB", "DIAMOND", "HEART"};// Cho biết 4 nước trong lá bài
 }
