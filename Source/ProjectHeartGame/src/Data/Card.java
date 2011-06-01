@@ -13,59 +13,59 @@ import java.util.Random;
  */
 public class Card extends DTOConstantCard {
    
-   private int face; // Con bài thứ mấy trong bộ bài
-   private int suit; // Loại bài gì: Spade, club, diamond, heart
+   private int faceCard; // Con bài thứ mấy trong bộ bài
+   private int suitCard; // Loại bài gì: Spade, club, diamond, heart
 
    /*
     * Khởi tạo bộ bài
-    * face: con thứ mấy trong bộ bài
-    * suit: nước nào
+    * faceCard: con thứ mấy trong bộ bài
+    * suitCard: nước nào
     */
    public Card(int face, int suit) {
-      this.face = face;
-      this.suit = suit;
+      this.faceCard = face;
+      this.suitCard = suit;
    }
 
    /*
     * Lấy ra thứ tự trong bộ bài.
     */
    public int getFace() {
-      return this.face;
+      return this.faceCard;
    }
 
    /*
     * Lấy ra nước của bộ bài
     */
    public int getSuit() {
-      return this.suit;
+      return this.suitCard;
    }
 
    /*
     * Gán giá trị của một con bài
     */
    public void setFace(int face) {
-      this.face = face;
+      this.faceCard = face;
    }
 
    /*
     * gán giá trị: là nước
     */
    public void setSuit(int suit) {
-      this.suit = suit;
+      this.suitCard = suit;
    }
 
    /*
     * Lấy ra tên một lá bài bất kì// toString
     */
    public String getNameCard() {
-      return (" " + Face[this.face] + Suit[this.suit]);
+      return (" " + Face[this.faceCard] + Suit[this.suitCard]);
    }
 
    /*
     * Kiểm tra coi hai lá bài có giống nhau không// equals
     */
    public boolean equalsCard(Card c) {
-      if (this.face == c.getFace() && this.suit == c.getSuit()) {
+      if (this.faceCard == c.getFace() && this.suitCard == c.getSuit()) {
          return true;
       }
       return false;
@@ -85,7 +85,7 @@ public class Card extends DTOConstantCard {
     * Kiểm tra coi một lá bài có phải là nước Cơ hay không
     */
    public boolean isHeart() {
-      if ((this.suit == SUIT_HEART)) {
+      if ((this.suitCard == SUIT_HEART)) {
          return false;
       }
       return false;
@@ -105,8 +105,8 @@ public class Card extends DTOConstantCard {
     * Kiểm tra xem 1 lá bài (this) có lớn hơn một lá bài c cùng nước hay không
     */
    public boolean isGreatThan(Card c) {
-      if (c.getSuit() == suit) {
-         if (face > c.getFace()) {
+      if (c.getSuit() == suitCard) {
+         if (faceCard > c.getFace()) {
             return true;
          }
          return false;
@@ -120,10 +120,10 @@ public class Card extends DTOConstantCard {
     * Nếu sai: ta trả về "Invalid"
     */
    public String creatIconFile() {
-      if (face > FACE_ACE || face < FACE_2 || suit > SUIT_HEART || suit < SUIT_SPADE) {
+      if (faceCard > FACE_ACE || faceCard < FACE_2 || suitCard > SUIT_HEART || suitCard < SUIT_SPADE) {
          return ("Invalid");
       }
-      return (PICTURES_FOLDER + Face[face] + Suit[suit] + PICTURES_EXTEND);
+      return (PICTURES_FOLDER + Face[faceCard] + Suit[suitCard] + PICTURES_EXTEND);
    }
 
    /*
@@ -134,8 +134,8 @@ public class Card extends DTOConstantCard {
       //Tạo ra các bộ bài
       ArrayList<Card> listNumberCard = new ArrayList<Card>(NUM_OF_CARD); //listNumberCard = 52 lá
       for (int indexCard = 0; indexCard < NUM_OF_CARD; indexCard++) {
-         int face = indexCard % NUM_OF_FACE;//face = [0-12]
-         int suit = indexCard / NUM_OF_FACE;//suit = [0-3]
+         int face = indexCard % NUM_OF_FACE;//faceCard = [0-12]
+         int suit = indexCard / NUM_OF_FACE;//suitCard = [0-3]
          Card cardTempl = new Card(face, suit);
          listNumberCard.add(cardTempl);
       }
