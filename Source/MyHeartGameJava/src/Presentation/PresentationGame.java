@@ -7,6 +7,7 @@ package Presentation;
 import BUS.Card;
 import BUS.Heart;
 import BUS.Player;
+import BUS.Sound;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
@@ -35,6 +36,8 @@ import javax.swing.border.EtchedBorder;
  */
 public class PresentationGame implements MouseListener, ItemListener, MouseMotionListener {
 
+   public Sound _playSound;// dùng để play một file âm thanh cho người chơi, khi click lên lá bài
+   public Card _cardIndexPlaySound;// Xác định con bài nào được phát âm thanh
    public JLabel[] _labelListCardHuman;// Vị trí lá bài của người
    public Player _nameBottomPlayer;// Người chơi ở vị trí bottom
    public Player _nameLeftPlayer;//Người chơi ở vị trí left
@@ -79,6 +82,10 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
    //Help
    public JMenu _menuHelp;// Menu "Help"
    public JMenuItem _menuItemHelp_About;//MenuItem "About"
+   //
+   public JMenu _menuConnectServer;// Menu "ConnectServer"
+   public JMenuItem _menuItemConnectServer_Connect;// Dùng để connnect server
+   public JMenuItem _menuItemConnectServer_DisConnect;//Dùng để disconnect server
    //
    public JLabel[] _labelPoisitionNamePlayer;//The hien ten cua nguoi choi tren mang hinh
    public JLabel[] _labelPositionPictureCardBottom;//The hien vi tri la bai duoc danh ra cua nguoi choi bottom
@@ -428,6 +435,40 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
    }
 
    /**
+    * setMenuConnectServer()
+    */
+   public void setMenuConnectServer() {
+      _menuConnectServer = new JMenu("Connect Server");
+      _menuConnectServer.setMnemonic('S');
+      _menuBarMainGame.add(_menuConnectServer);
+      //--------------------------------------Connect------------------
+      _menuItemConnectServer_Connect = new JMenuItem("Connect");
+      _menuItemConnectServer_Connect.setMnemonic('C');
+      _menuConnectServer.add(_menuItemConnectServer_Connect);
+      _menuItemConnectServer_Connect.addActionListener(new ActionListener() {
+
+         public void actionPerformed(ActionEvent e) {
+            //  throw new UnsupportedOperationException("Not supported yet.");
+            //Su ly connet o day
+            JOptionPane.showMessageDialog(null, "Chua su ly?");
+         }
+      });
+      //-----------------------------------Disconnect----------------
+      _menuItemConnectServer_DisConnect = new JMenuItem("Disconnect");
+      _menuItemConnectServer_DisConnect.setMnemonic('D');
+      _menuConnectServer.add(_menuItemConnectServer_DisConnect);
+      _menuItemConnectServer_DisConnect.addActionListener(new ActionListener() {
+
+         public void actionPerformed(ActionEvent e) {
+            // throw new UnsupportedOperationException("Not supported yet.");
+            //Su ly disconnect server
+            JOptionPane.showMessageDialog(null, "Chua su ly?");
+         }
+      });
+
+   }
+
+   /**
     *setMenuGame()
     */
    public void setMenuGame() {
@@ -514,9 +555,15 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
 
          @Override
          public void actionPerformed(ActionEvent e) {
-            System.exit(0);
+            ExitGame();
          }
       });
+   }
+
+   public void ExitGame() {
+      if (JOptionPane.showConfirmDialog(null, "Bạn chắc là muốn thoát game?") == JOptionPane.YES_OPTION) {
+         System.exit(0);
+      }
    }
 
    /**
@@ -701,45 +748,59 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
     */
    @Override
    public void mouseClicked(MouseEvent arg0) {
+      _playSound = new Sound();
       // TODO Auto-generated method stub
       if (arg0.getSource() == _labelListCardHuman[0] && _isClickLabelHuman) {
          _indexLabelCardHuman = 0;
+         _playSound.playFileSound(Card.SOUND_PLAY);
       }
       if (arg0.getSource() == _labelListCardHuman[1] && _isClickLabelHuman) {
          _indexLabelCardHuman = 1;
+         _playSound.playFileSound(Card.SOUND_PLAY);
       }
       if (arg0.getSource() == _labelListCardHuman[2] && _isClickLabelHuman) {
          _indexLabelCardHuman = 2;
+         _playSound.playFileSound(Card.SOUND_PLAY);
       }
       if (arg0.getSource() == _labelListCardHuman[3] && _isClickLabelHuman) {
          _indexLabelCardHuman = 3;
+          _playSound.playFileSound(Card.SOUND_PLAY);
       }
       if (arg0.getSource() == _labelListCardHuman[4] && _isClickLabelHuman) {
          _indexLabelCardHuman = 4;
+         _playSound.playFileSound(Card.SOUND_PLAY);
       }
       if (arg0.getSource() == _labelListCardHuman[5] && _isClickLabelHuman) {
          _indexLabelCardHuman = 5;
+          _playSound.playFileSound(Card.SOUND_PLAY);
       }
       if (arg0.getSource() == _labelListCardHuman[6] && _isClickLabelHuman) {
          _indexLabelCardHuman = 6;
+         _playSound.playFileSound(Card.SOUND_PLAY);
       }
       if (arg0.getSource() == _labelListCardHuman[7] && _isClickLabelHuman) {
          _indexLabelCardHuman = 7;
+         _playSound.playFileSound(Card.SOUND_PLAY);
       }
       if (arg0.getSource() == _labelListCardHuman[8] && _isClickLabelHuman) {
          _indexLabelCardHuman = 8;
+         _playSound.playFileSound(Card.SOUND_PLAY);
       }
       if (arg0.getSource() == _labelListCardHuman[9] && _isClickLabelHuman) {
          _indexLabelCardHuman = 9;
+         _playSound.playFileSound(Card.SOUND_PLAY);
       }
       if (arg0.getSource() == _labelListCardHuman[10] && _isClickLabelHuman) {
          _indexLabelCardHuman = 10;
+         _playSound.playFileSound(Card.SOUND_PLAY);
       }
       if (arg0.getSource() == _labelListCardHuman[11] && _isClickLabelHuman) {
          _indexLabelCardHuman = 11;
+         _playSound.playFileSound(Card.SOUND_PLAY);
       }
       if (arg0.getSource() == _labelListCardHuman[12] && _isClickLabelHuman) {
          _indexLabelCardHuman = 12;
+          _playSound.playFileSound(Card.SOUND_PLAY);
       }
 
       if (_is3Card) {
