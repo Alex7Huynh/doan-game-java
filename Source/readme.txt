@@ -1,1 +1,0 @@
-da xoa 2 thu muc nay can tao lai.

@@ -1,0 +1,5 @@
+Xoa toan bo thu muc cu, tao thu muc moi.
+Bai Lam hoan toan dua tren bai tham khao.
+Co them mot so tinh nang:
++ Thay doi Theme.
++ New game.
