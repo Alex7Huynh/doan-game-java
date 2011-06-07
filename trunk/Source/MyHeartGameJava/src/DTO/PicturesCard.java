@@ -44,6 +44,8 @@ public class PicturesCard extends Type {
    public static int CARD_PLAYER_QUANTITY = 13;// Qui định một nước bài gồm 13 lá
    public static final String[] TABLE_TYPE_CARD_TEXT = {"Bích", "Chuồn", "Rô", "Cơ"};//Mảng qui định các chuổi các
    // con bài để thông báo cho người chơi biết là nên chọn con nào
+   //Sound
+   public static final String SOUND_PLAY = "resources/sound/click_card.wav";//File name dùng để click lên lá bài
 
    /**
     * setCARD_PLAYER_QUANTITY(int CARD_PLAYER_QUANTITY)

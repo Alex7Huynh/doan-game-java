@@ -33,6 +33,7 @@ public final class Heart extends PresentationGame {
       setMenuBar();
       setMenuGame();
       setMenuOption();
+      setMenuConnectServer();
       setMenuHelp();
       setLabelNamePlayer();
       setLabelCardPlay();
