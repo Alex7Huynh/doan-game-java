@@ -34,7 +34,7 @@ public class PicturesCard extends Type {
    public static final String PICTURES_FOLDER_CHANGE_XP = "resources/pictures_4/";
    public static final String THEM_XP = "resources/pictures_theme/them_1.png";
    public static final String BACK_PICTURE_CHANGE_XP = "resources/pictures_back/back_4.png";
-      //Hình nền 4: dan gian: size = 10
+   //Hình nền 4: dan gian: size = 10
    public static final String PICTURES_EXTEND_CHANGE_FOLK = ".png";
    public static final String PICTURES_FOLDER_CHANGE_FOLK = "resources/pictures_5/";
    public static final String THEM_FOLK = "resources/pictures_theme/them_1.png";
@@ -45,7 +45,9 @@ public class PicturesCard extends Type {
    public static final String[] TABLE_TYPE_CARD_TEXT = {"Bích", "Chuồn", "Rô", "Cơ"};//Mảng qui định các chuổi các
    // con bài để thông báo cho người chơi biết là nên chọn con nào
    //Sound
-   public static final String SOUND_PLAY = "resources/sound/click_card.wav";//File name dùng để click lên lá bài
+   public static final String SOUND_PLAY_CLICK_CARD = "resources/sound/clickcard.wav";//File name dùng để click lên lá bài
+   public static final String SOUND_PLAY_GAMEOVER = "resources/sound/gameOver.wav";//File name dùng để thong bao game over
+   public static final String SOUND_PLAY_DEALGAME = "resources/sound/delaCard.wav";//Sound "Chia bai"
 
    /**
     * setCARD_PLAYER_QUANTITY(int CARD_PLAYER_QUANTITY)

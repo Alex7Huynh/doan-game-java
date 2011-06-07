@@ -61,6 +61,7 @@ public class Sound {
          return;
       } finally {
          datalineSourceSound.drain();
+         datalineSourceSound.stop();
          datalineSourceSound.close();
       }
    }
