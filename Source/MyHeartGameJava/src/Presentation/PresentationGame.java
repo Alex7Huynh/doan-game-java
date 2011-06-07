@@ -42,7 +42,7 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
    public Player _nameRightPlayer;//Người chơi ở vị trí right
    public boolean _isRunningGame;// Kiểm tra game đang chạy
    public int FLAG_HUMMAN = 0;// cờ xác định người
-   public int _sizeChangeCard = 4;//Kít thướt mặc định của bộ bài là(_sizeChangeCard = 4 có nghĩa là size = 16)
+   public int _sizeChangeCard = 5;//Kít thướt mặc định của bộ bài là(_sizeChangeCard = 5 có nghĩa là size = 16)
    public static JLabel _noticeLabel;//Thông báo người chơi
    public int _speedPlayCard = 10;// Tốc độ đánh ra quân bài
    public int _speedMoveCard = 2;// Tốc độ di chuyển con bài
@@ -70,6 +70,7 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
    public JMenu _menuItemOption_ChangeAppearance;// Menu "Change Appearacne"
    public JMenuItem _menuItemOption_ChangeAppearance_Size16;// MenuItem "Size 16"
    public JMenuItem _menuItemOption_ChangeAppearance_Size14;// MenuItem "Size 14"
+   public JMenuItem _menuItemOption_ChangeAppearance_Size12;//MenuItem "Size 12"
    public JMenuItem _menuItemOption_ChangeAppearance_Size10;// MenuItem "Size 14"
    public JMenu _menuItemOption_ChangeSpeed;//Menu "Change Speed"
    public JMenuItem _menuItemOption_ChangeSpeed_Quick;//MenuItem "Quick"
@@ -223,7 +224,7 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
       _nameLeftPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
       _nameTopPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
       _nameRightPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
-      notice("Created new game.");
+      notice("Xin chúc mừng bạn.\nTạo game mới thành công.");
    }
 
    /**
@@ -577,11 +578,11 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
             _nameLeftPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
          }
       });
-      _menuItemOption_ChangeAppearance_Size10 = new JRadioButtonMenuItem("Size 10");
-      _menuItemOption_ChangeAppearance.add(_menuItemOption_ChangeAppearance_Size10);
+      _menuItemOption_ChangeAppearance_Size12 = new JRadioButtonMenuItem("Size 12");
+      _menuItemOption_ChangeAppearance.add(_menuItemOption_ChangeAppearance_Size12);
       _menuItemOption_ChangeAppearance.addSeparator();
       _menuOption.add(_menuItemOption_ChangeAppearance);
-      _menuItemOption_ChangeAppearance_Size10.addActionListener(new ActionListener() {
+      _menuItemOption_ChangeAppearance_Size12.addActionListener(new ActionListener() {
 
          @Override
          public void actionPerformed(ActionEvent e) {
@@ -592,6 +593,23 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
             _nameLeftPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
          }
       });
+
+      _menuItemOption_ChangeAppearance_Size10 = new JRadioButtonMenuItem("Size 10");
+      _menuItemOption_ChangeAppearance.add(_menuItemOption_ChangeAppearance_Size10);
+      _menuItemOption_ChangeAppearance.addSeparator();
+      _menuOption.add(_menuItemOption_ChangeAppearance);
+      _menuItemOption_ChangeAppearance_Size10.addActionListener(new ActionListener() {
+
+         @Override
+         public void actionPerformed(ActionEvent e) {
+            _sizeChangeCard = 4;
+            _nameBottomPlayer.showListLabelCardPlayer(true, _sizeChangeCard);
+            _nameTopPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
+            _nameRightPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
+            _nameLeftPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
+         }
+      });
+
       //---------------------------------Change Speed--------------
       _menuItemOption_ChangeSpeed = new JMenu("Change Speed");
       _menuItemOption_ChangeSpeed_Quick = new JRadioButtonMenuItem("Quick");

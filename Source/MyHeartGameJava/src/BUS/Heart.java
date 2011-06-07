@@ -282,7 +282,7 @@ public final class Heart extends PresentationGame {
       Player p = this.whoIs100Score();
       if (p != null) {
          Player winner = this.whoIsMinScore();
-         _txtNoticeScore += winner.getNamePlayer() + " thắng cuộc!";
+         _txtNoticeScore += "Xin chúc mừng \'"+ winner.getNamePlayer() + "\' bạn là người thắng cuộc!";
          this.showGameScore("Score");
          this.newGame();
          return true;
@@ -358,7 +358,7 @@ public final class Heart extends PresentationGame {
       //Neu khong xet cac truong hop dac biet
       if (this.FLAG_HUMMAN == 0) {
 
-         String txt = "Chon 3 la bai de doi cho ";
+         String txt = "Bạn hãy chọn 3 lá bài tùy ý,\nđể đổi cho đối thủ.";
          PASS_NUMBER = (++PASS_NUMBER) % 4;
 
          switch (PASS_NUMBER) {
@@ -384,7 +384,7 @@ public final class Heart extends PresentationGame {
          if (PASS_NUMBER >= 0 && PASS_NUMBER <= 2) {
             _nameBottomPlayer.passCardPlayer(PASS_NUMBER);
 
-            notice("Nhan OK de bat dau choi.");
+            notice("Nhấn OK để chơi game.");
             _bntNewRound.setText("OK");
 
             _isStartNewRound = false;
