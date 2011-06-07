@@ -5,7 +5,6 @@
 package Presentation;
 
 import BUS.Heart;
-
 /**
  *
  * @author TienPhan
@@ -17,7 +16,7 @@ public class MainGame {
     */
    public static void main(String[] args) {
       // TODO code application logic here
-      Heart myHeart = new Heart();
-      myHeart.newGame();
+      Heart _myHeart = new Heart();
+      _myHeart.newGame();
    }
 }

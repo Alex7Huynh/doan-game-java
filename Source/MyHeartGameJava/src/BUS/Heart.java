@@ -47,6 +47,8 @@ public final class Heart extends PresentationGame {
     *dealCard()
     */
    public void dealCard() {
+      Sound _playSoundDealCard = new Sound();
+      _playSoundDealCard.playFileSound(Card.SOUND_PLAY_DEALGAME);
       if (this.FLAG_HUMMAN != 0) {
          special_Deal_Card();
          return;
@@ -75,6 +77,7 @@ public final class Heart extends PresentationGame {
       _nameLeftPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
       _nameTopPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
       _nameRightPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
+
    }
 
    /**
@@ -283,7 +286,7 @@ public final class Heart extends PresentationGame {
       Player p = this.whoIs100Score();
       if (p != null) {
          Player winner = this.whoIsMinScore();
-         _txtNoticeScore += "Xin chúc mừng \'"+ winner.getNamePlayer() + "\' bạn là người thắng cuộc!";
+         _txtNoticeScore += "Xin chúc mừng \'" + winner.getNamePlayer() + "\' bạn là người thắng cuộc!";
          this.showGameScore("Score");
          this.newGame();
          return true;

@@ -36,7 +36,7 @@ import javax.swing.border.EtchedBorder;
  */
 public class PresentationGame implements MouseListener, ItemListener, MouseMotionListener {
 
-   public Sound _playSound;// dùng để play một file âm thanh cho người chơi, khi click lên lá bài
+   public Sound _playSound = new Sound();// dùng để play một file âm thanh cho người chơi, khi click lên lá bài
    public Card _cardIndexPlaySound;// Xác định con bài nào được phát âm thanh
    public JLabel[] _labelListCardHuman;// Vị trí lá bài của người
    public Player _nameBottomPlayer;// Người chơi ở vị trí bottom
@@ -204,6 +204,7 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
     *resetDealCard()
     */
    public void resetDealCard() {
+
       if (this.FLAG_HUMMAN != 0) {
          special_Deal_Card();
          return;
@@ -232,6 +233,7 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
       _nameTopPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
       _nameRightPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
       notice("Xin chúc mừng bạn.\nTạo game mới thành công.");
+      _playSound.playFileSound(Card.SOUND_PLAY_DEALGAME);
    }
 
    /**
@@ -561,7 +563,9 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
    }
 
    public void ExitGame() {
+
       if (JOptionPane.showConfirmDialog(null, "Bạn chắc là muốn thoát game?") == JOptionPane.YES_OPTION) {
+         _playSound.playFileSound(Card.SOUND_PLAY_GAMEOVER);
          System.exit(0);
       }
    }
@@ -752,55 +756,55 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
       // TODO Auto-generated method stub
       if (arg0.getSource() == _labelListCardHuman[0] && _isClickLabelHuman) {
          _indexLabelCardHuman = 0;
-         _playSound.playFileSound(Card.SOUND_PLAY);
+         _playSound.playFileSound(Card.SOUND_PLAY_CLICK_CARD);
       }
       if (arg0.getSource() == _labelListCardHuman[1] && _isClickLabelHuman) {
          _indexLabelCardHuman = 1;
-         _playSound.playFileSound(Card.SOUND_PLAY);
+         _playSound.playFileSound(Card.SOUND_PLAY_CLICK_CARD);
       }
       if (arg0.getSource() == _labelListCardHuman[2] && _isClickLabelHuman) {
          _indexLabelCardHuman = 2;
-         _playSound.playFileSound(Card.SOUND_PLAY);
+         _playSound.playFileSound(Card.SOUND_PLAY_CLICK_CARD);
       }
       if (arg0.getSource() == _labelListCardHuman[3] && _isClickLabelHuman) {
          _indexLabelCardHuman = 3;
-          _playSound.playFileSound(Card.SOUND_PLAY);
+         _playSound.playFileSound(Card.SOUND_PLAY_CLICK_CARD);
       }
       if (arg0.getSource() == _labelListCardHuman[4] && _isClickLabelHuman) {
          _indexLabelCardHuman = 4;
-         _playSound.playFileSound(Card.SOUND_PLAY);
+         _playSound.playFileSound(Card.SOUND_PLAY_CLICK_CARD);
       }
       if (arg0.getSource() == _labelListCardHuman[5] && _isClickLabelHuman) {
          _indexLabelCardHuman = 5;
-          _playSound.playFileSound(Card.SOUND_PLAY);
+         _playSound.playFileSound(Card.SOUND_PLAY_CLICK_CARD);
       }
       if (arg0.getSource() == _labelListCardHuman[6] && _isClickLabelHuman) {
          _indexLabelCardHuman = 6;
-         _playSound.playFileSound(Card.SOUND_PLAY);
+         _playSound.playFileSound(Card.SOUND_PLAY_CLICK_CARD);
       }
       if (arg0.getSource() == _labelListCardHuman[7] && _isClickLabelHuman) {
          _indexLabelCardHuman = 7;
-         _playSound.playFileSound(Card.SOUND_PLAY);
+         _playSound.playFileSound(Card.SOUND_PLAY_CLICK_CARD);
       }
       if (arg0.getSource() == _labelListCardHuman[8] && _isClickLabelHuman) {
          _indexLabelCardHuman = 8;
-         _playSound.playFileSound(Card.SOUND_PLAY);
+         _playSound.playFileSound(Card.SOUND_PLAY_CLICK_CARD);
       }
       if (arg0.getSource() == _labelListCardHuman[9] && _isClickLabelHuman) {
          _indexLabelCardHuman = 9;
-         _playSound.playFileSound(Card.SOUND_PLAY);
+         _playSound.playFileSound(Card.SOUND_PLAY_CLICK_CARD);
       }
       if (arg0.getSource() == _labelListCardHuman[10] && _isClickLabelHuman) {
          _indexLabelCardHuman = 10;
-         _playSound.playFileSound(Card.SOUND_PLAY);
+         _playSound.playFileSound(Card.SOUND_PLAY_CLICK_CARD);
       }
       if (arg0.getSource() == _labelListCardHuman[11] && _isClickLabelHuman) {
          _indexLabelCardHuman = 11;
-         _playSound.playFileSound(Card.SOUND_PLAY);
+         _playSound.playFileSound(Card.SOUND_PLAY_CLICK_CARD);
       }
       if (arg0.getSource() == _labelListCardHuman[12] && _isClickLabelHuman) {
          _indexLabelCardHuman = 12;
-          _playSound.playFileSound(Card.SOUND_PLAY);
+         _playSound.playFileSound(Card.SOUND_PLAY_CLICK_CARD);
       }
 
       if (_is3Card) {
