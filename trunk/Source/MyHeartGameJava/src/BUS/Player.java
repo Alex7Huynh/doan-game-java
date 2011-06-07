@@ -30,7 +30,7 @@ public class Player extends PlayerConstant {
    private JLabel[] _listLabelCardPlayedPlayer;//label chứa các quân bài mà người chơi đã đánh ra
    private ArrayList<Integer> _list3CardChangePlayer;// Danh sách 3 lá bài được chọn của humman
    private int[] _randomIndexPlayerComputer;// vị trí các lá bài mà người chơi máy tính chọn
-   private int _sizeCard; //Kít thướt các lá bài mà ta muốn thay đổi: 16, 14, 10
+   private int _sizeCard; //Kít thướt các lá bài mà ta muốn thay đổi: 16, 14, 12, 10
 
    /**
     * Player(String namePlayer, int typePlayer, int postionPlayer)
@@ -242,7 +242,7 @@ public class Player extends PlayerConstant {
                return true;
             } else {
                if (this.isHumanPlayer()) {
-                  Heart.notice("Ban phai chon la \"2 Chuon\".");
+                  Heart.notice("Bạn đang giữ lá 2 chuồn.\nHãy chọn lá \"2 Chuồn\".");
                }
                return false;
             }
@@ -292,7 +292,7 @@ public class Player extends PlayerConstant {
                      if (!_listCardPlayer.get(indexCard).isHeartCard()) {
                         if (turnPlayer) {
                            if (this.isHumanPlayer()) {
-                              Heart.notice("Bạn không được chọn con Cơ.");
+                              Heart.notice("Bạn không được chọn con \"Cơ\".");
                            }
                            return false;
                         } else {
@@ -313,7 +313,7 @@ public class Player extends PlayerConstant {
                      }
                   }
                   if (this.isHumanPlayer()) {
-                     Heart.notice("Không được chọn quân Q bích.");
+                     Heart.notice("Không được chọn con \"Q bích\".");
                   }
                   return false;
                } else {
@@ -335,7 +335,7 @@ public class Player extends PlayerConstant {
    public void playCardPlayer(boolean queenPlayer, boolean turnPlayer, Card validCardFirst) {
       switch (_typePlayer) {
          case IS_COMPUTER:
-            Heart.notice("Đến lượt của:\' " + this._namePlayer + "\'");
+            Heart.notice("Đến lượt của:\'" + this._namePlayer + "\'");
             for (int indexCard = 0; indexCard < CARD_PLAYER_QUANTITY; indexCard++) {
                int indexCardNext = this._randomIndexPlayerComputer[indexCard];
                Card cardPlayed = _listCardPlayer.get(indexCardNext);
@@ -348,7 +348,7 @@ public class Player extends PlayerConstant {
             }
             break;
          case IS_HUMAN:
-            Heart.notice("Chọn 1 lá bài để đánh");
+            Heart.notice("Xin bạn vui lòng chọn 1 lá bài để đánh.");
             this._playCardPlayer = Heart.humanPlay(this);
             break;
       }
@@ -459,9 +459,12 @@ public class Player extends PlayerConstant {
                   this._listLabelCardPlayer[indexCardCurrent].setIcon(new ImageIcon(Card.BACK_PICTURE_CHANGE_WIN7_2));
                }
                if (sizeCard == 3) {
-                  this._listLabelCardPlayer[indexCardCurrent].setIcon(new ImageIcon(Card.BACK_PICTURE_CHANGE_FOLK));
+                  this._listLabelCardPlayer[indexCardCurrent].setIcon(new ImageIcon(Card.BACK_PICTURE_CHANGE_XP));
                }
                if (sizeCard == 4) {
+                  this._listLabelCardPlayer[indexCardCurrent].setIcon(new ImageIcon(Card.BACK_PICTURE_CHANGE_FOLK));
+               }
+               if (sizeCard == 5) {
                   this._listLabelCardPlayer[indexCardCurrent].setIcon(new ImageIcon(Card.BACK_PICTURE_DEFAULT));
                }
             }

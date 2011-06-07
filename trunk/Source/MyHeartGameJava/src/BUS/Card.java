@@ -162,6 +162,12 @@ public class Card extends PicturesCard {
             if (_rankIndex < getPICTURE_RANK_2() || _rankIndex > getPICTURE_RANK_ACE() || _typeIndex < getTYPE_CARD_SPADE() || _typeIndex > getTYPE_CARD_HEART()) {
                return "";
             }
+            return (PICTURES_FOLDER_CHANGE_XP + getTABLE_RANK_CARD()[_rankIndex] + getTABLE_TYPE_CARD()[_typeIndex] + PICTURES_EXTEND_CHANGE_XP);
+         }
+         case 4: {
+            if (_rankIndex < getPICTURE_RANK_2() || _rankIndex > getPICTURE_RANK_ACE() || _typeIndex < getTYPE_CARD_SPADE() || _typeIndex > getTYPE_CARD_HEART()) {
+               return "";
+            }
             return (PICTURES_FOLDER_CHANGE_FOLK + getTABLE_RANK_CARD()[_rankIndex] + getTABLE_TYPE_CARD()[_typeIndex] + PICTURES_EXTEND_CHANGE_FOLK);
          }
          default:
