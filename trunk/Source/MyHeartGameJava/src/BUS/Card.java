@@ -4,7 +4,6 @@
  */
 package BUS;
 
-import DTO.*;
 import DTO.PicturesCard;
 
 /**
@@ -65,7 +64,7 @@ public class Card extends PicturesCard {
     */
    @Override
    public String toString() {
-      return (" " + getTABLE_RANK_CARD()[_rankIndex] + getTABLE_TYPE_CARD()[_typeIndex]);
+      return (getTABLE_RANK_CARD()[_rankIndex] + getTABLE_TYPE_CARD()[_typeIndex]);
    }
 
    /**
@@ -82,7 +81,7 @@ public class Card extends PicturesCard {
    }
 
    /**
-    * Kiểm tra một lá bài có phải là con 2 Chuồn hay không: Để sữ lý con 2 chuồn
+    * Kiểm tra một lá bài có phải là con 2 Chuồn hay không
     * isTwoClubCard()
     * @return
     */

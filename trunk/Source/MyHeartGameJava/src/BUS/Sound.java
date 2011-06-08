@@ -25,8 +25,8 @@ public class Sound {
  */
    public void playFileSound(String fileNameSound) {
       int EXTERNAL_BUFFER_SIZE = 524288;
-      File soundFile = new File(fileNameSound);
-      if (!soundFile.exists()) {
+      File soundFile = new File(fileNameSound);//Khoi tao ten file am thanh
+      if (!soundFile.exists()) {//Khong co file am thanh nay
          return;
       }
       AudioInputStream audioSoundInputStream = null;
@@ -51,7 +51,7 @@ public class Sound {
       byte[] abData = new byte[EXTERNAL_BUFFER_SIZE];
       try {
          while (nBytesRead != -1) {
-            nBytesRead = audioSoundInputStream.read(abData, 0, abData.length);
+            nBytesRead = audioSoundInputStream.read(abData, 0, abData.length);//bat dau doc
             if (nBytesRead >= 0) {
                datalineSourceSound.write(abData, 0, nBytesRead);
             }

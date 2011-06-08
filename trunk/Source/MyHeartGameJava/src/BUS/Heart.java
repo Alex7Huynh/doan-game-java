@@ -28,19 +28,7 @@ public final class Heart extends PresentationGame {
    public int PASS_NUMBER;//Lượt pass bài của humman vói các người chơi còn lại
 
    public Heart() {
-      initNamePlayGame();
-      setMainFrame();
-      setMenuBar();
-      setMenuGame();
-      setMenuOption();
-      setMenuConnectServer();
-      setMenuHelp();
-      setLabelNamePlayer();
-      setLabelCardPlay();
-      setDimensionLabelCard();
-      setbntRound();
-      setPanelNote();
-      setVisibleGame();
+      enableGame();
    }
 
    /**
@@ -54,26 +42,32 @@ public final class Heart extends PresentationGame {
          return;
       }
       ArrayList<Card> cardList = Card.createList52Card();
-      Card c;
+      Card cardCurrent;
       for (int i = 0; i < 52; i += 4) {
 
-         //_nameBottomPlayer
-         c = cardList.get(i);
-         _nameBottomPlayer.addACardPlayer(c);
+         //_nameDownPlayer
+         cardCurrent = cardList.get(i);
+         _nameDownPlayer.addACardPlayer(cardCurrent);
 
          //_nameLeftPlayer
-         c = cardList.get(i + 1);
-         _nameLeftPlayer.addACardPlayer(c);
+         cardCurrent = cardList.get(i + 1);
+         _nameLeftPlayer.addACardPlayer(cardCurrent);
 
          //_nameTopPlayer
-         c = cardList.get(i + 2);
-         _nameTopPlayer.addACardPlayer(c);
+         cardCurrent = cardList.get(i + 2);
+         _nameTopPlayer.addACardPlayer(cardCurrent);
 
          //_nameRightPlayer
-         c = cardList.get(i + 3);
-         _nameRightPlayer.addACardPlayer(c);
+         cardCurrent = cardList.get(i + 3);
+         _nameRightPlayer.addACardPlayer(cardCurrent);
       }
-      _nameBottomPlayer.showListLabelCardPlayer(true, _sizeChangeCard);
+      //Sap xep lai cac la bai
+      _nameDownPlayer.sortCardPlayer();
+      _nameLeftPlayer.sortCardPlayer();
+      _nameRightPlayer.sortCardPlayer();
+      _nameTopPlayer.sortCardPlayer();
+      //Sao do hien thi ra cho nguoi can hien thi
+      _nameDownPlayer.showListLabelCardPlayer(true, _sizeChangeCard);
       _nameLeftPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
       _nameTopPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
       _nameRightPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
@@ -81,24 +75,24 @@ public final class Heart extends PresentationGame {
    }
 
    /**
-    * humanPlay(Player p)
-    * @param p
+    * humanPlay(Player PlayerDown)
+    * @param playerDown
     * @return
     */
-   public static Card humanPlay(Player p) {
-      Card c;
+   public static Card humanPlay(Player playerDown) {
+      Card cardDownPlayer;
       while (true) {
          if (_indexLabelCardHuman != -1) {
-            c = p.getListCardPlayer().get(_indexLabelCardHuman);
-            if (p.isValidCardPlayer(c, _queenPlayer, _turnPlayer, _validCard)) {
-               p.getListCardPlayer().set(_indexLabelCardHuman, null);
+            cardDownPlayer = playerDown.getListCardPlayer().get(_indexLabelCardHuman);
+            if (playerDown.isValidCardPlayer(cardDownPlayer, _queenPlayer, _turnPlayer, _validCard)) {
+               playerDown.getListCardPlayer().set(_indexLabelCardHuman, null);
                break;
             }
          }
       }
-      p.getListLabelCardPlayer()[_indexLabelCardHuman].setVisible(false);
+      playerDown.getListLabelCardPlayer()[_indexLabelCardHuman].setVisible(false);
       _indexLabelCardHuman = -1;
-      return c;
+      return cardDownPlayer;
    }
 
    /**
@@ -109,8 +103,8 @@ public final class Heart extends PresentationGame {
 
       this._isRunningGame = true;
       if (_turnPlayer) {
-         if (_nameBottomPlayer.isTwoClubCardPlayer()) {
-            return _nameBottomPlayer;
+         if (_nameDownPlayer.isTwoClubCardPlayer()) {
+            return _nameDownPlayer;
          }
          if (_nameRightPlayer.isTwoClubCardPlayer()) {
             return _nameRightPlayer;
@@ -133,8 +127,8 @@ public final class Heart extends PresentationGame {
             maxCard = _nextCardPlayer3;
          }
 
-         if (_nameBottomPlayer.getPLayCardPlayer().equalCard(maxCard)) {
-            return _nameBottomPlayer;
+         if (_nameDownPlayer.getPLayCardPlayer().equalCard(maxCard)) {
+            return _nameDownPlayer;
          }
          if (_nameRightPlayer.getPLayCardPlayer().equalCard(maxCard)) {
             return _nameRightPlayer;
@@ -189,8 +183,8 @@ public final class Heart extends PresentationGame {
          point[i] = lbl[i].getLocation();
       }
 
-      if (winner == _nameBottomPlayer) {
-         move(lbl, 0, 20);  	//_nameBottomPlayer
+      if (winner == _nameDownPlayer) {
+         move(lbl, 0, 20);  	//_nameDownPlayer
       }
       if (winner == _nameLeftPlayer) {
          move(lbl, -20, 0);  //_nameLeftPlayer
@@ -212,8 +206,8 @@ public final class Heart extends PresentationGame {
     * @return
     */
    public Player whoShootTheMoon() {
-      if (_nameBottomPlayer.isShootTheMoonPlayer()) {
-         return _nameBottomPlayer;
+      if (_nameDownPlayer.isShootTheMoonPlayer()) {
+         return _nameDownPlayer;
       }
       if (_nameRightPlayer.isShootTheMoonPlayer()) {
          return _nameRightPlayer;
@@ -245,7 +239,7 @@ public final class Heart extends PresentationGame {
     * @return
     */
    public Player whoIsMinScore() {
-      Player p = _nameBottomPlayer;
+      Player p = _nameDownPlayer;
       if (p.getScorePlayer() > _nameLeftPlayer.getScorePlayer()) {
          p = _nameLeftPlayer;
       }
@@ -263,8 +257,8 @@ public final class Heart extends PresentationGame {
     * @return
     */
    public Player whoIs100Score() {
-      if (_nameBottomPlayer.getScorePlayer() >= SCORE_MAX) {
-         return _nameBottomPlayer;
+      if (_nameDownPlayer.getScorePlayer() >= SCORE_MAX) {
+         return _nameDownPlayer;
       }
       if (_nameLeftPlayer.getScorePlayer() >= SCORE_MAX) {
          return _nameLeftPlayer;
@@ -298,7 +292,7 @@ public final class Heart extends PresentationGame {
     *setTxtScore()
     */
    public void setTxtScore() {
-      _txtNoticeScore += "  " + ((_nameBottomPlayer.getScorePlayer() < 10) ? ("  " + _nameBottomPlayer.getScorePlayer()) : (_nameBottomPlayer.getScorePlayer())) + "                ";
+      _txtNoticeScore += "  " + ((_nameDownPlayer.getScorePlayer() < 10) ? ("  " + _nameDownPlayer.getScorePlayer()) : (_nameDownPlayer.getScorePlayer())) + "                ";
       _txtNoticeScore += (_nameLeftPlayer.getScorePlayer() < 10 ? ("  " + _nameLeftPlayer.getScorePlayer()) : (_nameLeftPlayer.getScorePlayer())) + "                 ";
       _txtNoticeScore += (_nameTopPlayer.getScorePlayer() < 10 ? ("  " + _nameTopPlayer.getScorePlayer()) : (_nameTopPlayer.getScorePlayer())) + "                ";//
       _txtNoticeScore += (_nameRightPlayer.getScorePlayer() < 10 ? ("  " + _nameRightPlayer.getScorePlayer()) : (_nameRightPlayer.getScorePlayer())) + "\n";
@@ -309,7 +303,7 @@ public final class Heart extends PresentationGame {
     */
    public void scoring() {
       //Hien thi danh sach quan bai quan bai an duoc cua 4 nguoi choi
-      _nameBottomPlayer.showListScoreCardPlayer(_sizeChangeCard);
+      _nameDownPlayer.showListScoreCardPlayer(_sizeChangeCard);
       _nameRightPlayer.showListScoreCardPlayer(_sizeChangeCard);
       _nameTopPlayer.showListScoreCardPlayer(_sizeChangeCard);
       _nameLeftPlayer.showListScoreCardPlayer(_sizeChangeCard);
@@ -381,21 +375,21 @@ public final class Heart extends PresentationGame {
                _bntNewRound.setText("Pass Cross");
                break;
          }
-         notice(txt);
+         noticeMessage(txt);
          _bntNewRound.setVisible(true);
 
          //Thus hien pass card
          if (PASS_NUMBER >= 0 && PASS_NUMBER <= 2) {
-            _nameBottomPlayer.passCardPlayer(PASS_NUMBER);
+            _nameDownPlayer.passCardPlayer(PASS_NUMBER);
 
-            notice("Nhấn OK để chơi game.");
+            noticeMessage("Nhấn OK để chơi game.");
             _bntNewRound.setText("OK");
 
             _isStartNewRound = false;
             while (!_isStartNewRound) {
             }
 
-            _nameBottomPlayer.repaintList3CardChangePlayer();
+            _nameDownPlayer.repaintList3CardChangePlayer();
             _nameLeftPlayer.repaintList3CardChangePlayer();
             _nameTopPlayer.repaintList3CardChangePlayer();
             _nameRightPlayer.repaintList3CardChangePlayer();
@@ -405,7 +399,7 @@ public final class Heart extends PresentationGame {
 
       }
       //Sap xep cac la bai cua 4 nguoi choi
-      _nameBottomPlayer.sortCardPlayer();
+      _nameDownPlayer.sortCardPlayer();
       _nameLeftPlayer.sortCardPlayer();
       _nameTopPlayer.sortCardPlayer();
       _nameRightPlayer.sortCardPlayer();
@@ -420,14 +414,14 @@ public final class Heart extends PresentationGame {
 
       _menuItemGame_ShowCard.setText("Show Card");
 
-      _nameBottomPlayer.newRoundPlayer();
+      _nameDownPlayer.newRoundPlayer();
       _nameLeftPlayer.newRoundPlayer();
       _nameTopPlayer.newRoundPlayer();
       _nameRightPlayer.newRoundPlayer();
 
       this.checkStartNewRound();
 
-      _nameBottomPlayer.showListLabelCardPlayer(true, _sizeChangeCard);
+      _nameDownPlayer.showListLabelCardPlayer(true, _sizeChangeCard);
       _nameLeftPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
       _nameTopPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
       _nameRightPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
@@ -544,8 +538,8 @@ public final class Heart extends PresentationGame {
     *newGame()
     */
    public void newGame() {
-      _txtNoticeScore = _nameBottomPlayer.getNamePlayer() + "         " + _nameLeftPlayer.getNamePlayer() + "        " + _nameTopPlayer.getNamePlayer() + "         " + _nameRightPlayer.getNamePlayer() + "\n";
-      _nameBottomPlayer.newGamePlayer();
+      _txtNoticeScore = _nameDownPlayer.getNamePlayer() + "         " + _nameLeftPlayer.getNamePlayer() + "        " + _nameTopPlayer.getNamePlayer() + "         " + _nameRightPlayer.getNamePlayer() + "\n";
+      _nameDownPlayer.newGamePlayer();
       _nameLeftPlayer.newGamePlayer();
       _nameTopPlayer.newGamePlayer();
       _nameRightPlayer.newGamePlayer();
