@@ -8,6 +8,7 @@ import BUS.Card;
 import BUS.Heart;
 import BUS.Player;
 import BUS.Sound;
+import DTO.PicturesCard;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
@@ -36,10 +37,12 @@ import javax.swing.border.EtchedBorder;
  */
 public class PresentationGame implements MouseListener, ItemListener, MouseMotionListener {
 
+   public int dxPictureCard;//Do co theo chieu ngang cua la bai
+   public int dyPictureCard;//Do co theo chieu doc cua la bai
    public Sound _playSound = new Sound();// dùng để play một file âm thanh cho người chơi, khi click lên lá bài
    public Card _cardIndexPlaySound;// Xác định con bài nào được phát âm thanh
    public JLabel[] _labelListCardHuman;// Vị trí lá bài của người
-   public Player _nameBottomPlayer;// Người chơi ở vị trí bottom
+   public Player _nameDownPlayer;// Người chơi ở vị trí down
    public Player _nameLeftPlayer;//Người chơi ở vị trí left
    public Player _nameTopPlayer;//Người chơi ở vị trí top
    public Player _nameRightPlayer;//Người chơi ở vị trí right
@@ -84,11 +87,12 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
    public JMenuItem _menuItemHelp_About;//MenuItem "About"
    //
    public JMenu _menuConnectServer;// Menu "ConnectServer"
+   public JMenuItem _menuItemConnectServer_CreatServer;//Tao server
    public JMenuItem _menuItemConnectServer_Connect;// Dùng để connnect server
    public JMenuItem _menuItemConnectServer_DisConnect;//Dùng để disconnect server
    //
    public JLabel[] _labelPoisitionNamePlayer;//The hien ten cua nguoi choi tren mang hinh
-   public JLabel[] _labelPositionPictureCardBottom;//The hien vi tri la bai duoc danh ra cua nguoi choi bottom
+   public JLabel[] _labelPositionPictureCardDown;//The hien vi tri la bai duoc danh ra cua nguoi choi down
    public JLabel[] _labelPositionPictureCardLeft;//The hien vi tri la bai duoc danh ra cua nguoi choi left
    public JLabel[] _labelPositionPictureCardTop;//The hien vi tri la bai duoc danh ra cua nguoi choi top
    public JLabel[] _labelPositionPictureCardRight;//The hien vi tri la bai duoc danh ra cua nguoi choi right
@@ -104,27 +108,28 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
    }
 
    /**
+    * Hien thi diem so cho nguoi choi len message
     * showGameScore(String s)
     * @param s
     */
    public void showGameScore(String s) {
-      notice(s);
+      PresentationGame.noticeMessage(s);
       JOptionPane.showMessageDialog(null, _txtNoticeScore, "Curent Game Score", JOptionPane.INFORMATION_MESSAGE);
    }
 
    /**
-    *  notice(String s)
+    *  noticeMessage(String s)
     * @param s
     */
    public static void // <editor-fold defaultstate="collapsed" desc="comment">
-           notice// </editor-fold>
+           noticeMessage// </editor-fold>
            (String s) {
       if (_noticeLabel != null && s != null) {
          _noticeLabel.setText(s);
+         _noticeLabel.getBaseline(5, 15);
+         _noticeLabel.createToolTip();
          _noticeLabel.setForeground(Color.WHITE);
       }
-
-
    }
 
    /**
@@ -132,71 +137,59 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
     */
    public void special_Deal_Card() {
 
-      ArrayList<Card> cardList = Card.createList52Card();
+      ArrayList<Card> list52Card = Card.createList52Card();
 
-      //Chia bai cho cac nguoi theo chat
-      for (int i = 0; i < cardList.size(); i++) {
-         Card c = cardList.get(i);
-         //Chia ca quan bai chat Co cho _nameBottomPlayer
-         if (c.isHeartCard()) {
-            _nameBottomPlayer.addACardPlayer(c);
+      //Dau tien chia bai theo type
+      for (int indexCardCurrent = 0; indexCardCurrent < list52Card.size(); indexCardCurrent++) {
+         Card cardTemp = list52Card.get(indexCardCurrent);
+         if (cardTemp.isHeartCard()) {
+            _nameDownPlayer.addACardPlayer(cardTemp);//Chua toan quan type co
          }
-
-         //Chia ca quan bai chat Ro cho _nameLeftPlayer
-         if (c.getType() == Card.getTYPE_CARD_DIAMOND()) {
-            _nameLeftPlayer.addACardPlayer(c);
+         if (cardTemp.getType() == Card.getTYPE_CARD_DIAMOND()) {
+            _nameLeftPlayer.addACardPlayer(cardTemp);//Chua toan quan type ro
          }
-
-         //Chia ca quan bai chat Chuon cho _nameTopPlayer
-         if (c.getType() == Card.getTYPE_CARD_CLUB()) {
-            _nameTopPlayer.addACardPlayer(c);
+         if (cardTemp.getType() == Card.getTYPE_CARD_CLUB()) {
+            _nameTopPlayer.addACardPlayer(cardTemp);//Chua toan quan type chuon
          }
-
-         //Chia ca quan bai chat Bich cho _nameRightPlayer
-//         if (c.getType() == Card.TYPE_CARD_SPADE) {
-//            _nameRightPlayer.addACardPlayer(c);
-//         }
-         if (c.getType() == Card.getTYPE_CARD_SPADE()) {
-            _nameRightPlayer.addACardPlayer(c);
+         if (cardTemp.getType() == Card.getTYPE_CARD_SPADE()) {
+            _nameRightPlayer.addACardPlayer(cardTemp);//Chua toan quan type bich
          }
       }
-
-      //========== XEP BAI ==========
-      _nameBottomPlayer.sortCardPlayer();
+      _nameDownPlayer.sortCardPlayer();
       _nameLeftPlayer.sortCardPlayer();
       _nameTopPlayer.sortCardPlayer();
       _nameRightPlayer.sortCardPlayer();
 
       switch (this.FLAG_HUMMAN) {
-         //Truong hop 1: Human co 12 quan Co va Q bich
-         case 1:
-            int i1 = 0;
-            int i2 = 10;
-            Card c1 = _nameBottomPlayer.getListCardPlayer().get(i1);
-            Card c2 = _nameRightPlayer.getListCardPlayer().get(i2);
-            _nameBottomPlayer.getListCardPlayer().set(i1, c2);
-            _nameRightPlayer.getListCardPlayer().set(i2, c1);
+         case 1://Nguoi co quan dam bich va 12 quan co
+            int indexCardFirst = 0;
+            int indexCardEnd = 10;
+            Card cardDown = _nameDownPlayer.getListCardPlayer().get(indexCardFirst);
+            Card cardRight = _nameRightPlayer.getListCardPlayer().get(indexCardEnd);
+            _nameDownPlayer.getListCardPlayer().set(indexCardFirst, cardRight);
+            _nameRightPlayer.getListCardPlayer().set(indexCardEnd, cardDown);
             break;
-         //Truong hop 2:	Human la nguoi danh dau tien trong vong choi
-         case 2:
-            i1 = 0;
-            i2 = 0;
-            c1 = _nameBottomPlayer.getListCardPlayer().get(i1);
-            c2 = _nameTopPlayer.getListCardPlayer().get(i2);
-            _nameBottomPlayer.getListCardPlayer().set(i1, c2);
-            _nameTopPlayer.getListCardPlayer().set(i2, c1);
+         case 2://La nguoi danh dau tien
+            indexCardFirst = 0;
+            indexCardEnd = 0;
+            cardDown = _nameDownPlayer.getListCardPlayer().get(indexCardFirst);
+            cardRight = _nameTopPlayer.getListCardPlayer().get(indexCardEnd);
+            _nameDownPlayer.getListCardPlayer().set(indexCardFirst, cardRight);
+            _nameTopPlayer.getListCardPlayer().set(indexCardEnd, cardDown);
             break;
-
-         //Truong hop 3: Human la nguoi Shoot The Moon
-         case 3:
-            for (int i = 0; i < Player.CARD_PLAYER_QUANTITY; i++) {
-               c1 = _nameBottomPlayer.getListCardPlayer().get(i);
-               c2 = _nameTopPlayer.getListCardPlayer().get(i);
-               _nameBottomPlayer.getListCardPlayer().set(i, c2);
-               _nameTopPlayer.getListCardPlayer().set(i, c1);
+         case 3://la nguoi Shoot The Moon
+            for (int indexCard = 0; indexCard < Player.CARD_PLAYER_QUANTITY; indexCard++) {
+               cardDown = _nameDownPlayer.getListCardPlayer().get(indexCard);
+               cardRight = _nameTopPlayer.getListCardPlayer().get(indexCard);
+               _nameDownPlayer.getListCardPlayer().set(indexCard, cardRight);
+               _nameTopPlayer.getListCardPlayer().set(indexCard, cardDown);
             }
             break;
       }
+      _nameDownPlayer.sortCardPlayer();
+      _nameLeftPlayer.sortCardPlayer();
+      _nameTopPlayer.sortCardPlayer();
+      _nameRightPlayer.sortCardPlayer();
    }
 
    /**
@@ -209,30 +202,36 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
          special_Deal_Card();
          return;
       }
-      ArrayList<Card> cardList = Card.createList52Card();
+      ArrayList<Card> list52Card = Card.createList52Card();
       Card c;
       for (int i = 0; i < 13; i++) {
-         c = cardList.get(i);
-         _nameBottomPlayer.removeACardPlayer(i);
+         c = list52Card.get(i);
+         _nameDownPlayer.removeACardPlayer(i);
          _nameLeftPlayer.removeACardPlayer(i);
          _nameTopPlayer.removeACardPlayer(i);
          _nameRightPlayer.removeACardPlayer(i);
       }
       for (int i = 0; i < 52; i += 4) {
-         c = cardList.get(i);
-         _nameBottomPlayer.addACardPlayer(c);
-         c = cardList.get(i + 1);
+         c = list52Card.get(i);
+         _nameDownPlayer.addACardPlayer(c);
+         c = list52Card.get(i + 1);
          _nameLeftPlayer.addACardPlayer(c);
-         c = cardList.get(i + 2);
+         c = list52Card.get(i + 2);
          _nameTopPlayer.addACardPlayer(c);
-         c = cardList.get(i + 3);
+         c = list52Card.get(i + 3);
          _nameRightPlayer.addACardPlayer(c);
       }
-      _nameBottomPlayer.showListLabelCardPlayer(true, _sizeChangeCard);
+      //Xap xep lai cac la bai, sau khi new game
+      _nameDownPlayer.sortCardPlayer();
+      _nameLeftPlayer.sortCardPlayer();
+      _nameRightPlayer.sortCardPlayer();
+      _nameTopPlayer.sortCardPlayer();
+      //Hien thi cac la bai cho nguoi choi
+      _nameDownPlayer.showListLabelCardPlayer(true, _sizeChangeCard);
       _nameLeftPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
       _nameTopPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
       _nameRightPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
-      notice("Xin chúc mừng bạn.\nTạo game mới thành công.");
+      noticeMessage("Xin chúc mừng. Đã tạo game mới.");
       _playSound.playFileSound(Card.SOUND_PLAY_DEALGAME);
    }
 
@@ -248,73 +247,73 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
     *initNamePlayGame()
     */
    public void initNamePlayGame() {
-      //Tạo ra 4 người chơi
-      _nameBottomPlayer = new Player("Tien", Player.IS_HUMAN, Player.BOTTOM_PLAYER);
+      //Tạo ra 4 người chơi;
+      _nameDownPlayer = new Player("Tien", Player.IS_HUMAN, Player.DOWN_PLAYER);
       _nameLeftPlayer = new Player("Toan", Player.IS_COMPUTER, Player.LEFT_PLAYER);
       _nameTopPlayer = new Player("Thuan", Player.IS_COMPUTER, Player.TOP_PLAYER);
       _nameRightPlayer = new Player("Client 4", Player.IS_COMPUTER, Player.RIGHT_PLAYER);
       //Xét các người chơi tiếp theo
-      _nameBottomPlayer.setNextPlayer(_nameLeftPlayer);
+      _nameDownPlayer.setNextPlayer(_nameLeftPlayer);
       _nameLeftPlayer.setNextPlayer(_nameTopPlayer);
       _nameTopPlayer.setNextPlayer(_nameRightPlayer);
-      _nameRightPlayer.setNextPlayer(_nameBottomPlayer);
+      _nameRightPlayer.setNextPlayer(_nameDownPlayer);
    }
 
    /**
     * Xác định tạo độ của lá bài: chiều dài, chiều rộng của lá bài
+    * De hien thi la bai len label theo mot size qui dinh truoc
     *setDimensionLabelCard()
     */
    public void setDimensionLabelCard() {
       _sizePictureCard = new Dimension(114, 154);//kít thướt lớn nhất của lá bài
-      int xCooridinatePictureCard = 22;
-      int yCooridinatePictureCard = 20;
-      int MAX_CARD = Player.CARD_PLAYER_QUANTITY + 1;
-      // Nguời chơi ở vị trí: Bottom
-      _labelListCardHuman = new JLabel[MAX_CARD];
-      for (int i = 0; i < MAX_CARD; i++) {
+      dxPictureCard = 22;
+      dyPictureCard = 20;
+      // Nguời chơi ở vị trí: Down
+      _labelListCardHuman = new JLabel[14];
+      for (int i = 0; i < 14; i++) {
          _labelListCardHuman[i] = new JLabel();
          _labelListCardHuman[i].setSize(_sizePictureCard);
-         _labelListCardHuman[i].setLocation(i * xCooridinatePictureCard + 225, 475);
+         _labelListCardHuman[i].setLocation(i * dxPictureCard + 225, 475);
          _labelListCardHuman[i].setVisible(false);
          _labelListCardHuman[i].addMouseListener(this);
       }
-      for (int i = MAX_CARD - 1; i >= 0; i--) {
+      for (int i = 14 - 1; i >= 0; i--) {
          _frameMainGame.add(_labelListCardHuman[i]);
       }
-      _nameBottomPlayer.setListLabelCardPlayer(_labelListCardHuman);
+      _nameDownPlayer.setListLabelCardPlayer(_labelListCardHuman);
       // Nguời chơi ở vị trí: Left
-      _labelListCardComputerLeft = new JLabel[MAX_CARD];
-      for (int i = 0; i < MAX_CARD; i++) {
+      _labelListCardComputerLeft = new JLabel[14];
+      for (int i = 0; i < 14; i++) {
          _labelListCardComputerLeft[i] = new JLabel();
          _labelListCardComputerLeft[i].setSize(_sizePictureCard);
-         _labelListCardComputerLeft[i].setLocation(10, i * yCooridinatePictureCard + 135);
+         _labelListCardComputerLeft[i].setLocation(10, i * dyPictureCard + 135);
          _labelListCardComputerLeft[i].setVisible(false);
       }
-      for (int i = MAX_CARD - 1; i >= 0; i--) {
+      for (int i = 14 - 1; i >= 0; i--) {
          _frameMainGame.add(_labelListCardComputerLeft[i]);
       }
       _nameLeftPlayer.setListLabelCardPlayer(_labelListCardComputerLeft);
       // Nguời chơi ở vị trí: Top
-      _labelListCardComputerTop = new JLabel[MAX_CARD];
-      for (int i = 0; i < MAX_CARD; i++) {
+      _labelListCardComputerTop = new JLabel[14];
+      for (int i = 0; i < 14; i++) {
          _labelListCardComputerTop[i] = new JLabel();
          _labelListCardComputerTop[i].setSize(_sizePictureCard);
-         _labelListCardComputerTop[i].setLocation(i * xCooridinatePictureCard + 225, 15);
+         _labelListCardComputerTop[i].setLocation(i * dxPictureCard + 225, 15);
          _labelListCardComputerTop[i].setVisible(false);
       }
-      for (int i = 0; i < MAX_CARD; i++) {
+      for (int i = 0; i < 14; i++) {
          _frameMainGame.add(_labelListCardComputerTop[i]);
       }
       _nameTopPlayer.setListLabelCardPlayer(_labelListCardComputerTop);
       // Nguời chơi ở vị trí: Right
-      _labelListCardComputerRight = new JLabel[MAX_CARD];
-      for (int i = 0; i < MAX_CARD; i++) {
+      _labelListCardComputerRight = new JLabel[14];
+      for (int i = 0; i < 14; i++) {
          _labelListCardComputerRight[i] = new JLabel();
          _labelListCardComputerRight[i].setSize(_sizePictureCard);
-         _labelListCardComputerRight[i].setLocation(665, i * yCooridinatePictureCard + 135);
+         _labelListCardComputerRight[i].setLocation(665, i * dyPictureCard + 135);
          _labelListCardComputerRight[i].setVisible(false);
       }
-      for (int i = 0; i < MAX_CARD; i++) {
+      for (int i = 0; i < 14; i++) {
          _frameMainGame.add(_labelListCardComputerRight[i]);
       }
       _nameRightPlayer.setListLabelCardPlayer(_labelListCardComputerRight);
@@ -325,15 +324,15 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
     *setLabelCardPlay()
     */
    public void setLabelCardPlay() {
-      // Nguời chơi ở vị trí: Bottom
-      _labelPositionPictureCardBottom = new JLabel[4];
-      for (int i = 0; i < _labelPositionPictureCardBottom.length; i++) {
-         _labelPositionPictureCardBottom[i] = new JLabel();
-         _labelPositionPictureCardBottom[i].setSize(114, 154);
-         _labelPositionPictureCardBottom[i].setLocation(360, 280);
-         _labelPositionPictureCardBottom[i].setVisible(false);
+      // Nguời chơi ở vị trí: down
+      _labelPositionPictureCardDown = new JLabel[4];
+      for (int i = 0; i < _labelPositionPictureCardDown.length; i++) {
+         _labelPositionPictureCardDown[i] = new JLabel();
+         _labelPositionPictureCardDown[i].setSize(114, 154);
+         _labelPositionPictureCardDown[i].setLocation(360, 280);
+         _labelPositionPictureCardDown[i].setVisible(false);
       }
-      _nameBottomPlayer.setListLabelCardPlayedPlayer(_labelPositionPictureCardBottom);
+      _nameDownPlayer.setListLabelCardPlayedPlayer(_labelPositionPictureCardDown);
       // Nguời chơi ở vị trí: Left
       _labelPositionPictureCardLeft = new JLabel[4];
       for (int i = 0; i < _labelPositionPictureCardLeft.length; i++) {
@@ -362,22 +361,28 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
       }
       _nameRightPlayer.setListLabelCardPlayedPlayer(_labelPositionPictureCardRight);
 
+      /*Cui bap
+      _frameMainGame add tat ca cac vi tri ma nguoi choi danh ra
+      Tong cong co 4 * 4 = 16 vi tri duoc add vao
+       */
       _frameMainGame.add(_labelPositionPictureCardRight[3]);
       _frameMainGame.add(_labelPositionPictureCardTop[2]);
       _frameMainGame.add(_labelPositionPictureCardLeft[1]);
-      _frameMainGame.add(_labelPositionPictureCardBottom[0]);
-      _frameMainGame.add(_labelPositionPictureCardBottom[3]);
+      _frameMainGame.add(_labelPositionPictureCardDown[0]);
+      _frameMainGame.add(_labelPositionPictureCardDown[3]);
       _frameMainGame.add(_labelPositionPictureCardRight[2]);
       _frameMainGame.add(_labelPositionPictureCardTop[1]);
       _frameMainGame.add(_labelPositionPictureCardLeft[0]);
       _frameMainGame.add(_labelPositionPictureCardLeft[3]);
-      _frameMainGame.add(_labelPositionPictureCardBottom[2]);
+      _frameMainGame.add(_labelPositionPictureCardDown[2]);
       _frameMainGame.add(_labelPositionPictureCardRight[1]);
       _frameMainGame.add(_labelPositionPictureCardTop[0]);
       _frameMainGame.add(_labelPositionPictureCardTop[3]);
       _frameMainGame.add(_labelPositionPictureCardLeft[2]);
-      _frameMainGame.add(_labelPositionPictureCardBottom[1]);
+      _frameMainGame.add(_labelPositionPictureCardDown[1]);
       _frameMainGame.add(_labelPositionPictureCardRight[0]);
+
+
    }
 
    /**
@@ -386,8 +391,8 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
     */
    public void setLabelNamePlayer() {
       _labelPoisitionNamePlayer = new JLabel[4];
-      // Nguời chơi ở vị trí: Bottom
-      _labelPoisitionNamePlayer[0] = new JLabel(_nameBottomPlayer.getNamePlayer());
+      // Nguời chơi ở vị trí: down
+      _labelPoisitionNamePlayer[0] = new JLabel(_nameDownPlayer.getNamePlayer());
       _labelPoisitionNamePlayer[0].setSize(100, 20);
       _labelPoisitionNamePlayer[0].setLocation(180, 550);
       _labelPoisitionNamePlayer[0].setForeground(Color.RED);
@@ -417,12 +422,13 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
     *setMainFrame()
     */
    public void setMainFrame() throws HeadlessException {
-      _frameMainGame = new JFrame("Hearts Game ");
+      _frameMainGame = new JFrame();
       _frameMainGame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       _frameMainGame.setLayout(null);
       _frameMainGame.setResizable(false);
       _frameMainGame.setSize(800, 700);
       _frameMainGame.setLocation(225, 50);
+      _frameMainGame.setTitle("Java Game");
       _panelFrameMainGame = (JPanel) _frameMainGame.getContentPane();
       _panelFrameMainGame.setBackground(new Color(0, 114, 54));
    }
@@ -434,40 +440,6 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
    public void setMenuBar() {
       _menuBarMainGame = new JMenuBar();
       _frameMainGame.setJMenuBar(_menuBarMainGame);
-   }
-
-   /**
-    * setMenuConnectServer()
-    */
-   public void setMenuConnectServer() {
-      _menuConnectServer = new JMenu("Connect Server");
-      _menuConnectServer.setMnemonic('S');
-      _menuBarMainGame.add(_menuConnectServer);
-      //--------------------------------------Connect------------------
-      _menuItemConnectServer_Connect = new JMenuItem("Connect");
-      _menuItemConnectServer_Connect.setMnemonic('C');
-      _menuConnectServer.add(_menuItemConnectServer_Connect);
-      _menuItemConnectServer_Connect.addActionListener(new ActionListener() {
-
-         public void actionPerformed(ActionEvent e) {
-            //  throw new UnsupportedOperationException("Not supported yet.");
-            //Su ly connet o day
-            JOptionPane.showMessageDialog(null, "Chua su ly?");
-         }
-      });
-      //-----------------------------------Disconnect----------------
-      _menuItemConnectServer_DisConnect = new JMenuItem("Disconnect");
-      _menuItemConnectServer_DisConnect.setMnemonic('D');
-      _menuConnectServer.add(_menuItemConnectServer_DisConnect);
-      _menuItemConnectServer_DisConnect.addActionListener(new ActionListener() {
-
-         public void actionPerformed(ActionEvent e) {
-            // throw new UnsupportedOperationException("Not supported yet.");
-            //Su ly disconnect server
-            JOptionPane.showMessageDialog(null, "Chua su ly?");
-         }
-      });
-
    }
 
    /**
@@ -514,12 +486,12 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
 
          @Override
          public void actionPerformed(ActionEvent e) {
-            if (_nameBottomPlayer.isHumanPlayer()) {
-               _nameBottomPlayer.setTypePlayer(Player.IS_COMPUTER);
+            if (_nameDownPlayer.isHumanPlayer()) {
+               _nameDownPlayer.setTypePlayer(Player.IS_COMPUTER);
                _menuItemGame_AutomaticPlay.setText("Manually Play");
                _menuItemGame_AutomaticPlay.setMnemonic('M');
             } else {
-               _nameBottomPlayer.setTypePlayer(Player.IS_HUMAN);
+               _nameDownPlayer.setTypePlayer(Player.IS_HUMAN);
                _menuItemGame_AutomaticPlay.setText("Automatic Play");
                _menuItemGame_AutomaticPlay.setMnemonic('A');
             }
@@ -571,6 +543,55 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
    }
 
    /**
+    * setMenuConnectServer()
+    */
+   public void setMenuConnectServer() {
+      _menuConnectServer = new JMenu("Network");
+      _menuConnectServer.setMnemonic('N');
+      _menuBarMainGame.add(_menuConnectServer);
+      //-------------------------------Create server------------------
+      _menuItemConnectServer_CreatServer = new JMenuItem("Create Server");
+      //_menuItemConnectServer_CreatServer.setEnabled(false);
+      _menuItemConnectServer_CreatServer.setMnemonic('R');
+      _menuConnectServer.add(_menuItemConnectServer_CreatServer);
+      _menuItemConnectServer_CreatServer.addActionListener(new ActionListener() {
+
+         public void actionPerformed(ActionEvent e) {
+            //  throw new UnsupportedOperationException("Not supported yet.");
+            //Su ly connet o day
+            JOptionPane.showMessageDialog(null, "Chua su ly?");
+         }
+      });
+      //--------------------------------------Connect------------------
+      _menuItemConnectServer_Connect = new JMenuItem("Connect");
+      //_menuItemConnectServer_Connect.setEnabled(false);
+      _menuItemConnectServer_Connect.setMnemonic('C');
+      _menuConnectServer.add(_menuItemConnectServer_Connect);
+      _menuItemConnectServer_Connect.addActionListener(new ActionListener() {
+
+         public void actionPerformed(ActionEvent e) {
+            //  throw new UnsupportedOperationException("Not supported yet.");
+            //Su ly connet o day
+            JOptionPane.showMessageDialog(null, "Chua su ly?");
+         }
+      });
+      //-----------------------------------Disconnect----------------
+      _menuItemConnectServer_DisConnect = new JMenuItem("Disconnect");
+      // _menuItemConnectServer_DisConnect.setEnabled(false);
+      _menuItemConnectServer_DisConnect.setMnemonic('D');
+      _menuConnectServer.add(_menuItemConnectServer_DisConnect);
+      _menuItemConnectServer_DisConnect.addActionListener(new ActionListener() {
+
+         public void actionPerformed(ActionEvent e) {
+            // throw new UnsupportedOperationException("Not supported yet.");
+            //Su ly disconnect server
+            JOptionPane.showMessageDialog(null, "Chua su ly?");
+         }
+      });
+
+   }
+
+   /**
     *setMenuHelp()
     */
    public void setMenuHelp() {
@@ -608,7 +629,7 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
          @Override
          public void actionPerformed(ActionEvent e) {
             _sizeChangeCard = 1;
-            _nameBottomPlayer.showListLabelCardPlayer(true, _sizeChangeCard);
+            _nameDownPlayer.showListLabelCardPlayer(true, _sizeChangeCard);
             _nameTopPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
             _nameRightPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
             _nameLeftPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
@@ -623,7 +644,7 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
          @Override
          public void actionPerformed(ActionEvent e) {
             _sizeChangeCard = 2;
-            _nameBottomPlayer.showListLabelCardPlayer(true, _sizeChangeCard);
+            _nameDownPlayer.showListLabelCardPlayer(true, _sizeChangeCard);
             _nameTopPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
             _nameRightPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
             _nameLeftPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
@@ -638,7 +659,7 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
          @Override
          public void actionPerformed(ActionEvent e) {
             _sizeChangeCard = 3;
-            _nameBottomPlayer.showListLabelCardPlayer(true, _sizeChangeCard);
+            _nameDownPlayer.showListLabelCardPlayer(true, _sizeChangeCard);
             _nameTopPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
             _nameRightPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
             _nameLeftPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
@@ -654,7 +675,7 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
          @Override
          public void actionPerformed(ActionEvent e) {
             _sizeChangeCard = 4;
-            _nameBottomPlayer.showListLabelCardPlayer(true, _sizeChangeCard);
+            _nameDownPlayer.showListLabelCardPlayer(true, _sizeChangeCard);
             _nameTopPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
             _nameRightPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
             _nameLeftPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
@@ -811,19 +832,50 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
          if (_indexLabelCardHuman != -1) {
             if (_flagPlay[_indexLabelCardHuman] == false) {
                if (_indexPositon.size() < 3) {
-                  JLabel lbl = _nameBottomPlayer.getListLabelCardPlayer()[_indexLabelCardHuman];
+                  JLabel lbl = _nameDownPlayer.getListLabelCardPlayer()[_indexLabelCardHuman];
                   lbl.setLocation(lbl.getLocation().x, lbl.getLocation().y - 20);
                   _flagPlay[_indexLabelCardHuman] = true;
                   _indexPositon.add(new Integer(_indexLabelCardHuman));
                }
             } else {
-               JLabel lbl = _nameBottomPlayer.getListLabelCardPlayer()[_indexLabelCardHuman];
+               JLabel lbl = _nameDownPlayer.getListLabelCardPlayer()[_indexLabelCardHuman];
                lbl.setLocation(lbl.getLocation().x, lbl.getLocation().y + 20);
                _flagPlay[_indexLabelCardHuman] = false;
                _indexPositon.remove(new Integer(_indexLabelCardHuman));
             }
          }
       }
+   }
+
+   /**
+    *
+    */
+   public void enableGame() {
+      //Khoi tao ten nguoi choi
+      initNamePlayGame();
+      //Xet frame chinh
+      setMainFrame();
+      //Xet menubar chinh
+      setMenuBar();
+      //Xet menu game
+      setMenuGame();
+      //Xet menu Option
+      setMenuOption();
+      //xet menu Connect server
+      setMenuConnectServer();
+      //Xet menu help
+      setMenuHelp();
+      //Xet label name
+      setLabelNamePlayer();
+      //Xet label card
+      setLabelCardPlay();
+      //Xet kit thuot card
+      setDimensionLabelCard();
+      //Xet button Start game
+      setbntRound();
+      //Xet panel hien thi thong bao
+      setPanelNote();
+      setVisibleGame();
    }
 
    /**
@@ -889,6 +941,6 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
       //throw new UnsupportedOperationException("Not supported yet.");
       _xMouseCurrent = e.getX();
       _yMouseCurrent = e.getY();
-      _nameBottomPlayer.repaintList3CardChangePlayer();
+      _nameDownPlayer.repaintList3CardChangePlayer();
    }
 }

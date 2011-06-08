@@ -12,8 +12,8 @@ public class Type extends Rank {
 
    private static int TYPE_CARD_SPADE = 0;//Loại bài bích
    private static int TYPE_CARD_CLUB = 1;// Loại bài chuồn
-   private static int TYPE_CARD_DIAMOND = 2;// Laọi bài rô
-   private static int TYPE_CARD_HEART = 3;// Laọi bài cơ
+   private static int TYPE_CARD_DIAMOND = 2;// Loai bài rô
+   private static int TYPE_CARD_HEART = 3;// Loai bài cơ
    private static String[] TABLE_TYPE_CARD = {//Chuổi các ký hiệu dùng để nhận biết loại bài
       "s",
       "c",

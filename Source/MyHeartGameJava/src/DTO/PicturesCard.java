@@ -85,24 +85,24 @@ public class PicturesCard extends Type {
     * @return
     */
    public static ArrayList<Card> createList52Card() {
-      ArrayList<Card> listCardQuantity = new ArrayList<Card>(PicturesCard.CARD_QUANTITY);
+      ArrayList<Card> list52Card = new ArrayList<Card>(PicturesCard.CARD_QUANTITY);
       for (int indexCard = 0; indexCard < PicturesCard.CARD_QUANTITY; indexCard++) {
          int rankIndex = indexCard % PicturesCard.CARD_PLAYER_QUANTITY;//rankIndex = [0,12]
          int typeIndex = indexCard / PicturesCard.CARD_PLAYER_QUANTITY;//typeIndex = [0-3]
          Card cardTemp = new Card(rankIndex, typeIndex);
-         listCardQuantity.add(cardTemp);
+         list52Card.add(cardTemp);
       }
-      //Trộn các lá baid lại với nhau
+      //Trộn các lá bai lại với nhau
       Random randomCard = new Random();
       for (int indexCard = 0; indexCard < PicturesCard.CARD_QUANTITY; indexCard++) {
          int indexCardTemp = randomCard.nextInt(PicturesCard.CARD_QUANTITY);
          if (indexCardTemp != indexCard) {//Hoán đổi vị trí các lá bài với nhau
-            Card cardTemp = listCardQuantity.get(indexCard);
-            listCardQuantity.set(indexCard, listCardQuantity.get(indexCardTemp));
-            listCardQuantity.set(indexCardTemp, cardTemp);
+            Card cardTemp = list52Card.get(indexCard);
+            list52Card.set(indexCard, list52Card.get(indexCardTemp));
+            list52Card.set(indexCardTemp, cardTemp);
          }
       }
-      return listCardQuantity;// Trả về danh sách 52 lá bài
+      return list52Card;// Trả về danh sách 52 lá bài
    }
 
    /**
