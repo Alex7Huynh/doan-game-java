@@ -551,7 +551,7 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
       _menuBarMainGame.add(_menuConnectServer);
       //-------------------------------Create server------------------
       _menuItemConnectServer_CreatServer = new JMenuItem("Create Server");
-      //_menuItemConnectServer_CreatServer.setEnabled(false);
+      _menuItemConnectServer_CreatServer.setEnabled(false);
       _menuItemConnectServer_CreatServer.setMnemonic('R');
       _menuConnectServer.add(_menuItemConnectServer_CreatServer);
       _menuItemConnectServer_CreatServer.addActionListener(new ActionListener() {
@@ -606,7 +606,7 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
 
          @Override
          public void actionPerformed(ActionEvent e) {
-            JOptionPane.showMessageDialog(null, "Sinh Viên:\nTrần Hưng Thuận  0812508.\nPhan Nhật Tiến   0812515.\nHuỳnh Công Toàn   0812527.\nGVHD:\nNguyễn Văn Khuyết.", "Hearts Game", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Sinh Viên:\nTrần Hưng Thuận  0812508.\nPhan Nhật Tiến   0812515.\nHuỳnh Công Toàn   0812527.\nGVHD:\nNguyễn Văn Khiết.", "Hearts Game", JOptionPane.INFORMATION_MESSAGE);
          }
       });
    }
