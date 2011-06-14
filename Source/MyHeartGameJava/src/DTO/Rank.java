@@ -11,19 +11,19 @@ package DTO;
 public class Rank {
 
    private static String[] TABLE_RANK_CARD = {// Chuoi các hạng của con bài(2-14)
-      "2",//2
-      "3",
-      "4",
-      "5",
-      "6",
-      "7",
-      "8",
-      "9",
-      "10",
-      "11",//J
-      "12",//Q
-      "13",//K
-      "14"};//Ace
+      "2_",//2
+      "3_",
+      "4_",
+      "5_",
+      "6_",
+      "7_",
+      "8_",
+      "9_",
+      "10_",
+      "11_",//J
+      "12_",//Q
+      "13_",//K
+      "14_"};//Ace
    private static int PICTURE_RANK_2 = 0;// hạng của con 2
    private static int PICTURE_RANK_ACE = 12;// hạng của con ace
    private static int PICTURE_RANK_QUEEN = 10;// hạng của con Q
