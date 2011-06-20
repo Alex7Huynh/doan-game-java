@@ -41,7 +41,7 @@
                   </Group>
                   <Component id="LabBai" alignment="0" min="-2" pref="623" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="20" max="32767" attributes="0"/>
+              <EmptySpace pref="23" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <Group type="103" groupAlignment="1" max="-2" attributes="0">
