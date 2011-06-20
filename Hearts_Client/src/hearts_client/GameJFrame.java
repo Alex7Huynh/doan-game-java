@@ -1,20 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * GameJFrame.java
- *
- * Created on Jun 9, 2011, 3:44:50 PM
- */
-
 package hearts_client;
 
-/**
- *
- * @author Czytelnik
- */
+import mypackage.Hearts;
+
 public class GameJFrame extends javax.swing.JFrame {
 
     /** Creates new form GameJFrame */
@@ -24,7 +11,7 @@ public class GameJFrame extends javax.swing.JFrame {
 
     GameJFrame(ConnectJFrame cf) {
         initComponents();
-        ConnectF=cf;
+        ConnectF = cf;
     }
 
     /** This method is called from within the constructor to
@@ -153,21 +140,29 @@ public class GameJFrame extends javax.swing.JFrame {
 
     private void jButtonSendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonSendMouseClicked
         // TODO add your handling code here:
-        ConnectF.sendMessage(jTextMegToServer.getText().trim() );
+        ConnectF.sendMessage(jTextMegToServer.getText().trim());
     }//GEN-LAST:event_jButtonSendMouseClicked
 
     /**
-    * @param args the command line arguments
-    */
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GameJFrame().setVisible(true);
-
-            }
-        });
+        /*java.awt.EventQueue.invokeLater(new Runnable() {
+        public void run() {
+        new GameJFrame().setVisible(true);
+        
+        }
+        });*/
+        myGame = new Hearts();
+        myGame.newGame();
     }
+    private static Hearts myGame;
 
+    public void setPlayerName(int order, String name) {
+        String[] PlayerName = myGame.getPlayerName();
+        PlayerName[order] = name;
+        myGame.setPlayerName(PlayerName);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JLabel LabBai;
     public javax.swing.JLabel LabMeg;
@@ -181,6 +176,6 @@ public class GameJFrame extends javax.swing.JFrame {
     private javax.swing.JTextField jTextMegToServer;
     // End of variables declaration//GEN-END:variables
     public String MyName;
-    public String YourName[]= new String[3];
+    public String YourName[] = new String[3];
     public ConnectJFrame ConnectF;
 }
