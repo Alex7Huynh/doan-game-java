@@ -29,6 +29,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
 /**
@@ -100,6 +102,10 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
    public JLabel[] _labelListCardComputerLeft;// Vị trí lá bài của người chơi ở vị trí Left
    public JLabel[] _labelListCardComputerTop;//Vị trí lá bài của người chơi ở vị trí Top
    public JLabel[] _labelListCardComputerRight;//Vị trí lá bài của người chơi ở vị trí Right
+   //
+   public JButton _bntSendMessage;
+   public JTextArea _txtDisplayMessage;
+   public JTextField _txtSendMessage;
 
    /**
     * PresentationGame()
@@ -847,6 +853,40 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
       }
    }
 
+   public void setTextMessage() {
+
+      //Hien thi hang noi dung chat
+      _txtDisplayMessage = new JTextArea("chao");
+      _txtDisplayMessage.setSize(185, 65);
+      _txtDisplayMessage.setLocation(610, 560);
+
+      //Text box chat
+      _txtSendMessage = new JTextField("chat");
+      _txtSendMessage.setSize(122, 25);
+      _txtSendMessage.setLocation(610,625 );
+
+      //Button send noi dung chat
+      _bntSendMessage = new JButton("Send");
+      _bntSendMessage.setSize(63, 25);
+      _bntSendMessage.setLocation(732, 625);
+      _bntSendMessage.setBackground(Color.GRAY);
+      _bntSendMessage.setForeground(Color.RED);
+      _bntSendMessage.setVisible(true);
+      _bntSendMessage.addActionListener(new ActionListener() {
+
+         @Override
+         public void actionPerformed(ActionEvent e) {
+
+            _txtDisplayMessage.setText("Me:"+_txtSendMessage.getText().toString().trim());
+         }
+      });
+
+      _frameMainGame.add(_txtDisplayMessage);
+      _frameMainGame.add(_txtSendMessage);
+      _frameMainGame.add(_bntSendMessage);
+
+   }
+
    /**
     *
     */
@@ -869,6 +909,8 @@ public class PresentationGame implements MouseListener, ItemListener, MouseMotio
       setLabelNamePlayer();
       //Xet label card
       setLabelCardPlay();
+      //Hien thi thong tin de chat
+      setTextMessage();
       //Xet kit thuot card
       setDimensionLabelCard();
       //Xet button Start game
