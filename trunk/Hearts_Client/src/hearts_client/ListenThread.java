@@ -71,13 +71,14 @@ public class ListenThread extends Thread {
                             GameF = new GameJFrame(ConnectF);
 
                             //GameF.MyName= ConnectF.MyName;
+                            //GameF.setPlayerName(0, ConnectF.MyName);
                             GameF.setPlayerName(0, ConnectF.MyName);
-                            GameF.setTitle(GameF.MyName);
+                            GameF.setTitle(ConnectF.MyName);
                             NoiDung = NoiDung.substring(NoiDung.indexOf("%") + 1);
                             String temp[] = NoiDung.split("%");
                             int dem = 0;
                             for (int i = 0; i < 4; i++) {
-                                if (temp[i].equals(GameF.MyName)) {
+                                if (temp[i].equals(ConnectF.MyName)) {
                                     dem = i;
                                     break;
                                 }
@@ -86,12 +87,13 @@ public class ListenThread extends Thread {
                                 //GameF.YourName[i]=temp[++dem%4];
                                 GameF.setPlayerName(i + 1, temp[++dem % 4]);
                             }
-                            GameF.LabMy.setText(GameF.MyName);
-                            GameF.LabYou1.setText(GameF.YourName[0]);
-                            GameF.LabYou2.setText(GameF.YourName[1]);
-                            GameF.LabYou3.setText(GameF.YourName[2]);
+//                            GameF.LabMy.setText(GameF.MyName);
+//                            GameF.LabYou1.setText(GameF.YourName[0]);
+//                            GameF.LabYou2.setText(GameF.YourName[1]);
+//                            GameF.LabYou3.setText(GameF.YourName[2]);
 
-                            GameF.setVisible(true);
+                            //GameF.setVisible(true);
+                            GameF.myGame.newGame();
 
                         }
                         break;
