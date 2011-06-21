@@ -6,12 +6,13 @@ public class GameJFrame extends javax.swing.JFrame {
 
     /** Creates new form GameJFrame */
     public GameJFrame() {
-        initComponents();
+        //initComponents();
     }
 
     GameJFrame(ConnectJFrame cf) {
-        initComponents();
+        //initComponents();
         ConnectF = cf;
+        myGame = new Hearts();
     }
 
     /** This method is called from within the constructor to
@@ -153,15 +154,14 @@ public class GameJFrame extends javax.swing.JFrame {
         
         }
         });*/
-        myGame = new Hearts();
+        //myGame = new Hearts();
+        //myGame.setPlayerName(0,"AAAAA");
         myGame.newGame();
     }
-    private static Hearts myGame;
+    public static Hearts myGame;
 
     public void setPlayerName(int order, String name) {
-        String[] PlayerName = myGame.getPlayerName();
-        PlayerName[order] = name;
-        myGame.setPlayerName(PlayerName);
+        myGame.setPlayerName(order, name);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JLabel LabBai;
@@ -175,7 +175,7 @@ public class GameJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField jTextMegToServer;
     // End of variables declaration//GEN-END:variables
-    public String MyName;
-    public String YourName[] = new String[3];
+    //public String MyName;
+    //public String YourName[] = new String[3];
     public ConnectJFrame ConnectF;
 }

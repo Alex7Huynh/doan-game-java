@@ -31,16 +31,19 @@ public class Card {
 	public static final int SUIT_DIAMOND = 2;
 	public static final int SUIT_HEART = 3;
 	
-	public static final String PICTURES_FOLDER = "pictures/";
-	public static final String PICTURES_EXTEND = ".gif";
-	public static final String BACK_PICTURE = "pictures/b.gif";
+	//public static final String PICTURES_FOLDER = "pictures/";
+        public static final String PICTURES_FOLDER = "resources/pictures_1/";
+	//public static final String PICTURES_EXTEND = ".gif";
+        public static final String PICTURES_EXTEND = ".png";
+	//public static final String BACK_PICTURE = "pictures/b.gif";
+        public static final String BACK_PICTURE = "resources/pictures_back/back_1.png";
 	
 	//nuoc cua la bai: 2..10, j, q, k, a
-	public static final String[] Face = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "j", "q", "k", "a"};  
+	public static final String[] Face = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14"};  
 	//public static final String[] faceText = {"TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "TEEN", "JACK", "QUEEN", "KING", "ACE"};
 	
 	//chat cua la bai(bich, chuon, ro, co): s(spade), c(club), d(diamond), h(heart)
-	public static final String[] Suit = {"s", "c", "d", "h"};
+	public static final String[] Suit = {"Bich", "Chuon", "Ro", "Co"};
 	public static final String[] suitText = {"Bich", "Chuon", "Ro", "Co"};
 	
 	private int face; 	//nuoc: 0..12
@@ -72,7 +75,7 @@ public class Card {
 	}
 
 	public String toString() {
-		return (" " + Face[face] + Suit[suit]);
+		return ( Face[face] + "_" + Suit[suit]);
 	}
 	
 	//equals
@@ -118,7 +121,7 @@ public class Card {
 	public String creatIconFile() {
 		if(face < FACE_2 || face > FACE_ACE || suit < SUIT_SPADE || suit > SUIT_HEART)
 			return "";
-		return (PICTURES_FOLDER + Face[face] + Suit[suit] + PICTURES_EXTEND);	
+		return (PICTURES_FOLDER + Face[face] + "_" + Suit[suit] + PICTURES_EXTEND);	
 	}
 	
 	//Thiet lap mot bo bai
