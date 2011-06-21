@@ -1,0 +1,1135 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="MyHeartGameJava" default="run" basedir=".">
+  <!--sound-->
+  <property name="resources_sound_1" value="resources/sound/beepWarning.wav"/>
+  <property name="jar_resources_sound_1" value="build/jar/resources/sound/beepWarning.wav"/>
+
+  <property name="resources_sound_2" value="resources/sound/clickcard.wav"/>
+  <property name="jar_resources_sound_2" value="build/jar/resources/sound/clickcard.wav"/>
+
+  <property name="resources_sound_3" value="resources/sound/delaCard.wav"/>
+  <property name="jar_resources_sound_3" value="build/jar/resources/sound/delaCard.wav"/>
+
+  <property name="resources_sound_4" value="resources/sound/gameOver.wav"/>
+  <property name="jar_resources_sound_4" value="build/jar/resources/sound/gameOver.wav"/>
+
+  <!--picture back-->
+  <property name="resources_back_1" value="resources/pictures_back/back_1.png"/>
+  <property name="jar_resources_back_1" value="build/jar/resources/pictures_back/back_1.png"/>
+
+  <property name="resources_back_2" value="resources/pictures_back/back_2.png"/>
+  <property name="jar_resources_back_2" value="build/jar/resources/pictures_back/back_2.png"/>
+
+  <property name="resources_back_3" value="resources/pictures_back/back_3.png"/>
+  <property name="jar_resources_back_3" value="build/jar/resources/pictures_back/back_3.png"/>
+
+  <property name="resources_back_4" value="resources/pictures_back/back_4.png"/>
+  <property name="jar_resources_back_4" value="build/jar/resources/pictures_back/back_4.png"/>
+
+  <property name="resources_back_5" value="resources/pictures_back/back_5.png"/>
+  <property name="jar_resources_back_5" value="build/jar/resources/pictures_back/back_5.png"/>
+
+  <property name="resources_back_6" value="resources/pictures_back/back_6.png"/>
+  <property name="jar_resources_back_6" value="build/jar/resources/pictures_back/back_6.png"/>
+
+  <property name="resources_back_7" value="resources/pictures_back/back_7.png"/>
+  <property name="jar_resources_back_7" value="build/jar/resources/pictures_back/back_7.png"/>
+
+  <property name="resources_back_8" value="resources/pictures_back/back_8.png"/>
+  <property name="jar_resources_back_8" value="build/jar/resources/pictures_back/back_8.png"/>
+  <!-- Bo bai thu 1-->
+  <property name="resources_1_2" value="resources/pictures_1/2_Bich.png"/>
+  <property name="jar_resources_1_2" value="build/jar/resources/pictures_1/2_Bich.png"/>
+
+  <property name="resources_1_3" value="resources/pictures_1/2_Chuon.png"/>
+  <property name="jar_resources_1_3" value="build/jar/resources/pictures_1/2_Chuon.png"/>
+
+  <property name="resources_1_4" value="resources/pictures_1/2_Ro.png"/>
+  <property name="jar_resources_1_4" value="build/jar/resources/pictures_1/2_Ro.png"/>
+
+  <property name="resources_1_5" value="resources/pictures_1/2_Co.png"/>
+  <property name="jar_resources_1_5" value="build/jar/resources/pictures_1/2_Co.png"/>
+
+  <property name="resources_1_6" value="resources/pictures_1/3_Bich.png"/>
+  <property name="jar_resources_1_6" value="build/jar/resources/pictures_1/3_Bich.png"/>
+
+  <property name="resources_1_7" value="resources/pictures_1/3_Chuon.png"/>
+  <property name="jar_resources_1_7" value="build/jar/resources/pictures_1/3_Chuon.png"/>
+
+  <property name="resources_1_8" value="resources/pictures_1/3_Ro.png"/>
+  <property name="jar_resources_1_8" value="build/jar/resources/pictures_1/3_Ro.png"/>
+
+  <property name="resources_1_9" value="resources/pictures_1/3_Co.png"/>
+  <property name="jar_resources_1_9" value="build/jar/resources/pictures_1/3_Co.png"/>
+
+  <property name="resources_1_10" value="resources/pictures_1/4_Bich.png"/>
+  <property name="jar_resources_1_10" value="build/jar/resources/pictures_1/4_Bich.png"/>
+
+  <property name="resources_1_11" value="resources/pictures_1/4_Chuon.png"/>
+  <property name="jar_resources_1_11" value="build/jar/resources/pictures_1/4_Chuon.png"/>
+
+  <property name="resources_1_12" value="resources/pictures_1/4_Ro.png"/>
+  <property name="jar_resources_1_12" value="build/jar/resources/pictures_1/4_Ro.png"/>
+
+  <property name="resources_1_13" value="resources/pictures_1/4_Co.png"/>
+  <property name="jar_resources_1_13" value="build/jar/resources/pictures_1/4_Co.png"/>
+
+  <property name="resources_1_14" value="resources/pictures_1/5_Bich.png"/>
+  <property name="jar_resources_1_14" value="build/jar/resources/pictures_1/5_Bich.png"/>
+
+  <property name="resources_1_15" value="resources/pictures_1/5_Chuon.png"/>
+  <property name="jar_resources_1_15" value="build/jar/resources/pictures_1/5_Chuon.png"/>
+
+  <property name="resources_1_16" value="resources/pictures_1/5_Ro.png"/>
+  <property name="jar_resources_1_16" value="build/jar/resources/pictures_1/5_Ro.png"/>
+
+  <property name="resources_1_17" value="resources/pictures_1/5_Co.png"/>
+  <property name="jar_resources_1_17" value="build/jar/resources/pictures_1/5_Co.png"/>
+
+  <property name="resources_1_18" value="resources/pictures_1/6_Bich.png"/>
+  <property name="jar_resources_1_18" value="build/jar/resources/pictures_1/6_Bich.png"/>
+
+  <property name="resources_1_19" value="resources/pictures_1/6_Chuon.png"/>
+  <property name="jar_resources_1_19" value="build/jar/resources/pictures_1/6_Chuon.png"/>
+
+  <property name="resources_1_20" value="resources/pictures_1/6_Ro.png"/>
+  <property name="jar_resources_1_20" value="build/jar/resources/pictures_1/6_Ro.png"/>
+
+  <property name="resources_1_21" value="resources/pictures_1/6_Co.png"/>
+  <property name="jar_resources_1_21" value="build/jar/resources/pictures_1/6_Co.png"/>
+
+  <property name="resources_1_22" value="resources/pictures_1/7_Bich.png"/>
+  <property name="jar_resources_1_22" value="build/jar/resources/pictures_1/7_Bich.png"/>
+
+  <property name="resources_1_23" value="resources/pictures_1/7_Chuon.png"/>
+  <property name="jar_resources_1_23" value="build/jar/resources/pictures_1/7_Chuon.png"/>
+
+  <property name="resources_1_24" value="resources/pictures_1/7_Ro.png"/>
+  <property name="jar_resources_1_24" value="build/jar/resources/pictures_1/7_Ro.png"/>
+
+  <property name="resources_1_25" value="resources/pictures_1/7_Co.png"/>
+  <property name="jar_resources_1_25" value="build/jar/resources/pictures_1/7_Co.png"/>
+
+  <property name="resources_1_26" value="resources/pictures_1/8_Bich.png"/>
+  <property name="jar_resources_1_26" value="build/jar/resources/pictures_1/8_Bich.png"/>
+
+  <property name="resources_1_27" value="resources/pictures_1/8_Chuon.png"/>
+  <property name="jar_resources_1_27" value="build/jar/resources/pictures_1/8_Chuon.png"/>
+
+  <property name="resources_1_28" value="resources/pictures_1/8_Ro.png"/>
+  <property name="jar_resources_1_28" value="build/jar/resources/pictures_1/8_Ro.png"/>
+
+  <property name="resources_1_29" value="resources/pictures_1/8_Co.png"/>
+  <property name="jar_resources_1_29" value="build/jar/resources/pictures_1/8_Co.png"/>
+
+  <property name="resources_1_30" value="resources/pictures_1/9_Bich.png"/>
+  <property name="jar_resources_1_30" value="build/jar/resources/pictures_1/9_Bich.png"/>
+
+  <property name="resources_1_31" value="resources/pictures_1/9_Chuon.png"/>
+  <property name="jar_resources_1_31" value="build/jar/resources/pictures_1/9_Chuon.png"/>
+
+  <property name="resources_1_32" value="resources/pictures_1/9_Ro.png"/>
+  <property name="jar_resources_1_32" value="build/jar/resources/pictures_1/9_Ro.png"/>
+
+  <property name="resources_1_33" value="resources/pictures_1/9_Co.png"/>
+  <property name="jar_resources_1_33" value="build/jar/resources/pictures_1/9_Co.png"/>
+
+  <property name="resources_1_34" value="resources/pictures_1/10_Bich.png"/>
+  <property name="jar_resources_1_34" value="build/jar/resources/pictures_1/10_Bich.png"/>
+
+  <property name="resources_1_35" value="resources/pictures_1/10_Chuon.png"/>
+  <property name="jar_resources_1_35" value="build/jar/resources/pictures_1/10_Chuon.png"/>
+
+  <property name="resources_1_36" value="resources/pictures_1/10_Ro.png"/>
+  <property name="jar_resources_1_36" value="build/jar/resources/pictures_1/10_Ro.png"/>
+
+  <property name="resources_1_37" value="resources/pictures_1/10_Co.png"/>
+  <property name="jar_resources_1_37" value="build/jar/resources/pictures_1/10_Co.png"/>
+
+  <property name="resources_1_38" value="resources/pictures_1/11_Bich.png"/>
+  <property name="jar_resources_1_38" value="build/jar/resources/pictures_1/11_Bich.png"/>
+
+  <property name="resources_1_39" value="resources/pictures_1/11_Chuon.png"/>
+  <property name="jar_resources_1_39" value="build/jar/resources/pictures_1/11_Chuon.png"/>
+
+  <property name="resources_1_40" value="resources/pictures_1/11_Ro.png"/>
+  <property name="jar_resources_1_40" value="build/jar/resources/pictures_1/11_Ro.png"/>
+
+  <property name="resources_1_41" value="resources/pictures_1/11_Co.png"/>
+  <property name="jar_resources_1_41" value="build/jar/resources/pictures_1/11_Co.png"/>
+
+  <property name="resources_1_42" value="resources/pictures_1/12_Bich.png"/>
+  <property name="jar_resources_1_42" value="build/jar/resources/pictures_1/12_Bich.png"/>
+
+  <property name="resources_1_43" value="resources/pictures_1/12_Chuon.png"/>
+  <property name="jar_resources_1_43" value="build/jar/resources/pictures_1/12_Chuon.png"/>
+
+  <property name="resources_1_44" value="resources/pictures_1/12_Ro.png"/>
+  <property name="jar_resources_1_44" value="build/jar/resources/pictures_1/12_Ro.png"/>
+
+  <property name="resources_1_45" value="resources/pictures_1/12_Co.png"/>
+  <property name="jar_resources_1_45" value="build/jar/resources/pictures_1/12_Co.png"/>
+
+  <property name="resources_1_46" value="resources/pictures_1/13_Bich.png"/>
+  <property name="jar_resources_1_46" value="build/jar/resources/pictures_1/13_Bich.png"/>
+
+  <property name="resources_1_47" value="resources/pictures_1/13_Chuon.png"/>
+  <property name="jar_resources_1_47" value="build/jar/resources/pictures_1/13_Chuon.png"/>
+
+  <property name="resources_1_48" value="resources/pictures_1/13_Ro.png"/>
+  <property name="jar_resources_1_48" value="build/jar/resources/pictures_1/13_Ro.png"/>
+
+  <property name="resources_1_49" value="resources/pictures_1/13_Co.png"/>
+  <property name="jar_resources_1_49" value="build/jar/resources/pictures_1/13_Co.png"/>
+
+  <property name="resources_1_50" value="resources/pictures_1/14_Bich.png"/>
+  <property name="jar_resources_1_50" value="build/jar/resources/pictures_1/14_Bich.png"/>
+
+  <property name="resources_1_51" value="resources/pictures_1/14_Chuon.png"/>
+  <property name="jar_resources_1_51" value="build/jar/resources/pictures_1/14_Chuon.png"/>
+
+  <property name="resources_1_52" value="resources/pictures_1/14_Ro.png"/>
+  <property name="jar_resources_1_52" value="build/jar/resources/pictures_1/14_Ro.png"/>
+
+  <property name="resources_1_53" value="resources/pictures_1/14_Co.png"/>
+  <property name="jar_resources_1_53" value="build/jar/resources/pictures_1/14_Co.png"/>
+
+  <!-- Bo bai thu 2-->
+  <property name="resources_2_2" value="resources/pictures_2/2_Bich.png"/>
+  <property name="jar_resources_2_2" value="build/jar/resources/pictures_2/2_Bich.png"/>
+
+  <property name="resources_2_3" value="resources/pictures_2/2_Chuon.png"/>
+  <property name="jar_resources_2_3" value="build/jar/resources/pictures_2/2_Chuon.png"/>
+
+  <property name="resources_2_4" value="resources/pictures_2/2_Ro.png"/>
+  <property name="jar_resources_2_4" value="build/jar/resources/pictures_2/2_Ro.png"/>
+
+  <property name="resources_2_5" value="resources/pictures_2/2_Co.png"/>
+  <property name="jar_resources_2_5" value="build/jar/resources/pictures_2/2_Co.png"/>
+
+  <property name="resources_2_6" value="resources/pictures_2/3_Bich.png"/>
+  <property name="jar_resources_2_6" value="build/jar/resources/pictures_2/3_Bich.png"/>
+
+  <property name="resources_2_7" value="resources/pictures_2/3_Chuon.png"/>
+  <property name="jar_resources_2_7" value="build/jar/resources/pictures_2/3_Chuon.png"/>
+
+  <property name="resources_2_8" value="resources/pictures_2/3_Ro.png"/>
+  <property name="jar_resources_2_8" value="build/jar/resources/pictures_2/3_Ro.png"/>
+
+  <property name="resources_2_9" value="resources/pictures_2/3_Co.png"/>
+  <property name="jar_resources_2_9" value="build/jar/resources/pictures_2/3_Co.png"/>
+
+  <property name="resources_2_10" value="resources/pictures_2/4_Bich.png"/>
+  <property name="jar_resources_2_10" value="build/jar/resources/pictures_2/4_Bich.png"/>
+
+  <property name="resources_2_11" value="resources/pictures_2/4_Chuon.png"/>
+  <property name="jar_resources_2_11" value="build/jar/resources/pictures_2/4_Chuon.png"/>
+
+  <property name="resources_2_12" value="resources/pictures_2/4_Ro.png"/>
+  <property name="jar_resources_2_12" value="build/jar/resources/pictures_2/4_Ro.png"/>
+
+  <property name="resources_2_13" value="resources/pictures_2/4_Co.png"/>
+  <property name="jar_resources_2_13" value="build/jar/resources/pictures_2/4_Co.png"/>
+
+  <property name="resources_2_14" value="resources/pictures_2/5_Bich.png"/>
+  <property name="jar_resources_2_14" value="build/jar/resources/pictures_2/5_Bich.png"/>
+
+  <property name="resources_2_15" value="resources/pictures_2/5_Chuon.png"/>
+  <property name="jar_resources_2_15" value="build/jar/resources/pictures_2/5_Chuon.png"/>
+
+  <property name="resources_2_16" value="resources/pictures_2/5_Ro.png"/>
+  <property name="jar_resources_2_16" value="build/jar/resources/pictures_2/5_Ro.png"/>
+
+  <property name="resources_2_17" value="resources/pictures_2/5_Co.png"/>
+  <property name="jar_resources_2_17" value="build/jar/resources/pictures_2/5_Co.png"/>
+
+  <property name="resources_2_18" value="resources/pictures_2/6_Bich.png"/>
+  <property name="jar_resources_2_18" value="build/jar/resources/pictures_2/6_Bich.png"/>
+
+  <property name="resources_2_19" value="resources/pictures_2/6_Chuon.png"/>
+  <property name="jar_resources_2_19" value="build/jar/resources/pictures_2/6_Chuon.png"/>
+
+  <property name="resources_2_20" value="resources/pictures_2/6_Ro.png"/>
+  <property name="jar_resources_2_20" value="build/jar/resources/pictures_2/6_Ro.png"/>
+
+  <property name="resources_2_21" value="resources/pictures_2/6_Co.png"/>
+  <property name="jar_resources_2_21" value="build/jar/resources/pictures_2/6_Co.png"/>
+
+  <property name="resources_2_22" value="resources/pictures_2/7_Bich.png"/>
+  <property name="jar_resources_2_22" value="build/jar/resources/pictures_2/7_Bich.png"/>
+
+  <property name="resources_2_23" value="resources/pictures_2/7_Chuon.png"/>
+  <property name="jar_resources_2_23" value="build/jar/resources/pictures_2/7_Chuon.png"/>
+
+  <property name="resources_2_24" value="resources/pictures_2/7_Ro.png"/>
+  <property name="jar_resources_2_24" value="build/jar/resources/pictures_2/7_Ro.png"/>
+
+  <property name="resources_2_25" value="resources/pictures_2/7_Co.png"/>
+  <property name="jar_resources_2_25" value="build/jar/resources/pictures_2/7_Co.png"/>
+
+  <property name="resources_2_26" value="resources/pictures_2/8_Bich.png"/>
+  <property name="jar_resources_2_26" value="build/jar/resources/pictures_2/8_Bich.png"/>
+
+  <property name="resources_2_27" value="resources/pictures_2/8_Chuon.png"/>
+  <property name="jar_resources_2_27" value="build/jar/resources/pictures_2/8_Chuon.png"/>
+
+  <property name="resources_2_28" value="resources/pictures_2/8_Ro.png"/>
+  <property name="jar_resources_2_28" value="build/jar/resources/pictures_2/8_Ro.png"/>
+
+  <property name="resources_2_29" value="resources/pictures_2/8_Co.png"/>
+  <property name="jar_resources_2_29" value="build/jar/resources/pictures_2/8_Co.png"/>
+
+  <property name="resources_2_30" value="resources/pictures_2/9_Bich.png"/>
+  <property name="jar_resources_2_30" value="build/jar/resources/pictures_2/9_Bich.png"/>
+
+  <property name="resources_2_31" value="resources/pictures_2/9_Chuon.png"/>
+  <property name="jar_resources_2_31" value="build/jar/resources/pictures_2/9_Chuon.png"/>
+
+  <property name="resources_2_32" value="resources/pictures_2/9_Ro.png"/>
+  <property name="jar_resources_2_32" value="build/jar/resources/pictures_2/9_Ro.png"/>
+
+  <property name="resources_2_33" value="resources/pictures_2/9_Co.png"/>
+  <property name="jar_resources_2_33" value="build/jar/resources/pictures_2/9_Co.png"/>
+
+  <property name="resources_2_34" value="resources/pictures_2/10_Bich.png"/>
+  <property name="jar_resources_2_34" value="build/jar/resources/pictures_2/10_Bich.png"/>
+
+  <property name="resources_2_35" value="resources/pictures_2/10_Chuon.png"/>
+  <property name="jar_resources_2_35" value="build/jar/resources/pictures_2/10_Chuon.png"/>
+
+  <property name="resources_2_36" value="resources/pictures_2/10_Ro.png"/>
+  <property name="jar_resources_2_36" value="build/jar/resources/pictures_2/10_Ro.png"/>
+
+  <property name="resources_2_37" value="resources/pictures_2/10_Co.png"/>
+  <property name="jar_resources_2_37" value="build/jar/resources/pictures_2/10_Co.png"/>
+
+  <property name="resources_2_38" value="resources/pictures_2/11_Bich.png"/>
+  <property name="jar_resources_2_38" value="build/jar/resources/pictures_2/11_Bich.png"/>
+
+  <property name="resources_2_39" value="resources/pictures_2/11_Chuon.png"/>
+  <property name="jar_resources_2_39" value="build/jar/resources/pictures_2/11_Chuon.png"/>
+
+  <property name="resources_2_40" value="resources/pictures_2/11_Ro.png"/>
+  <property name="jar_resources_2_40" value="build/jar/resources/pictures_2/11_Ro.png"/>
+
+  <property name="resources_2_41" value="resources/pictures_2/11_Co.png"/>
+  <property name="jar_resources_2_41" value="build/jar/resources/pictures_2/11_Co.png"/>
+
+  <property name="resources_2_42" value="resources/pictures_2/12_Bich.png"/>
+  <property name="jar_resources_2_42" value="build/jar/resources/pictures_2/12_Bich.png"/>
+
+  <property name="resources_2_43" value="resources/pictures_2/12_Chuon.png"/>
+  <property name="jar_resources_2_43" value="build/jar/resources/pictures_2/12_Chuon.png"/>
+
+  <property name="resources_2_44" value="resources/pictures_2/12_Ro.png"/>
+  <property name="jar_resources_2_44" value="build/jar/resources/pictures_2/12_Ro.png"/>
+
+  <property name="resources_2_45" value="resources/pictures_2/12_Co.png"/>
+  <property name="jar_resources_2_45" value="build/jar/resources/pictures_2/12_Co.png"/>
+
+  <property name="resources_2_46" value="resources/pictures_2/13_Bich.png"/>
+  <property name="jar_resources_2_46" value="build/jar/resources/pictures_2/13_Bich.png"/>
+
+  <property name="resources_2_47" value="resources/pictures_2/13_Chuon.png"/>
+  <property name="jar_resources_2_47" value="build/jar/resources/pictures_2/13_Chuon.png"/>
+
+  <property name="resources_2_48" value="resources/pictures_2/13_Ro.png"/>
+  <property name="jar_resources_2_48" value="build/jar/resources/pictures_2/13_Ro.png"/>
+
+  <property name="resources_2_49" value="resources/pictures_2/13_Co.png"/>
+  <property name="jar_resources_2_49" value="build/jar/resources/pictures_2/13_Co.png"/>
+
+  <property name="resources_2_50" value="resources/pictures_2/14_Bich.png"/>
+  <property name="jar_resources_2_50" value="build/jar/resources/pictures_2/14_Bich.png"/>
+
+  <property name="resources_2_51" value="resources/pictures_2/14_Chuon.png"/>
+  <property name="jar_resources_2_51" value="build/jar/resources/pictures_2/14_Chuon.png"/>
+
+  <property name="resources_2_52" value="resources/pictures_2/14_Ro.png"/>
+  <property name="jar_resources_2_52" value="build/jar/resources/pictures_2/14_Ro.png"/>
+
+  <property name="resources_2_53" value="resources/pictures_2/14_Co.png"/>
+  <property name="jar_resources_2_53" value="build/jar/resources/pictures_2/14_Co.png"/>
+
+  <!-- Bo bai thu 3-->
+  <property name="resources_3_2" value="resources/pictures_3/2_Bich.png"/>
+  <property name="jar_resources_3_2" value="build/jar/resources/pictures_3/2_Bich.png"/>
+
+  <property name="resources_3_3" value="resources/pictures_3/2_Chuon.png"/>
+  <property name="jar_resources_3_3" value="build/jar/resources/pictures_3/2_Chuon.png"/>
+
+  <property name="resources_3_4" value="resources/pictures_3/2_Ro.png"/>
+  <property name="jar_resources_3_4" value="build/jar/resources/pictures_3/2_Ro.png"/>
+
+  <property name="resources_3_5" value="resources/pictures_3/2_Co.png"/>
+  <property name="jar_resources_3_5" value="build/jar/resources/pictures_3/2_Co.png"/>
+
+  <property name="resources_3_6" value="resources/pictures_3/3_Bich.png"/>
+  <property name="jar_resources_3_6" value="build/jar/resources/pictures_3/3_Bich.png"/>
+
+  <property name="resources_3_7" value="resources/pictures_3/3_Chuon.png"/>
+  <property name="jar_resources_3_7" value="build/jar/resources/pictures_3/3_Chuon.png"/>
+
+  <property name="resources_3_8" value="resources/pictures_3/3_Ro.png"/>
+  <property name="jar_resources_3_8" value="build/jar/resources/pictures_3/3_Ro.png"/>
+
+  <property name="resources_3_9" value="resources/pictures_3/3_Co.png"/>
+  <property name="jar_resources_3_9" value="build/jar/resources/pictures_3/3_Co.png"/>
+
+  <property name="resources_3_10" value="resources/pictures_3/4_Bich.png"/>
+  <property name="jar_resources_3_10" value="build/jar/resources/pictures_3/4_Bich.png"/>
+
+  <property name="resources_3_11" value="resources/pictures_3/4_Chuon.png"/>
+  <property name="jar_resources_3_11" value="build/jar/resources/pictures_3/4_Chuon.png"/>
+
+  <property name="resources_3_12" value="resources/pictures_3/4_Ro.png"/>
+  <property name="jar_resources_3_12" value="build/jar/resources/pictures_3/4_Ro.png"/>
+
+  <property name="resources_3_13" value="resources/pictures_3/4_Co.png"/>
+  <property name="jar_resources_3_13" value="build/jar/resources/pictures_3/4_Co.png"/>
+
+  <property name="resources_3_14" value="resources/pictures_3/5_Bich.png"/>
+  <property name="jar_resources_3_14" value="build/jar/resources/pictures_3/5_Bich.png"/>
+
+  <property name="resources_3_15" value="resources/pictures_3/5_Chuon.png"/>
+  <property name="jar_resources_3_15" value="build/jar/resources/pictures_3/5_Chuon.png"/>
+
+  <property name="resources_3_16" value="resources/pictures_3/5_Ro.png"/>
+  <property name="jar_resources_3_16" value="build/jar/resources/pictures_3/5_Ro.png"/>
+
+  <property name="resources_3_17" value="resources/pictures_3/5_Co.png"/>
+  <property name="jar_resources_3_17" value="build/jar/resources/pictures_3/5_Co.png"/>
+
+  <property name="resources_3_18" value="resources/pictures_3/6_Bich.png"/>
+  <property name="jar_resources_3_18" value="build/jar/resources/pictures_3/6_Bich.png"/>
+
+  <property name="resources_3_19" value="resources/pictures_3/6_Chuon.png"/>
+  <property name="jar_resources_3_19" value="build/jar/resources/pictures_3/6_Chuon.png"/>
+
+  <property name="resources_3_20" value="resources/pictures_3/6_Ro.png"/>
+  <property name="jar_resources_3_20" value="build/jar/resources/pictures_3/6_Ro.png"/>
+
+  <property name="resources_3_21" value="resources/pictures_3/6_Co.png"/>
+  <property name="jar_resources_3_21" value="build/jar/resources/pictures_3/6_Co.png"/>
+
+  <property name="resources_3_22" value="resources/pictures_3/7_Bich.png"/>
+  <property name="jar_resources_3_22" value="build/jar/resources/pictures_3/7_Bich.png"/>
+
+  <property name="resources_3_23" value="resources/pictures_3/7_Chuon.png"/>
+  <property name="jar_resources_3_23" value="build/jar/resources/pictures_3/7_Chuon.png"/>
+
+  <property name="resources_3_24" value="resources/pictures_3/7_Ro.png"/>
+  <property name="jar_resources_3_24" value="build/jar/resources/pictures_3/7_Ro.png"/>
+
+  <property name="resources_3_25" value="resources/pictures_3/7_Co.png"/>
+  <property name="jar_resources_3_25" value="build/jar/resources/pictures_3/7_Co.png"/>
+
+  <property name="resources_3_26" value="resources/pictures_3/8_Bich.png"/>
+  <property name="jar_resources_3_26" value="build/jar/resources/pictures_3/8_Bich.png"/>
+
+  <property name="resources_3_27" value="resources/pictures_3/8_Chuon.png"/>
+  <property name="jar_resources_3_27" value="build/jar/resources/pictures_3/8_Chuon.png"/>
+
+  <property name="resources_3_28" value="resources/pictures_3/8_Ro.png"/>
+  <property name="jar_resources_3_28" value="build/jar/resources/pictures_3/8_Ro.png"/>
+
+  <property name="resources_3_29" value="resources/pictures_3/8_Co.png"/>
+  <property name="jar_resources_3_29" value="build/jar/resources/pictures_3/8_Co.png"/>
+
+  <property name="resources_3_30" value="resources/pictures_3/9_Bich.png"/>
+  <property name="jar_resources_3_30" value="build/jar/resources/pictures_3/9_Bich.png"/>
+
+  <property name="resources_3_31" value="resources/pictures_3/9_Chuon.png"/>
+  <property name="jar_resources_3_31" value="build/jar/resources/pictures_3/9_Chuon.png"/>
+
+  <property name="resources_3_32" value="resources/pictures_3/9_Ro.png"/>
+  <property name="jar_resources_3_32" value="build/jar/resources/pictures_3/9_Ro.png"/>
+
+  <property name="resources_3_33" value="resources/pictures_3/9_Co.png"/>
+  <property name="jar_resources_3_33" value="build/jar/resources/pictures_3/9_Co.png"/>
+
+  <property name="resources_3_34" value="resources/pictures_3/10_Bich.png"/>
+  <property name="jar_resources_3_34" value="build/jar/resources/pictures_3/10_Bich.png"/>
+
+  <property name="resources_3_35" value="resources/pictures_3/10_Chuon.png"/>
+  <property name="jar_resources_3_35" value="build/jar/resources/pictures_3/10_Chuon.png"/>
+
+  <property name="resources_3_36" value="resources/pictures_3/10_Ro.png"/>
+  <property name="jar_resources_3_36" value="build/jar/resources/pictures_3/10_Ro.png"/>
+
+  <property name="resources_3_37" value="resources/pictures_3/10_Co.png"/>
+  <property name="jar_resources_3_37" value="build/jar/resources/pictures_3/10_Co.png"/>
+
+  <property name="resources_3_38" value="resources/pictures_3/11_Bich.png"/>
+  <property name="jar_resources_3_38" value="build/jar/resources/pictures_3/11_Bich.png"/>
+
+  <property name="resources_3_39" value="resources/pictures_3/11_Chuon.png"/>
+  <property name="jar_resources_3_39" value="build/jar/resources/pictures_3/11_Chuon.png"/>
+
+  <property name="resources_3_40" value="resources/pictures_3/11_Ro.png"/>
+  <property name="jar_resources_3_40" value="build/jar/resources/pictures_3/11_Ro.png"/>
+
+  <property name="resources_3_41" value="resources/pictures_3/11_Co.png"/>
+  <property name="jar_resources_3_41" value="build/jar/resources/pictures_3/11_Co.png"/>
+
+  <property name="resources_3_42" value="resources/pictures_3/12_Bich.png"/>
+  <property name="jar_resources_3_42" value="build/jar/resources/pictures_3/12_Bich.png"/>
+
+  <property name="resources_3_43" value="resources/pictures_3/12_Chuon.png"/>
+  <property name="jar_resources_3_43" value="build/jar/resources/pictures_3/12_Chuon.png"/>
+
+  <property name="resources_3_44" value="resources/pictures_3/12_Ro.png"/>
+  <property name="jar_resources_3_44" value="build/jar/resources/pictures_3/12_Ro.png"/>
+
+  <property name="resources_3_45" value="resources/pictures_3/12_Co.png"/>
+  <property name="jar_resources_3_45" value="build/jar/resources/pictures_3/12_Co.png"/>
+
+  <property name="resources_3_46" value="resources/pictures_3/13_Bich.png"/>
+  <property name="jar_resources_3_46" value="build/jar/resources/pictures_3/13_Bich.png"/>
+
+  <property name="resources_3_47" value="resources/pictures_3/13_Chuon.png"/>
+  <property name="jar_resources_3_47" value="build/jar/resources/pictures_3/13_Chuon.png"/>
+
+  <property name="resources_3_48" value="resources/pictures_3/13_Ro.png"/>
+  <property name="jar_resources_3_48" value="build/jar/resources/pictures_3/13_Ro.png"/>
+
+  <property name="resources_3_49" value="resources/pictures_3/13_Co.png"/>
+  <property name="jar_resources_3_49" value="build/jar/resources/pictures_3/13_Co.png"/>
+
+  <property name="resources_3_50" value="resources/pictures_3/14_Bich.png"/>
+  <property name="jar_resources_3_50" value="build/jar/resources/pictures_3/14_Bich.png"/>
+
+  <property name="resources_3_51" value="resources/pictures_3/14_Chuon.png"/>
+  <property name="jar_resources_3_51" value="build/jar/resources/pictures_3/14_Chuon.png"/>
+
+  <property name="resources_3_52" value="resources/pictures_3/14_Ro.png"/>
+  <property name="jar_resources_3_52" value="build/jar/resources/pictures_3/14_Ro.png"/>
+
+  <property name="resources_3_53" value="resources/pictures_3/14_Co.png"/>
+  <property name="jar_resources_3_53" value="build/jar/resources/pictures_3/14_Co.png"/>
+
+  <!-- Bo bai thu 4-->
+  <property name="resources_4_2" value="resources/pictures_4/2_Bich.png"/>
+  <property name="jar_resources_4_2" value="build/jar/resources/pictures_4/2_Bich.png"/>
+
+  <property name="resources_4_3" value="resources/pictures_4/2_Chuon.png"/>
+  <property name="jar_resources_4_3" value="build/jar/resources/pictures_4/2_Chuon.png"/>
+
+  <property name="resources_4_4" value="resources/pictures_4/2_Ro.png"/>
+  <property name="jar_resources_4_4" value="build/jar/resources/pictures_4/2_Ro.png"/>
+
+  <property name="resources_4_5" value="resources/pictures_4/2_Co.png"/>
+  <property name="jar_resources_4_5" value="build/jar/resources/pictures_4/2_Co.png"/>
+
+  <property name="resources_4_6" value="resources/pictures_4/3_Bich.png"/>
+  <property name="jar_resources_4_6" value="build/jar/resources/pictures_4/3_Bich.png"/>
+
+  <property name="resources_4_7" value="resources/pictures_4/3_Chuon.png"/>
+  <property name="jar_resources_4_7" value="build/jar/resources/pictures_4/3_Chuon.png"/>
+
+  <property name="resources_4_8" value="resources/pictures_4/3_Ro.png"/>
+  <property name="jar_resources_4_8" value="build/jar/resources/pictures_4/3_Ro.png"/>
+
+  <property name="resources_4_9" value="resources/pictures_4/3_Co.png"/>
+  <property name="jar_resources_4_9" value="build/jar/resources/pictures_4/3_Co.png"/>
+
+  <property name="resources_4_10" value="resources/pictures_4/4_Bich.png"/>
+  <property name="jar_resources_4_10" value="build/jar/resources/pictures_4/4_Bich.png"/>
+
+  <property name="resources_4_11" value="resources/pictures_4/4_Chuon.png"/>
+  <property name="jar_resources_4_11" value="build/jar/resources/pictures_4/4_Chuon.png"/>
+
+  <property name="resources_4_12" value="resources/pictures_4/4_Ro.png"/>
+  <property name="jar_resources_4_12" value="build/jar/resources/pictures_4/4_Ro.png"/>
+
+  <property name="resources_4_13" value="resources/pictures_4/4_Co.png"/>
+  <property name="jar_resources_4_13" value="build/jar/resources/pictures_4/4_Co.png"/>
+
+  <property name="resources_4_14" value="resources/pictures_4/5_Bich.png"/>
+  <property name="jar_resources_4_14" value="build/jar/resources/pictures_4/5_Bich.png"/>
+
+  <property name="resources_4_15" value="resources/pictures_4/5_Chuon.png"/>
+  <property name="jar_resources_4_15" value="build/jar/resources/pictures_4/5_Chuon.png"/>
+
+  <property name="resources_4_16" value="resources/pictures_4/5_Ro.png"/>
+  <property name="jar_resources_4_16" value="build/jar/resources/pictures_4/5_Ro.png"/>
+
+  <property name="resources_4_17" value="resources/pictures_4/5_Co.png"/>
+  <property name="jar_resources_4_17" value="build/jar/resources/pictures_4/5_Co.png"/>
+
+  <property name="resources_4_18" value="resources/pictures_4/6_Bich.png"/>
+  <property name="jar_resources_4_18" value="build/jar/resources/pictures_4/6_Bich.png"/>
+
+  <property name="resources_4_19" value="resources/pictures_4/6_Chuon.png"/>
+  <property name="jar_resources_4_19" value="build/jar/resources/pictures_4/6_Chuon.png"/>
+
+  <property name="resources_4_20" value="resources/pictures_4/6_Ro.png"/>
+  <property name="jar_resources_4_20" value="build/jar/resources/pictures_4/6_Ro.png"/>
+
+  <property name="resources_4_21" value="resources/pictures_4/6_Co.png"/>
+  <property name="jar_resources_4_21" value="build/jar/resources/pictures_4/6_Co.png"/>
+
+  <property name="resources_4_22" value="resources/pictures_4/7_Bich.png"/>
+  <property name="jar_resources_4_22" value="build/jar/resources/pictures_4/7_Bich.png"/>
+
+  <property name="resources_4_23" value="resources/pictures_4/7_Chuon.png"/>
+  <property name="jar_resources_4_23" value="build/jar/resources/pictures_4/7_Chuon.png"/>
+
+  <property name="resources_4_24" value="resources/pictures_4/7_Ro.png"/>
+  <property name="jar_resources_4_24" value="build/jar/resources/pictures_4/7_Ro.png"/>
+
+  <property name="resources_4_25" value="resources/pictures_4/7_Co.png"/>
+  <property name="jar_resources_4_25" value="build/jar/resources/pictures_4/7_Co.png"/>
+
+  <property name="resources_4_26" value="resources/pictures_4/8_Bich.png"/>
+  <property name="jar_resources_4_26" value="build/jar/resources/pictures_4/8_Bich.png"/>
+
+  <property name="resources_4_27" value="resources/pictures_4/8_Chuon.png"/>
+  <property name="jar_resources_4_27" value="build/jar/resources/pictures_4/8_Chuon.png"/>
+
+  <property name="resources_4_28" value="resources/pictures_4/8_Ro.png"/>
+  <property name="jar_resources_4_28" value="build/jar/resources/pictures_4/8_Ro.png"/>
+
+  <property name="resources_4_29" value="resources/pictures_4/8_Co.png"/>
+  <property name="jar_resources_4_29" value="build/jar/resources/pictures_4/8_Co.png"/>
+
+  <property name="resources_4_30" value="resources/pictures_4/9_Bich.png"/>
+  <property name="jar_resources_4_30" value="build/jar/resources/pictures_4/9_Bich.png"/>
+
+  <property name="resources_4_31" value="resources/pictures_4/9_Chuon.png"/>
+  <property name="jar_resources_4_31" value="build/jar/resources/pictures_4/9_Chuon.png"/>
+
+  <property name="resources_4_32" value="resources/pictures_4/9_Ro.png"/>
+  <property name="jar_resources_4_32" value="build/jar/resources/pictures_4/9_Ro.png"/>
+
+  <property name="resources_4_33" value="resources/pictures_4/9_Co.png"/>
+  <property name="jar_resources_4_33" value="build/jar/resources/pictures_4/9_Co.png"/>
+
+  <property name="resources_4_34" value="resources/pictures_4/10_Bich.png"/>
+  <property name="jar_resources_4_34" value="build/jar/resources/pictures_4/10_Bich.png"/>
+
+  <property name="resources_4_35" value="resources/pictures_4/10_Chuon.png"/>
+  <property name="jar_resources_4_35" value="build/jar/resources/pictures_4/10_Chuon.png"/>
+
+  <property name="resources_4_36" value="resources/pictures_4/10_Ro.png"/>
+  <property name="jar_resources_4_36" value="build/jar/resources/pictures_4/10_Ro.png"/>
+
+  <property name="resources_4_37" value="resources/pictures_4/10_Co.png"/>
+  <property name="jar_resources_4_37" value="build/jar/resources/pictures_4/10_Co.png"/>
+
+  <property name="resources_4_38" value="resources/pictures_4/11_Bich.png"/>
+  <property name="jar_resources_4_38" value="build/jar/resources/pictures_4/11_Bich.png"/>
+
+  <property name="resources_4_39" value="resources/pictures_4/11_Chuon.png"/>
+  <property name="jar_resources_4_39" value="build/jar/resources/pictures_4/11_Chuon.png"/>
+
+  <property name="resources_4_40" value="resources/pictures_4/11_Ro.png"/>
+  <property name="jar_resources_4_40" value="build/jar/resources/pictures_4/11_Ro.png"/>
+
+  <property name="resources_4_41" value="resources/pictures_4/11_Co.png"/>
+  <property name="jar_resources_4_41" value="build/jar/resources/pictures_4/11_Co.png"/>
+
+  <property name="resources_4_42" value="resources/pictures_4/12_Bich.png"/>
+  <property name="jar_resources_4_42" value="build/jar/resources/pictures_4/12_Bich.png"/>
+
+  <property name="resources_4_43" value="resources/pictures_4/12_Chuon.png"/>
+  <property name="jar_resources_4_43" value="build/jar/resources/pictures_4/12_Chuon.png"/>
+
+  <property name="resources_4_44" value="resources/pictures_4/12_Ro.png"/>
+  <property name="jar_resources_4_44" value="build/jar/resources/pictures_4/12_Ro.png"/>
+
+  <property name="resources_4_45" value="resources/pictures_4/12_Co.png"/>
+  <property name="jar_resources_4_45" value="build/jar/resources/pictures_4/12_Co.png"/>
+
+  <property name="resources_4_46" value="resources/pictures_4/13_Bich.png"/>
+  <property name="jar_resources_4_46" value="build/jar/resources/pictures_4/13_Bich.png"/>
+
+  <property name="resources_4_47" value="resources/pictures_4/13_Chuon.png"/>
+  <property name="jar_resources_4_47" value="build/jar/resources/pictures_4/13_Chuon.png"/>
+
+  <property name="resources_4_48" value="resources/pictures_4/13_Ro.png"/>
+  <property name="jar_resources_4_48" value="build/jar/resources/pictures_4/13_Ro.png"/>
+
+  <property name="resources_4_49" value="resources/pictures_4/13_Co.png"/>
+  <property name="jar_resources_4_49" value="build/jar/resources/pictures_4/13_Co.png"/>
+
+  <property name="resources_4_50" value="resources/pictures_4/14_Bich.png"/>
+  <property name="jar_resources_4_50" value="build/jar/resources/pictures_4/14_Bich.png"/>
+
+  <property name="resources_4_51" value="resources/pictures_4/14_Chuon.png"/>
+  <property name="jar_resources_4_51" value="build/jar/resources/pictures_4/14_Chuon.png"/>
+
+  <property name="resources_4_52" value="resources/pictures_4/14_Ro.png"/>
+  <property name="jar_resources_4_52" value="build/jar/resources/pictures_4/14_Ro.png"/>
+
+  <property name="resources_4_53" value="resources/pictures_4/14_Co.png"/>
+  <property name="jar_resources_4_53" value="build/jar/resources/pictures_4/14_Co.png"/>
+
+  <!-- Bo bai thu 5-->
+  <property name="resources_5_2" value="resources/pictures_5/2_Bich.png"/>
+  <property name="jar_resources_5_2" value="build/jar/resources/pictures_5/2_Bich.png"/>
+
+  <property name="resources_5_3" value="resources/pictures_5/2_Chuon.png"/>
+  <property name="jar_resources_5_3" value="build/jar/resources/pictures_5/2_Chuon.png"/>
+
+  <property name="resources_5_4" value="resources/pictures_5/2_Ro.png"/>
+  <property name="jar_resources_5_4" value="build/jar/resources/pictures_5/2_Ro.png"/>
+
+  <property name="resources_5_5" value="resources/pictures_5/2_Co.png"/>
+  <property name="jar_resources_5_5" value="build/jar/resources/pictures_5/2_Co.png"/>
+
+  <property name="resources_5_6" value="resources/pictures_5/3_Bich.png"/>
+  <property name="jar_resources_5_6" value="build/jar/resources/pictures_5/3_Bich.png"/>
+
+  <property name="resources_5_7" value="resources/pictures_5/3_Chuon.png"/>
+  <property name="jar_resources_5_7" value="build/jar/resources/pictures_5/3_Chuon.png"/>
+
+  <property name="resources_5_8" value="resources/pictures_5/3_Ro.png"/>
+  <property name="jar_resources_5_8" value="build/jar/resources/pictures_5/3_Ro.png"/>
+
+  <property name="resources_5_9" value="resources/pictures_5/3_Co.png"/>
+  <property name="jar_resources_5_9" value="build/jar/resources/pictures_5/3_Co.png"/>
+
+  <property name="resources_5_10" value="resources/pictures_5/4_Bich.png"/>
+  <property name="jar_resources_5_10" value="build/jar/resources/pictures_5/4_Bich.png"/>
+
+  <property name="resources_5_11" value="resources/pictures_5/4_Chuon.png"/>
+  <property name="jar_resources_5_11" value="build/jar/resources/pictures_5/4_Chuon.png"/>
+
+  <property name="resources_5_12" value="resources/pictures_5/4_Ro.png"/>
+  <property name="jar_resources_5_12" value="build/jar/resources/pictures_5/4_Ro.png"/>
+
+  <property name="resources_5_13" value="resources/pictures_5/4_Co.png"/>
+  <property name="jar_resources_5_13" value="build/jar/resources/pictures_5/4_Co.png"/>
+
+  <property name="resources_5_14" value="resources/pictures_5/5_Bich.png"/>
+  <property name="jar_resources_5_14" value="build/jar/resources/pictures_5/5_Bich.png"/>
+
+  <property name="resources_5_15" value="resources/pictures_5/5_Chuon.png"/>
+  <property name="jar_resources_5_15" value="build/jar/resources/pictures_5/5_Chuon.png"/>
+
+  <property name="resources_5_16" value="resources/pictures_5/5_Ro.png"/>
+  <property name="jar_resources_5_16" value="build/jar/resources/pictures_5/5_Ro.png"/>
+
+  <property name="resources_5_17" value="resources/pictures_5/5_Co.png"/>
+  <property name="jar_resources_5_17" value="build/jar/resources/pictures_5/5_Co.png"/>
+
+  <property name="resources_5_18" value="resources/pictures_5/6_Bich.png"/>
+  <property name="jar_resources_5_18" value="build/jar/resources/pictures_5/6_Bich.png"/>
+
+  <property name="resources_5_19" value="resources/pictures_5/6_Chuon.png"/>
+  <property name="jar_resources_5_19" value="build/jar/resources/pictures_5/6_Chuon.png"/>
+
+  <property name="resources_5_20" value="resources/pictures_5/6_Ro.png"/>
+  <property name="jar_resources_5_20" value="build/jar/resources/pictures_5/6_Ro.png"/>
+
+  <property name="resources_5_21" value="resources/pictures_5/6_Co.png"/>
+  <property name="jar_resources_5_21" value="build/jar/resources/pictures_5/6_Co.png"/>
+
+  <property name="resources_5_22" value="resources/pictures_5/7_Bich.png"/>
+  <property name="jar_resources_5_22" value="build/jar/resources/pictures_5/7_Bich.png"/>
+
+  <property name="resources_5_23" value="resources/pictures_5/7_Chuon.png"/>
+  <property name="jar_resources_5_23" value="build/jar/resources/pictures_5/7_Chuon.png"/>
+
+  <property name="resources_5_24" value="resources/pictures_5/7_Ro.png"/>
+  <property name="jar_resources_5_24" value="build/jar/resources/pictures_5/7_Ro.png"/>
+
+  <property name="resources_5_25" value="resources/pictures_5/7_Co.png"/>
+  <property name="jar_resources_5_25" value="build/jar/resources/pictures_5/7_Co.png"/>
+
+  <property name="resources_5_26" value="resources/pictures_5/8_Bich.png"/>
+  <property name="jar_resources_5_26" value="build/jar/resources/pictures_5/8_Bich.png"/>
+
+  <property name="resources_5_27" value="resources/pictures_5/8_Chuon.png"/>
+  <property name="jar_resources_5_27" value="build/jar/resources/pictures_5/8_Chuon.png"/>
+
+  <property name="resources_5_28" value="resources/pictures_5/8_Ro.png"/>
+  <property name="jar_resources_5_28" value="build/jar/resources/pictures_5/8_Ro.png"/>
+
+  <property name="resources_5_29" value="resources/pictures_5/8_Co.png"/>
+  <property name="jar_resources_5_29" value="build/jar/resources/pictures_5/8_Co.png"/>
+
+  <property name="resources_5_30" value="resources/pictures_5/9_Bich.png"/>
+  <property name="jar_resources_5_30" value="build/jar/resources/pictures_5/9_Bich.png"/>
+
+  <property name="resources_5_31" value="resources/pictures_5/9_Chuon.png"/>
+  <property name="jar_resources_5_31" value="build/jar/resources/pictures_5/9_Chuon.png"/>
+
+  <property name="resources_5_32" value="resources/pictures_5/9_Ro.png"/>
+  <property name="jar_resources_5_32" value="build/jar/resources/pictures_5/9_Ro.png"/>
+
+  <property name="resources_5_33" value="resources/pictures_5/9_Co.png"/>
+  <property name="jar_resources_5_33" value="build/jar/resources/pictures_5/9_Co.png"/>
+
+  <property name="resources_5_34" value="resources/pictures_5/10_Bich.png"/>
+  <property name="jar_resources_5_34" value="build/jar/resources/pictures_5/10_Bich.png"/>
+
+  <property name="resources_5_35" value="resources/pictures_5/10_Chuon.png"/>
+  <property name="jar_resources_5_35" value="build/jar/resources/pictures_5/10_Chuon.png"/>
+
+  <property name="resources_5_36" value="resources/pictures_5/10_Ro.png"/>
+  <property name="jar_resources_5_36" value="build/jar/resources/pictures_5/10_Ro.png"/>
+
+  <property name="resources_5_37" value="resources/pictures_5/10_Co.png"/>
+  <property name="jar_resources_5_37" value="build/jar/resources/pictures_5/10_Co.png"/>
+
+  <property name="resources_5_38" value="resources/pictures_5/11_Bich.png"/>
+  <property name="jar_resources_5_38" value="build/jar/resources/pictures_5/11_Bich.png"/>
+
+  <property name="resources_5_39" value="resources/pictures_5/11_Chuon.png"/>
+  <property name="jar_resources_5_39" value="build/jar/resources/pictures_5/11_Chuon.png"/>
+
+  <property name="resources_5_40" value="resources/pictures_5/11_Ro.png"/>
+  <property name="jar_resources_5_40" value="build/jar/resources/pictures_5/11_Ro.png"/>
+
+  <property name="resources_5_41" value="resources/pictures_5/11_Co.png"/>
+  <property name="jar_resources_5_41" value="build/jar/resources/pictures_5/11_Co.png"/>
+
+  <property name="resources_5_42" value="resources/pictures_5/12_Bich.png"/>
+  <property name="jar_resources_5_42" value="build/jar/resources/pictures_5/12_Bich.png"/>
+
+  <property name="resources_5_43" value="resources/pictures_5/12_Chuon.png"/>
+  <property name="jar_resources_5_43" value="build/jar/resources/pictures_5/12_Chuon.png"/>
+
+  <property name="resources_5_44" value="resources/pictures_5/12_Ro.png"/>
+  <property name="jar_resources_5_44" value="build/jar/resources/pictures_5/12_Ro.png"/>
+
+  <property name="resources_5_45" value="resources/pictures_5/12_Co.png"/>
+  <property name="jar_resources_5_45" value="build/jar/resources/pictures_5/12_Co.png"/>
+
+  <property name="resources_5_46" value="resources/pictures_5/13_Bich.png"/>
+  <property name="jar_resources_5_46" value="build/jar/resources/pictures_5/13_Bich.png"/>
+
+  <property name="resources_5_47" value="resources/pictures_5/13_Chuon.png"/>
+  <property name="jar_resources_5_47" value="build/jar/resources/pictures_5/13_Chuon.png"/>
+
+  <property name="resources_5_48" value="resources/pictures_5/13_Ro.png"/>
+  <property name="jar_resources_5_48" value="build/jar/resources/pictures_5/13_Ro.png"/>
+
+  <property name="resources_5_49" value="resources/pictures_5/13_Co.png"/>
+  <property name="jar_resources_5_49" value="build/jar/resources/pictures_5/13_Co.png"/>
+
+  <property name="resources_5_50" value="resources/pictures_5/14_Bich.png"/>
+  <property name="jar_resources_5_50" value="build/jar/resources/pictures_5/14_Bich.png"/>
+
+  <property name="resources_5_51" value="resources/pictures_5/14_Chuon.png"/>
+  <property name="jar_resources_5_51" value="build/jar/resources/pictures_5/14_Chuon.png"/>
+
+  <property name="resources_5_52" value="resources/pictures_5/14_Ro.png"/>
+  <property name="jar_resources_5_52" value="build/jar/resources/pictures_5/14_Ro.png"/>
+
+  <property name="resources_5_53" value="resources/pictures_5/14_Co.png"/>
+  <property name="jar_resources_5_53" value="build/jar/resources/pictures_5/14_Co.png"/>
+  <!--Xoa thu muc build-->
+  <target name="clean">
+    <delete dir="./build"/>
+  </target>
+  <!--tao cac thu muc build-->
+  <target name="compile" depends="clean">
+    <mkdir dir="./build"/>
+    <mkdir dir="./build/classes"/>
+    <mkdir dir="./build/classes/DTO"/>
+    <mkdir dir="./build/classes/BUS"/>
+    <mkdir dir="./build/classes/Server"/>
+    <mkdir dir="./build/classes/Client"/>
+    <javac srcdir="src" destdir="build/classes" encoding="UTF-8"/>
+  </target>
+  <!--Tao file jar de chay-->
+  <target name="jar" depends="compile">
+    <mkdir dir="build/jar"/>
+    <!-- Copy sound-->
+    <copy file="${resources_sound_1}" tofile="${jar_resources_sound_1}"/>
+    <copy file="${resources_sound_2}" tofile="${jar_resources_sound_2}"/>
+    <copy file="${resources_sound_3}" tofile="${jar_resources_sound_3}"/>
+    <copy file="${resources_sound_4}" tofile="${jar_resources_sound_4}"/>
+    <!--picture back-->
+    <copy file="${resources_back_1}" tofile="${jar_resources_back_1}"/>
+    <copy file="${resources_back_2}" tofile="${jar_resources_back_2}"/>
+    <copy file="${resources_back_3}" tofile="${jar_resources_back_3}"/>
+    <copy file="${resources_back_4}" tofile="${jar_resources_back_4}"/>
+    <copy file="${resources_back_5}" tofile="${jar_resources_back_5}"/>
+    <copy file="${resources_back_6}" tofile="${jar_resources_back_6}"/>
+    <copy file="${resources_back_7}" tofile="${jar_resources_back_7}"/>
+    <copy file="${resources_back_8}" tofile="${jar_resources_back_8}"/>
+    <!--copy thu muc 1 -->
+    <copy file="${resources_1_2}" tofile="${jar_resources_1_2}"/>
+    <copy file="${resources_1_3}" tofile="${jar_resources_1_3}"/>
+    <copy file="${resources_1_4}" tofile="${jar_resources_1_4}"/>
+    <copy file="${resources_1_5}" tofile="${jar_resources_1_5}"/>
+    <copy file="${resources_1_6}" tofile="${jar_resources_1_6}"/>
+    <copy file="${resources_1_7}" tofile="${jar_resources_1_7}"/>
+    <copy file="${resources_1_8}" tofile="${jar_resources_1_8}"/>
+    <copy file="${resources_1_9}" tofile="${jar_resources_1_9}"/>
+    <copy file="${resources_1_10}" tofile="${jar_resources_1_10}"/>
+    <copy file="${resources_1_11}" tofile="${jar_resources_1_11}"/>
+    <copy file="${resources_1_12}" tofile="${jar_resources_1_12}"/>
+    <copy file="${resources_1_13}" tofile="${jar_resources_1_13}"/>
+    <copy file="${resources_1_14}" tofile="${jar_resources_1_14}"/>
+    <copy file="${resources_1_15}" tofile="${jar_resources_1_15}"/>
+    <copy file="${resources_1_16}" tofile="${jar_resources_1_16}"/>
+    <copy file="${resources_1_17}" tofile="${jar_resources_1_17}"/>
+    <copy file="${resources_1_18}" tofile="${jar_resources_1_18}"/>
+    <copy file="${resources_1_19}" tofile="${jar_resources_1_19}"/>
+    <copy file="${resources_1_20}" tofile="${jar_resources_1_20}"/>
+    <copy file="${resources_1_21}" tofile="${jar_resources_1_21}"/>
+    <copy file="${resources_1_22}" tofile="${jar_resources_1_22}"/>
+    <copy file="${resources_1_23}" tofile="${jar_resources_1_23}"/>
+    <copy file="${resources_1_24}" tofile="${jar_resources_1_24}"/>
+    <copy file="${resources_1_25}" tofile="${jar_resources_1_25}"/>
+    <copy file="${resources_1_26}" tofile="${jar_resources_1_26}"/>
+    <copy file="${resources_1_27}" tofile="${jar_resources_1_27}"/>
+    <copy file="${resources_1_28}" tofile="${jar_resources_1_28}"/>
+    <copy file="${resources_1_29}" tofile="${jar_resources_1_29}"/>
+    <copy file="${resources_1_30}" tofile="${jar_resources_1_30}"/>
+    <copy file="${resources_1_31}" tofile="${jar_resources_1_31}"/>
+    <copy file="${resources_1_32}" tofile="${jar_resources_1_32}"/>
+    <copy file="${resources_1_33}" tofile="${jar_resources_1_33}"/>
+    <copy file="${resources_1_34}" tofile="${jar_resources_1_34}"/>
+    <copy file="${resources_1_35}" tofile="${jar_resources_1_35}"/>
+    <copy file="${resources_1_36}" tofile="${jar_resources_1_36}"/>
+    <copy file="${resources_1_37}" tofile="${jar_resources_1_37}"/>
+    <copy file="${resources_1_38}" tofile="${jar_resources_1_38}"/>
+    <copy file="${resources_1_39}" tofile="${jar_resources_1_39}"/>
+    <copy file="${resources_1_40}" tofile="${jar_resources_1_40}"/>
+    <copy file="${resources_1_41}" tofile="${jar_resources_1_41}"/>
+    <copy file="${resources_1_42}" tofile="${jar_resources_1_42}"/>
+    <copy file="${resources_1_43}" tofile="${jar_resources_1_43}"/>
+    <copy file="${resources_1_44}" tofile="${jar_resources_1_44}"/>
+    <copy file="${resources_1_45}" tofile="${jar_resources_1_45}"/>
+    <copy file="${resources_1_46}" tofile="${jar_resources_1_46}"/>
+    <copy file="${resources_1_47}" tofile="${jar_resources_1_47}"/>
+    <copy file="${resources_1_48}" tofile="${jar_resources_1_48}"/>
+    <copy file="${resources_1_49}" tofile="${jar_resources_1_49}"/>
+    <copy file="${resources_1_50}" tofile="${jar_resources_1_50}"/>
+    <copy file="${resources_1_51}" tofile="${jar_resources_1_51}"/>
+    <copy file="${resources_1_52}" tofile="${jar_resources_1_52}"/>
+    <copy file="${resources_1_53}" tofile="${jar_resources_1_53}"/>
+
+    <!--copy thu muc 2 -->
+    <copy file="${resources_2_2}" tofile="${jar_resources_2_2}"/>
+    <copy file="${resources_2_3}" tofile="${jar_resources_2_3}"/>
+    <copy file="${resources_2_4}" tofile="${jar_resources_2_4}"/>
+    <copy file="${resources_2_5}" tofile="${jar_resources_2_5}"/>
+    <copy file="${resources_2_6}" tofile="${jar_resources_2_6}"/>
+    <copy file="${resources_2_7}" tofile="${jar_resources_2_7}"/>
+    <copy file="${resources_2_8}" tofile="${jar_resources_2_8}"/>
+    <copy file="${resources_2_9}" tofile="${jar_resources_2_9}"/>
+    <copy file="${resources_2_10}" tofile="${jar_resources_2_10}"/>
+    <copy file="${resources_2_11}" tofile="${jar_resources_2_11}"/>
+    <copy file="${resources_2_12}" tofile="${jar_resources_2_12}"/>
+    <copy file="${resources_2_13}" tofile="${jar_resources_2_13}"/>
+    <copy file="${resources_2_14}" tofile="${jar_resources_2_14}"/>
+    <copy file="${resources_2_15}" tofile="${jar_resources_2_15}"/>
+    <copy file="${resources_2_16}" tofile="${jar_resources_2_16}"/>
+    <copy file="${resources_2_17}" tofile="${jar_resources_2_17}"/>
+    <copy file="${resources_2_18}" tofile="${jar_resources_2_18}"/>
+    <copy file="${resources_2_19}" tofile="${jar_resources_2_19}"/>
+    <copy file="${resources_2_20}" tofile="${jar_resources_2_20}"/>
+    <copy file="${resources_2_21}" tofile="${jar_resources_2_21}"/>
+    <copy file="${resources_2_22}" tofile="${jar_resources_2_22}"/>
+    <copy file="${resources_2_23}" tofile="${jar_resources_2_23}"/>
+    <copy file="${resources_2_24}" tofile="${jar_resources_2_24}"/>
+    <copy file="${resources_2_25}" tofile="${jar_resources_2_25}"/>
+    <copy file="${resources_2_26}" tofile="${jar_resources_2_26}"/>
+    <copy file="${resources_2_27}" tofile="${jar_resources_2_27}"/>
+    <copy file="${resources_2_28}" tofile="${jar_resources_2_28}"/>
+    <copy file="${resources_2_29}" tofile="${jar_resources_2_29}"/>
+    <copy file="${resources_2_30}" tofile="${jar_resources_2_30}"/>
+    <copy file="${resources_2_31}" tofile="${jar_resources_2_31}"/>
+    <copy file="${resources_2_32}" tofile="${jar_resources_2_32}"/>
+    <copy file="${resources_2_33}" tofile="${jar_resources_2_33}"/>
+    <copy file="${resources_2_34}" tofile="${jar_resources_2_34}"/>
+    <copy file="${resources_2_35}" tofile="${jar_resources_2_35}"/>
+    <copy file="${resources_2_36}" tofile="${jar_resources_2_36}"/>
+    <copy file="${resources_2_37}" tofile="${jar_resources_2_37}"/>
+    <copy file="${resources_2_38}" tofile="${jar_resources_2_38}"/>
+    <copy file="${resources_2_39}" tofile="${jar_resources_2_39}"/>
+    <copy file="${resources_2_40}" tofile="${jar_resources_2_40}"/>
+    <copy file="${resources_2_41}" tofile="${jar_resources_2_41}"/>
+    <copy file="${resources_2_42}" tofile="${jar_resources_2_42}"/>
+    <copy file="${resources_2_43}" tofile="${jar_resources_2_43}"/>
+    <copy file="${resources_2_44}" tofile="${jar_resources_2_44}"/>
+    <copy file="${resources_2_45}" tofile="${jar_resources_2_45}"/>
+    <copy file="${resources_2_46}" tofile="${jar_resources_2_46}"/>
+    <copy file="${resources_2_47}" tofile="${jar_resources_2_47}"/>
+    <copy file="${resources_2_48}" tofile="${jar_resources_2_48}"/>
+    <copy file="${resources_2_49}" tofile="${jar_resources_2_49}"/>
+    <copy file="${resources_2_50}" tofile="${jar_resources_2_50}"/>
+    <copy file="${resources_2_51}" tofile="${jar_resources_2_51}"/>
+    <copy file="${resources_2_52}" tofile="${jar_resources_2_52}"/>
+    <copy file="${resources_2_53}" tofile="${jar_resources_2_53}"/>
+
+    <!--copy thu muc 3 -->
+    <copy file="${resources_3_2}" tofile="${jar_resources_3_2}"/>
+    <copy file="${resources_3_3}" tofile="${jar_resources_3_3}"/>
+    <copy file="${resources_3_4}" tofile="${jar_resources_3_4}"/>
+    <copy file="${resources_3_5}" tofile="${jar_resources_3_5}"/>
+    <copy file="${resources_3_6}" tofile="${jar_resources_3_6}"/>
+    <copy file="${resources_3_7}" tofile="${jar_resources_3_7}"/>
+    <copy file="${resources_3_8}" tofile="${jar_resources_3_8}"/>
+    <copy file="${resources_3_9}" tofile="${jar_resources_3_9}"/>
+    <copy file="${resources_3_10}" tofile="${jar_resources_3_10}"/>
+    <copy file="${resources_3_11}" tofile="${jar_resources_3_11}"/>
+    <copy file="${resources_3_12}" tofile="${jar_resources_3_12}"/>
+    <copy file="${resources_3_13}" tofile="${jar_resources_3_13}"/>
+    <copy file="${resources_3_14}" tofile="${jar_resources_3_14}"/>
+    <copy file="${resources_3_15}" tofile="${jar_resources_3_15}"/>
+    <copy file="${resources_3_16}" tofile="${jar_resources_3_16}"/>
+    <copy file="${resources_3_17}" tofile="${jar_resources_3_17}"/>
+    <copy file="${resources_3_18}" tofile="${jar_resources_3_18}"/>
+    <copy file="${resources_3_19}" tofile="${jar_resources_3_19}"/>
+    <copy file="${resources_3_20}" tofile="${jar_resources_3_20}"/>
+    <copy file="${resources_3_21}" tofile="${jar_resources_3_21}"/>
+    <copy file="${resources_3_22}" tofile="${jar_resources_3_22}"/>
+    <copy file="${resources_3_23}" tofile="${jar_resources_3_23}"/>
+    <copy file="${resources_3_24}" tofile="${jar_resources_3_24}"/>
+    <copy file="${resources_3_25}" tofile="${jar_resources_3_25}"/>
+    <copy file="${resources_3_26}" tofile="${jar_resources_3_26}"/>
+    <copy file="${resources_3_27}" tofile="${jar_resources_3_27}"/>
+    <copy file="${resources_3_28}" tofile="${jar_resources_3_28}"/>
+    <copy file="${resources_3_29}" tofile="${jar_resources_3_29}"/>
+    <copy file="${resources_3_30}" tofile="${jar_resources_3_30}"/>
+    <copy file="${resources_3_31}" tofile="${jar_resources_3_31}"/>
+    <copy file="${resources_3_32}" tofile="${jar_resources_3_32}"/>
+    <copy file="${resources_3_33}" tofile="${jar_resources_3_33}"/>
+    <copy file="${resources_3_34}" tofile="${jar_resources_3_34}"/>
+    <copy file="${resources_3_35}" tofile="${jar_resources_3_35}"/>
+    <copy file="${resources_3_36}" tofile="${jar_resources_3_36}"/>
+    <copy file="${resources_3_37}" tofile="${jar_resources_3_37}"/>
+    <copy file="${resources_3_38}" tofile="${jar_resources_3_38}"/>
+    <copy file="${resources_3_39}" tofile="${jar_resources_3_39}"/>
+    <copy file="${resources_3_40}" tofile="${jar_resources_3_40}"/>
+    <copy file="${resources_3_41}" tofile="${jar_resources_3_41}"/>
+    <copy file="${resources_3_42}" tofile="${jar_resources_3_42}"/>
+    <copy file="${resources_3_43}" tofile="${jar_resources_3_43}"/>
+    <copy file="${resources_3_44}" tofile="${jar_resources_3_44}"/>
+    <copy file="${resources_3_45}" tofile="${jar_resources_3_45}"/>
+    <copy file="${resources_3_46}" tofile="${jar_resources_3_46}"/>
+    <copy file="${resources_3_47}" tofile="${jar_resources_3_47}"/>
+    <copy file="${resources_3_48}" tofile="${jar_resources_3_48}"/>
+    <copy file="${resources_3_49}" tofile="${jar_resources_3_49}"/>
+    <copy file="${resources_3_50}" tofile="${jar_resources_3_50}"/>
+    <copy file="${resources_3_51}" tofile="${jar_resources_3_51}"/>
+    <copy file="${resources_3_52}" tofile="${jar_resources_3_52}"/>
+    <copy file="${resources_3_53}" tofile="${jar_resources_3_53}"/>
+
+    <!--copy thu muc 4 -->
+    <copy file="${resources_4_2}" tofile="${jar_resources_4_2}"/>
+    <copy file="${resources_4_3}" tofile="${jar_resources_4_3}"/>
+    <copy file="${resources_4_4}" tofile="${jar_resources_4_4}"/>
+    <copy file="${resources_4_5}" tofile="${jar_resources_4_5}"/>
+    <copy file="${resources_4_6}" tofile="${jar_resources_4_6}"/>
+    <copy file="${resources_4_7}" tofile="${jar_resources_4_7}"/>
+    <copy file="${resources_4_8}" tofile="${jar_resources_4_8}"/>
+    <copy file="${resources_4_9}" tofile="${jar_resources_4_9}"/>
+    <copy file="${resources_4_10}" tofile="${jar_resources_4_10}"/>
+    <copy file="${resources_4_11}" tofile="${jar_resources_4_11}"/>
+    <copy file="${resources_4_12}" tofile="${jar_resources_4_12}"/>
+    <copy file="${resources_4_13}" tofile="${jar_resources_4_13}"/>
+    <copy file="${resources_4_14}" tofile="${jar_resources_4_14}"/>
+    <copy file="${resources_4_15}" tofile="${jar_resources_4_15}"/>
+    <copy file="${resources_4_16}" tofile="${jar_resources_4_16}"/>
+    <copy file="${resources_4_17}" tofile="${jar_resources_4_17}"/>
+    <copy file="${resources_4_18}" tofile="${jar_resources_4_18}"/>
+    <copy file="${resources_4_19}" tofile="${jar_resources_4_19}"/>
+    <copy file="${resources_4_20}" tofile="${jar_resources_4_20}"/>
+    <copy file="${resources_4_21}" tofile="${jar_resources_4_21}"/>
+    <copy file="${resources_4_22}" tofile="${jar_resources_4_22}"/>
+    <copy file="${resources_4_23}" tofile="${jar_resources_4_23}"/>
+    <copy file="${resources_4_24}" tofile="${jar_resources_4_24}"/>
+    <copy file="${resources_4_25}" tofile="${jar_resources_4_25}"/>
+    <copy file="${resources_4_26}" tofile="${jar_resources_4_26}"/>
+    <copy file="${resources_4_27}" tofile="${jar_resources_4_27}"/>
+    <copy file="${resources_4_28}" tofile="${jar_resources_4_28}"/>
+    <copy file="${resources_4_29}" tofile="${jar_resources_4_29}"/>
+    <copy file="${resources_4_30}" tofile="${jar_resources_4_30}"/>
+    <copy file="${resources_4_31}" tofile="${jar_resources_4_31}"/>
+    <copy file="${resources_4_32}" tofile="${jar_resources_4_32}"/>
+    <copy file="${resources_4_33}" tofile="${jar_resources_4_33}"/>
+    <copy file="${resources_4_34}" tofile="${jar_resources_4_34}"/>
+    <copy file="${resources_4_35}" tofile="${jar_resources_4_35}"/>
+    <copy file="${resources_4_36}" tofile="${jar_resources_4_36}"/>
+    <copy file="${resources_4_37}" tofile="${jar_resources_4_37}"/>
+    <copy file="${resources_4_38}" tofile="${jar_resources_4_38}"/>
+    <copy file="${resources_4_39}" tofile="${jar_resources_4_39}"/>
+    <copy file="${resources_4_40}" tofile="${jar_resources_4_40}"/>
+    <copy file="${resources_4_41}" tofile="${jar_resources_4_41}"/>
+    <copy file="${resources_4_42}" tofile="${jar_resources_4_42}"/>
+    <copy file="${resources_4_43}" tofile="${jar_resources_4_43}"/>
+    <copy file="${resources_4_44}" tofile="${jar_resources_4_44}"/>
+    <copy file="${resources_4_45}" tofile="${jar_resources_4_45}"/>
+    <copy file="${resources_4_46}" tofile="${jar_resources_4_46}"/>
+    <copy file="${resources_4_47}" tofile="${jar_resources_4_47}"/>
+    <copy file="${resources_4_48}" tofile="${jar_resources_4_48}"/>
+    <copy file="${resources_4_49}" tofile="${jar_resources_4_49}"/>
+    <copy file="${resources_4_50}" tofile="${jar_resources_4_50}"/>
+    <copy file="${resources_4_51}" tofile="${jar_resources_4_51}"/>
+    <copy file="${resources_4_52}" tofile="${jar_resources_4_52}"/>
+    <copy file="${resources_4_53}" tofile="${jar_resources_4_53}"/>
+
+    <!--copy thu muc 5 -->
+    <copy file="${resources_5_2}" tofile="${jar_resources_5_2}"/>
+    <copy file="${resources_5_3}" tofile="${jar_resources_5_3}"/>
+    <copy file="${resources_5_4}" tofile="${jar_resources_5_4}"/>
+    <copy file="${resources_5_5}" tofile="${jar_resources_5_5}"/>
+    <copy file="${resources_5_6}" tofile="${jar_resources_5_6}"/>
+    <copy file="${resources_5_7}" tofile="${jar_resources_5_7}"/>
+    <copy file="${resources_5_8}" tofile="${jar_resources_5_8}"/>
+    <copy file="${resources_5_9}" tofile="${jar_resources_5_9}"/>
+    <copy file="${resources_5_10}" tofile="${jar_resources_5_10}"/>
+    <copy file="${resources_5_11}" tofile="${jar_resources_5_11}"/>
+    <copy file="${resources_5_12}" tofile="${jar_resources_5_12}"/>
+    <copy file="${resources_5_13}" tofile="${jar_resources_5_13}"/>
+    <copy file="${resources_5_14}" tofile="${jar_resources_5_14}"/>
+    <copy file="${resources_5_15}" tofile="${jar_resources_5_15}"/>
+    <copy file="${resources_5_16}" tofile="${jar_resources_5_16}"/>
+    <copy file="${resources_5_17}" tofile="${jar_resources_5_17}"/>
+    <copy file="${resources_5_18}" tofile="${jar_resources_5_18}"/>
+    <copy file="${resources_5_19}" tofile="${jar_resources_5_19}"/>
+    <copy file="${resources_5_20}" tofile="${jar_resources_5_20}"/>
+    <copy file="${resources_5_21}" tofile="${jar_resources_5_21}"/>
+    <copy file="${resources_5_22}" tofile="${jar_resources_5_22}"/>
+    <copy file="${resources_5_23}" tofile="${jar_resources_5_23}"/>
+    <copy file="${resources_5_24}" tofile="${jar_resources_5_24}"/>
+    <copy file="${resources_5_25}" tofile="${jar_resources_5_25}"/>
+    <copy file="${resources_5_26}" tofile="${jar_resources_5_26}"/>
+    <copy file="${resources_5_27}" tofile="${jar_resources_5_27}"/>
+    <copy file="${resources_5_28}" tofile="${jar_resources_5_28}"/>
+    <copy file="${resources_5_29}" tofile="${jar_resources_5_29}"/>
+    <copy file="${resources_5_30}" tofile="${jar_resources_5_30}"/>
+    <copy file="${resources_5_31}" tofile="${jar_resources_5_31}"/>
+    <copy file="${resources_5_32}" tofile="${jar_resources_5_32}"/>
+    <copy file="${resources_5_33}" tofile="${jar_resources_5_33}"/>
+    <copy file="${resources_5_34}" tofile="${jar_resources_5_34}"/>
+    <copy file="${resources_5_35}" tofile="${jar_resources_5_35}"/>
+    <copy file="${resources_5_36}" tofile="${jar_resources_5_36}"/>
+    <copy file="${resources_5_37}" tofile="${jar_resources_5_37}"/>
+    <copy file="${resources_5_38}" tofile="${jar_resources_5_38}"/>
+    <copy file="${resources_5_39}" tofile="${jar_resources_5_39}"/>
+    <copy file="${resources_5_40}" tofile="${jar_resources_5_40}"/>
+    <copy file="${resources_5_41}" tofile="${jar_resources_5_41}"/>
+    <copy file="${resources_5_42}" tofile="${jar_resources_5_42}"/>
+    <copy file="${resources_5_43}" tofile="${jar_resources_5_43}"/>
+    <copy file="${resources_5_44}" tofile="${jar_resources_5_44}"/>
+    <copy file="${resources_5_45}" tofile="${jar_resources_5_45}"/>
+    <copy file="${resources_5_46}" tofile="${jar_resources_5_46}"/>
+    <copy file="${resources_5_47}" tofile="${jar_resources_5_47}"/>
+    <copy file="${resources_5_48}" tofile="${jar_resources_5_48}"/>
+    <copy file="${resources_5_49}" tofile="${jar_resources_5_49}"/>
+    <copy file="${resources_5_50}" tofile="${jar_resources_5_50}"/>
+    <copy file="${resources_5_51}" tofile="${jar_resources_5_51}"/>
+    <copy file="${resources_5_52}" tofile="${jar_resources_5_52}"/>
+    <copy file="${resources_5_53}" tofile="${jar_resources_5_53}"/>
+
+    <jar destfile="build/jar/MyHeartGameJava.jar" basedir="./build/classes">
+      <manifest>
+        <attribute name="Main-Class" value="Presentation.MainGame"/>
+      </manifest>
+    </jar>
+  </target>
+  <!--Chay file jar vua moi tao-->
+  <target name="run" depends="jar">
+    <java jar="build/jar/MyHeartGameJava.jar" fork="true" spawn="true"/>
+  </target>
+</project>
