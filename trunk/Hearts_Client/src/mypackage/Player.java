@@ -17,7 +17,7 @@ public class Player {
     public static final int TOP = 4;
     private String name;				//ten nguoi choi
     private ArrayList<Card> listCard;
-    private ArrayList<Card> socreCard;
+    private ArrayList<Card> scoreCard;
     private int score = 0;				//diem so
     private Player nextPlayer;			//nguoi choi tiep theo
     private boolean isFirst;			//xac dinh xem co phai la nguoi danh dau tien trong luot hien tai khong
@@ -36,7 +36,7 @@ public class Player {
         this.type = type;
         this.position = position;
         this.listCard = new ArrayList<Card>(SOQUANBAI);
-        this.socreCard = new ArrayList<Card>();
+        this.scoreCard = new ArrayList<Card>();
 
         this.randomIndex = new int[SOQUANBAI];
         for (int i = 0; i < SOQUANBAI; i++) {
@@ -344,7 +344,7 @@ public class Player {
     //========================================================================
     public void addAScoreCard(Card arg0) {//, Card arg1, Card arg2, Card arg3) {
         if (arg0.isHeart() || arg0.isQueenSpade()) {
-            socreCard.add(arg0);
+            scoreCard.add(arg0);
             if (arg0.isHeart()) {
                 score += 1;
             }
@@ -358,7 +358,7 @@ public class Player {
     //					shoot the moon
     //========================================================================
     public boolean isShootTheMoon() {
-        if (socreCard.size() == SOQUANBAI + 1) {
+        if (scoreCard.size() == SOQUANBAI + 1) {
             return true;
         }
         return false;
@@ -400,21 +400,21 @@ public class Player {
     //					hien thi cac la bai thang duoc cua nguoi choi
     //========================================================================
     public void showListScoreCard() {
-        if (socreCard == null || socreCard.size() == 0) {
+        if (scoreCard == null || scoreCard.size() == 0) {
             return;
         }
 
-        for (int i = 0; i < socreCard.size(); i++) {
-            Card c = socreCard.get(i);
+        for (int i = 0; i < scoreCard.size(); i++) {
+            Card c = scoreCard.get(i);
             this.listCardLabel[i].setIcon(new ImageIcon(c.creatIconFile()));
             this.listCardLabel[i].setVisible(true);
         }
 
-        for (int i = socreCard.size(); i < listCardLabel.length; i++) {
+        for (int i = scoreCard.size(); i < listCardLabel.length; i++) {
             this.listCardLabel[i].setVisible(false);
         }
 
-        if (socreCard.size() > listCardLabel.length) {
+        if (scoreCard.size() > listCardLabel.length) {
             this.listCardLabel[SOQUANBAI].setVisible(false);
         }
     }
@@ -599,7 +599,7 @@ public class Player {
     //========================================================================
     public void newRound() {
         this.listCard = new ArrayList<Card>(SOQUANBAI);
-        this.socreCard = new ArrayList<Card>();
+        this.scoreCard = new ArrayList<Card>();
     }
 
     //========================================================================

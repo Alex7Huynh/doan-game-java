@@ -154,14 +154,17 @@ public class GameJFrame extends javax.swing.JFrame {
         
         }
         });*/
-        //myGame = new Hearts();
-        //myGame.setPlayerName(0,"AAAAA");
+        //myGame = new Hearts();        
         myGame.newGame();
     }
     public static Hearts myGame;
 
     public void setPlayerName(int order, String name) {
         myGame.setPlayerName(order, name);
+    }
+    public void createListCard(String message)
+    {
+        myGame.createListCard(message);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JLabel LabBai;
@@ -175,7 +178,7 @@ public class GameJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField jTextMegToServer;
     // End of variables declaration//GEN-END:variables
-    //public String MyName;
-    //public String YourName[] = new String[3];
+//    public String MyName;
+//    public String YourName[] = new String[3];
     public ConnectJFrame ConnectF;
 }

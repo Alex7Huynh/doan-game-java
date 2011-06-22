@@ -15,6 +15,7 @@ import javax.swing.border.EtchedBorder;
 public class Hearts implements MouseListener, ItemListener {
 
     private static final long serialVersionUID = 1L;
+    private ArrayList<Card> cardList;
     private JFrame myFrame;
     private JMenuBar menuBar;
     private JMenu game, help;
@@ -25,6 +26,7 @@ public class Hearts implements MouseListener, ItemListener {
     private JLabel[] lblPlayerName; //Vi tri ten nguoi choi
     private Player pPlayerOne, pPlayerTwo, pPlayerThree, pPlayerFour;	    //4 nguoi choi trong game
     public ArrayList<String> PlayerName;
+    public ArrayList<String> RealPlayerName;
     private Player firstPlayer;							//nguoi choi dau tien trong moi luot
     private String txtScore;	//String thong bao hien thi diem
     private static int labelIndex = -1;	//vi tri Label la bai duoc chon cua nguoi choi human
@@ -59,14 +61,16 @@ public class Hearts implements MouseListener, ItemListener {
     public void setPlayerName(int ID, String name) {
         if (ID == 0) {
             myFrame.setTitle(name);
-            pPlayerOne.setName(name);
+            pPlayerOne.setName(name);            
         } else if (ID == 1) {
-            pPlayerTwo.setName(name);
+            pPlayerTwo.setName(name);            
         } else if (ID == 2) {
-            pPlayerThree.setName(name);
+            pPlayerThree.setName(name);            
         } else if (ID == 3) {
             pPlayerFour.setName(name);
         }
+        
+        PlayerName.set(ID, name);
         lblPlayerName[ID].setText(name);
     }
 
@@ -86,7 +90,230 @@ public class Hearts implements MouseListener, ItemListener {
     //Constructor
 
     public Hearts() {
+        cardList = new ArrayList<Card>();
+        RealPlayerName = new ArrayList<String>();
+        initPlayer();
+        initMenu();
+        initPlayerNameLabel();
+        initCardPlayLabel();
+        initPlayerCardLabel();
 
+        //===============================================================
+        //					Start new Round
+        //===============================================================
+        newRoundButton = new JButton("Start Round");
+
+        newRoundButton.setSize(101, 25);
+        //newRoundButton.setToolTipText("Click To Start New Round");
+        newRoundButton.setLocation(340, 425);
+        newRoundButton.setBackground(Color.WHITE);
+        newRoundButton.setForeground(Color.RED);
+        newRoundButton.setVisible(false);
+        newRoundButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                // TODO Auto-generated method stub
+                startNewRound = true;
+            }
+        });
+        myFrame.add(newRoundButton);
+
+        //===============================================================
+        //							Note
+        //===============================================================
+        JPanel panel = new JPanel();
+        panel.setLayout(null);
+        panel.setBackground(new Color(242, 243, 248));
+        panel.setBorder(new EtchedBorder(EtchedBorder.RAISED));
+        panel.setBounds(0, 650, 250, 25);
+        myFrame.add(panel);
+
+        //noteLabel = new JLabel("*------------------------------------------------------------------------------------------------------------------------------------------------*");
+        noteLabel = new JLabel("");
+        noteLabel.setSize(panel.getSize().width, panel.getSize().height);
+        noteLabel.setLocation(5, 0);
+        panel.add(noteLabel);
+
+
+        //====================================================================
+        //							Show Frame
+        //====================================================================
+        myFrame.setVisible(true);
+
+    }
+
+    private void initPlayerCardLabel() {
+        //====================================================================
+        //				LABEL OF PLAYER'S CARD
+        //====================================================================
+        Dimension size = new Dimension(114, 154);
+        int dx = 22;
+        int dy = 20;
+        int MAX_CARD = Player.SOQUANBAI + 1;
+
+        //====================================================================
+        //					Jara's card
+        //====================================================================
+        lblHuman = new JLabel[MAX_CARD];
+        for (int i = 0; i < MAX_CARD; i++) {
+            lblHuman[i] = new JLabel();
+            lblHuman[i].setSize(size);
+            lblHuman[i].setLocation(i * dx + 225, 475);
+            lblHuman[i].setVisible(false);
+            lblHuman[i].addMouseListener(this);
+        }
+        for (int i = MAX_CARD - 1; i >= 0; i--) {
+            myFrame.add(lblHuman[i]);
+        }
+        pPlayerOne.setListCardLabel(lblHuman);
+
+
+        //====================================================================
+        //					Pauline's card
+        //====================================================================
+        JLabel[] lblComputer1 = new JLabel[MAX_CARD];
+        for (int i = 0; i < MAX_CARD; i++) {
+            lblComputer1[i] = new JLabel();
+            lblComputer1[i].setSize(size);
+            lblComputer1[i].setLocation(10, i * dy + 135);
+            lblComputer1[i].setVisible(false);
+        }
+        for (int i = MAX_CARD - 1; i >= 0; i--) {
+            myFrame.add(lblComputer1[i]);
+        }
+        pPlayerTwo.setListCardLabel(lblComputer1);
+
+
+        //===============================================================
+        //					Michele's card
+        //===============================================================
+        JLabel[] lblComputer2 = new JLabel[MAX_CARD];
+        for (int i = 0; i < MAX_CARD; i++) {
+            lblComputer2[i] = new JLabel();
+            lblComputer2[i].setSize(size);
+            lblComputer2[i].setLocation(i * dx + 225, 15);
+            lblComputer2[i].setVisible(false);
+        }
+        for (int i = 0; i < MAX_CARD; i++) {
+            myFrame.add(lblComputer2[i]);
+        }
+        pPlayerThree.setListCardLabel(lblComputer2);
+
+
+        //===============================================================
+        //					Ben's card
+        //===============================================================
+        JLabel[] lblComputer3 = new JLabel[MAX_CARD];
+        for (int i = 0; i < MAX_CARD; i++) {
+            lblComputer3[i] = new JLabel();
+            lblComputer3[i].setSize(size);
+            lblComputer3[i].setLocation(665, i * dy + 135);
+            lblComputer3[i].setVisible(false);
+        }
+        for (int i = 0; i < MAX_CARD; i++) {
+            myFrame.add(lblComputer3[i]);
+        }
+        pPlayerFour.setListCardLabel(lblComputer3);
+    }
+
+    private void initCardPlayLabel() {
+        //====================================================================
+        //				CARDPLAY'S LABEL
+        //====================================================================
+        //QUAN DANH RA CUA pJara
+        JLabel[] lbl1 = new JLabel[4];
+        for (int i = 0; i < lbl1.length; i++) {
+            lbl1[i] = new JLabel();
+            lbl1[i].setSize(114, 154);
+            lbl1[i].setLocation(360, 280);
+            lbl1[i].setVisible(false);
+        }
+        pPlayerOne.setPlayCardLabel(lbl1);
+
+        //QUAN DANH RA CUA pPauline
+        JLabel[] lbl2 = new JLabel[4];
+        for (int i = 0; i < lbl2.length; i++) {
+            lbl2[i] = new JLabel();
+            lbl2[i].setSize(114, 154);
+            lbl2[i].setLocation(335, 250);
+            lbl2[i].setVisible(false);
+        }
+        pPlayerTwo.setPlayCardLabel(lbl2);
+
+        //QUAN DANH RA CUA pMichele
+        JLabel[] lbl3 = new JLabel[4];
+        for (int i = 0; i < lbl3.length; i++) {
+            lbl3[i] = new JLabel();
+            lbl3[i].setSize(114, 154);
+            lbl3[i].setLocation(360, 215);
+            lbl3[i].setVisible(false);
+        }
+        pPlayerThree.setPlayCardLabel(lbl3);
+
+        //QUAN DANH RA CUA pBen   	
+        JLabel[] lbl4 = new JLabel[4];
+        for (int i = 0; i < lbl3.length; i++) {
+            lbl4[i] = new JLabel();
+            lbl4[i].setSize(114, 154);
+            lbl4[i].setLocation(395, 250);
+            lbl4[i].setVisible(false);
+        }
+        pPlayerFour.setPlayCardLabel(lbl4);
+
+        myFrame.add(lbl4[3]);
+        myFrame.add(lbl3[2]);
+        myFrame.add(lbl2[1]);
+        myFrame.add(lbl1[0]);
+
+        myFrame.add(lbl1[3]);
+        myFrame.add(lbl4[2]);
+        myFrame.add(lbl3[1]);
+        myFrame.add(lbl2[0]);
+
+        myFrame.add(lbl2[3]);
+        myFrame.add(lbl1[2]);
+        myFrame.add(lbl4[1]);
+        myFrame.add(lbl3[0]);
+
+        myFrame.add(lbl3[3]);
+        myFrame.add(lbl2[2]);
+        myFrame.add(lbl1[1]);
+        myFrame.add(lbl4[0]);
+    }
+
+    private void initPlayerNameLabel() {
+        //====================================================================
+        //					 	PLAYER'S NAME LABEL 
+        //====================================================================
+        lblPlayerName = new JLabel[4];
+        //pJara
+        lblPlayerName[0] = new JLabel(pPlayerOne.getName());
+        lblPlayerName[0].setSize(100, 20);
+        lblPlayerName[0].setLocation(180, 550);
+        lblPlayerName[0].setForeground(Color.red);
+        myFrame.add(lblPlayerName[0]);
+        //pPauline
+        lblPlayerName[1] = new JLabel(pPlayerTwo.getName());
+        lblPlayerName[1].setSize(100, 20);
+        lblPlayerName[1].setLocation(40, 100);
+        lblPlayerName[1].setForeground(Color.red);
+        myFrame.add(lblPlayerName[1]);
+        //pMichele
+        lblPlayerName[2] = new JLabel(pPlayerThree.getName());
+        lblPlayerName[2].setSize(100, 20);
+        lblPlayerName[2].setLocation(620, 40);
+        lblPlayerName[2].setForeground(Color.red);
+        myFrame.add(lblPlayerName[2]);
+        //pBen
+        lblPlayerName[3] = new JLabel(pPlayerFour.getName());
+        lblPlayerName[3].setSize(100, 20);
+        lblPlayerName[3].setLocation(700, 540);
+        lblPlayerName[3].setForeground(Color.red);
+        myFrame.add(lblPlayerName[3]);
+    }
+
+    private void initPlayer() {
         //====================================================================
         //					THIET LAP NGUOI CHOI
         //====================================================================
@@ -95,8 +322,19 @@ public class Hearts implements MouseListener, ItemListener {
         PlayerName.add("Bill");
         PlayerName.add("Cain");
         PlayerName.add("David");
-        initPlayer();
 
+        pPlayerOne = new Player(PlayerName.get(0), Player.IS_HUMAN, Player.BOTTOM);
+        pPlayerTwo = new Player(PlayerName.get(1), Player.IS_HUMAN, Player.LEFT);
+        pPlayerThree = new Player(PlayerName.get(2), Player.IS_HUMAN, Player.TOP);
+        pPlayerFour = new Player(PlayerName.get(3), Player.IS_HUMAN, Player.RIGHT);
+
+        pPlayerOne.setNextPlayer(pPlayerTwo);
+        pPlayerTwo.setNextPlayer(pPlayerThree);
+        pPlayerThree.setNextPlayer(pPlayerFour);
+        pPlayerFour.setNextPlayer(pPlayerOne);
+    }
+
+    private void initMenu() {
         //====================================================================
         //					THIET LAP FRAME
         //====================================================================
@@ -107,7 +345,7 @@ public class Hearts implements MouseListener, ItemListener {
         myFrame.setSize(800, 750);
         myFrame.setLocation(150, 0);
         JPanel panelFrame = (JPanel) myFrame.getContentPane();
-        panelFrame.setBackground(new Color(0, 114, 54));
+        panelFrame.setBackground(new Color(80, 120, 60));
 
         //====================================================================
         //					 THIET LAP MENU
@@ -218,232 +456,31 @@ public class Hearts implements MouseListener, ItemListener {
         north.add(normal);
         north.add(slow);
         menuBar.add(north, BorderLayout.WEST);
-
-
-        //====================================================================
-        //					 	PLAYER'S NAME LABEL 
-        //====================================================================
-        lblPlayerName = new JLabel[4];
-        //pJara
-        lblPlayerName[0] = new JLabel(pPlayerOne.getName());
-        lblPlayerName[0].setSize(100, 20);
-        lblPlayerName[0].setLocation(180, 550);
-        lblPlayerName[0].setForeground(Color.red);
-        myFrame.add(lblPlayerName[0]);
-        //pPauline
-        lblPlayerName[1] = new JLabel(pPlayerTwo.getName());
-        lblPlayerName[1].setSize(100, 20);
-        lblPlayerName[1].setLocation(40, 100);
-        lblPlayerName[1].setForeground(Color.red);
-        myFrame.add(lblPlayerName[1]);
-        //pMichele
-        lblPlayerName[2] = new JLabel(pPlayerThree.getName());
-        lblPlayerName[2].setSize(100, 20);
-        lblPlayerName[2].setLocation(620, 40);
-        lblPlayerName[2].setForeground(Color.red);
-        myFrame.add(lblPlayerName[2]);
-        //pBen
-        lblPlayerName[3] = new JLabel(pPlayerFour.getName());
-        lblPlayerName[3].setSize(100, 20);
-        lblPlayerName[3].setLocation(700, 540);
-        lblPlayerName[3].setForeground(Color.red);
-        myFrame.add(lblPlayerName[3]);
-
-        //====================================================================
-        //				CARDPLAY'S LABEL
-        //====================================================================
-        //QUAN DANH RA CUA pJara
-        JLabel[] lbl1 = new JLabel[4];
-        for (int i = 0; i < lbl1.length; i++) {
-            lbl1[i] = new JLabel();
-            lbl1[i].setSize(114, 154);
-            lbl1[i].setLocation(360, 280);
-            lbl1[i].setVisible(false);
-        }
-        pPlayerOne.setPlayCardLabel(lbl1);
-
-        //QUAN DANH RA CUA pPauline
-        JLabel[] lbl2 = new JLabel[4];
-        for (int i = 0; i < lbl2.length; i++) {
-            lbl2[i] = new JLabel();
-            lbl2[i].setSize(114, 154);
-            lbl2[i].setLocation(335, 250);
-            lbl2[i].setVisible(false);
-        }
-        pPlayerTwo.setPlayCardLabel(lbl2);
-
-        //QUAN DANH RA CUA pMichele
-        JLabel[] lbl3 = new JLabel[4];
-        for (int i = 0; i < lbl3.length; i++) {
-            lbl3[i] = new JLabel();
-            lbl3[i].setSize(114, 154);
-            lbl3[i].setLocation(360, 215);
-            lbl3[i].setVisible(false);
-        }
-        pPlayerThree.setPlayCardLabel(lbl3);
-
-        //QUAN DANH RA CUA pBen   	
-        JLabel[] lbl4 = new JLabel[4];
-        for (int i = 0; i < lbl3.length; i++) {
-            lbl4[i] = new JLabel();
-            lbl4[i].setSize(114, 154);
-            lbl4[i].setLocation(395, 250);
-            lbl4[i].setVisible(false);
-        }
-        pPlayerFour.setPlayCardLabel(lbl4);
-
-        myFrame.add(lbl4[3]);
-        myFrame.add(lbl3[2]);
-        myFrame.add(lbl2[1]);
-        myFrame.add(lbl1[0]);
-
-        myFrame.add(lbl1[3]);
-        myFrame.add(lbl4[2]);
-        myFrame.add(lbl3[1]);
-        myFrame.add(lbl2[0]);
-
-        myFrame.add(lbl2[3]);
-        myFrame.add(lbl1[2]);
-        myFrame.add(lbl4[1]);
-        myFrame.add(lbl3[0]);
-
-        myFrame.add(lbl3[3]);
-        myFrame.add(lbl2[2]);
-        myFrame.add(lbl1[1]);
-        myFrame.add(lbl4[0]);
-
-        //====================================================================
-        //				LABEL OF PLAYER'S CARD
-        //====================================================================
-        Dimension size = new Dimension(114, 154);
-        int dx = 22;
-        int dy = 20;
-        int MAX_CARD = Player.SOQUANBAI + 1;
-
-        //====================================================================
-        //					Jara's card
-        //====================================================================
-        lblHuman = new JLabel[MAX_CARD];
-        for (int i = 0; i < MAX_CARD; i++) {
-            lblHuman[i] = new JLabel();
-            lblHuman[i].setSize(size);
-            lblHuman[i].setLocation(i * dx + 225, 475);
-            lblHuman[i].setVisible(false);
-            lblHuman[i].addMouseListener(this);
-        }
-        for (int i = MAX_CARD - 1; i >= 0; i--) {
-            myFrame.add(lblHuman[i]);
-        }
-        pPlayerOne.setListCardLabel(lblHuman);
-
-
-        //====================================================================
-        //					Pauline's card
-        //====================================================================
-        JLabel[] lblComputer1 = new JLabel[MAX_CARD];
-        for (int i = 0; i < MAX_CARD; i++) {
-            lblComputer1[i] = new JLabel();
-            lblComputer1[i].setSize(size);
-            lblComputer1[i].setLocation(10, i * dy + 135);
-            lblComputer1[i].setVisible(false);
-        }
-        for (int i = MAX_CARD - 1; i >= 0; i--) {
-            myFrame.add(lblComputer1[i]);
-        }
-        pPlayerTwo.setListCardLabel(lblComputer1);
-
-
-        //===============================================================
-        //					Michele's card
-        //===============================================================
-        JLabel[] lblComputer2 = new JLabel[MAX_CARD];
-        for (int i = 0; i < MAX_CARD; i++) {
-            lblComputer2[i] = new JLabel();
-            lblComputer2[i].setSize(size);
-            lblComputer2[i].setLocation(i * dx + 225, 15);
-            lblComputer2[i].setVisible(false);
-        }
-        for (int i = 0; i < MAX_CARD; i++) {
-            myFrame.add(lblComputer2[i]);
-        }
-        pPlayerThree.setListCardLabel(lblComputer2);
-
-
-        //===============================================================
-        //					Ben's card
-        //===============================================================
-        JLabel[] lblComputer3 = new JLabel[MAX_CARD];
-        for (int i = 0; i < MAX_CARD; i++) {
-            lblComputer3[i] = new JLabel();
-            lblComputer3[i].setSize(size);
-            lblComputer3[i].setLocation(665, i * dy + 135);
-            lblComputer3[i].setVisible(false);
-        }
-        for (int i = 0; i < MAX_CARD; i++) {
-            myFrame.add(lblComputer3[i]);
-        }
-        pPlayerFour.setListCardLabel(lblComputer3);
-
-        //===============================================================
-        //					Start new Round
-        //===============================================================
-        newRoundButton = new JButton("Start Round");
-
-        newRoundButton.setSize(101, 25);
-        //newRoundButton.setToolTipText("Click To Start New Round");
-        newRoundButton.setLocation(340, 425);
-        newRoundButton.setBackground(Color.WHITE);
-        newRoundButton.setForeground(Color.RED);
-        newRoundButton.setVisible(false);
-        newRoundButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                // TODO Auto-generated method stub
-                startNewRound = true;
-            }
-        });
-        myFrame.add(newRoundButton);
-
-        //===============================================================
-        //							Note
-        //===============================================================
-        JPanel panel = new JPanel();
-        panel.setLayout(null);
-        panel.setBackground(new Color(242, 243, 248));
-        panel.setBorder(new EtchedBorder(EtchedBorder.RAISED));
-        panel.setBounds(0, 650, 250, 25);
-        myFrame.add(panel);
-
-        //noteLabel = new JLabel("*------------------------------------------------------------------------------------------------------------------------------------------------*");
-        noteLabel = new JLabel("");
-        noteLabel.setSize(panel.getSize().width, panel.getSize().height);
-        noteLabel.setLocation(5, 0);
-        panel.add(noteLabel);
-
-
-        //====================================================================
-        //							Show Frame
-        //====================================================================
-        myFrame.setVisible(true);
-
     }
-
-    private void initPlayer() {
-        pPlayerOne = new Player(PlayerName.get(0), Player.IS_HUMAN, Player.BOTTOM);
-        pPlayerTwo = new Player(PlayerName.get(1), Player.IS_COMPUTER, Player.LEFT);
-        pPlayerThree = new Player(PlayerName.get(2), Player.IS_COMPUTER, Player.TOP);
-        pPlayerFour = new Player(PlayerName.get(3), Player.IS_COMPUTER, Player.RIGHT);
-
-        pPlayerOne.setNextPlayer(pPlayerTwo);
-        pPlayerTwo.setNextPlayer(pPlayerThree);
-        pPlayerThree.setNextPlayer(pPlayerFour);
-        pPlayerFour.setNextPlayer(pPlayerOne);
-    }
-
     //====================================================================
     // 							Chia bai
     //====================================================================
+
+    public void createListCard(String message) {
+        String PlayerName = message.substring(0, message.indexOf("%"));
+        RealPlayerName.add(PlayerName);
+        String NoiDung = message.substring(message.indexOf("%") + 1);
+        String[] lstBai = new String[Card.NUM_OF_FACE];
+        lstBai = NoiDung.split("%");
+
+        for (int i = 0; i < Card.NUM_OF_FACE; ++i) {
+            String[] FaceSuit = lstBai[i].split("_");
+            int face = Integer.parseInt(FaceSuit[0]) - 2;
+            for (int j = 0; j < Card.NUM_OF_SUIT; ++j) {
+                if (Card.Suit[j].equals(FaceSuit[1])) {
+                    Card c = new Card(face, j);
+                    cardList.add(c);
+                    break;
+                }
+            }
+        }
+    }
+
     public void dealCard() {
 
         //Neu co xet cac truong hop dac biet
@@ -452,27 +489,70 @@ public class Hearts implements MouseListener, ItemListener {
             return;
         }
 
+        /*String PlayerName = message.substring(0, message.indexOf("%"));
+        String NoiDung = message.substring(message.indexOf("%") + 1);
+        String[] lstBai = new String[Card.NUM_OF_FACE];
+        lstBai = NoiDung.split("%");
+        ArrayList<Card> cardList = new ArrayList<Card>();
+        for (int i = 0; i < Card.NUM_OF_FACE; ++i) {
+        String[] FaceSuit = lstBai[i].split("_");
+        int face = Integer.parseInt(FaceSuit[0]);            
+        for (int j = 0; j < Card.NUM_OF_SUIT; ++j) {
+        if (Card.Suit[j].equals(FaceSuit[1])) {
+        Card c = new Card(face, j);
+        if (pPlayerOne.getName().equals(PlayerName)) {
+        pPlayerOne.addACard(c);
+        }
+        else if (pPlayerTwo.getName().equals(PlayerName)) {
+        pPlayerTwo.addACard(c);
+        }
+        else if (pPlayerThree.getName().equals(PlayerName)) {
+        pPlayerThree.addACard(c);
+        }
+        else if (pPlayerFour.getName().equals(PlayerName)) {
+        pPlayerFour.addACard(c);
+        }
+        break;
+        }
+        }
+        }*/
         //Neu khong xet cac truong hop dac biet
-        ArrayList<Card> cardList = Card.creatListCard();
+        //ArrayList<Card> cardList = Card.creatListCard();
 
         //chia tung nhom 4 la bai co nguoi choi theo chieu kim dong ho, tinh tu human
         Card c;
-        for (int i = 0; i < 52; i += 4) {
+        int StartIndex1 = -1;
+        int StartIndex2 = -1;
+        int StartIndex3 = -1;
+        int StartIndex4 = -1;
+        
+        for (int i = 0; i < PlayerName.size(); ++i) {
+            if (pPlayerOne.getName().equals(RealPlayerName.get(i))) {
+                StartIndex1 = i;
+            } else if (pPlayerTwo.getName().equals(RealPlayerName.get(i))) {
+                StartIndex2 = i;
+            } else if (pPlayerThree.getName().equals(RealPlayerName.get(i))) {
+                StartIndex3 = i;
+            } else if (pPlayerFour.getName().equals(RealPlayerName.get(i))) {
+                StartIndex4 = i;
+            }
+        }
+        for (int i = 0; i < Card.NUM_OF_FACE; ++i) {
 
             //pJara
-            c = cardList.get(i);
+            c = cardList.get(i + StartIndex1 * Card.NUM_OF_FACE);
             pPlayerOne.addACard(c);
 
             //pPauline
-            c = cardList.get(i + 1);
+            c = cardList.get(i + StartIndex2 * Card.NUM_OF_FACE);
             pPlayerTwo.addACard(c);
 
             //pMichele
-            c = cardList.get(i + 2);
+            c = cardList.get(i + StartIndex3 * Card.NUM_OF_FACE);
             pPlayerThree.addACard(c);
 
             //pBen
-            c = cardList.get(i + 3);
+            c = cardList.get(i + StartIndex4 * Card.NUM_OF_FACE);
             pPlayerFour.addACard(c);
         }
 
