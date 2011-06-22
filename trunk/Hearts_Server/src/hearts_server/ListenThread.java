@@ -44,30 +44,36 @@ public class ListenThread extends Thread {
         Socket temp = null;
         while (Running) {
             try {
-                temp = ServerS.accept();
+                temp = ServerS.accept();// nhận 1 kết nối từ client
                 OutputStream os;
                 BufferedWriter bw;
+                // kiểm tra số client hiện có
+                //trường hợp đã đủ người chơi
                 if (SoClient == 4) {
                     os = temp.getOutputStream();
                     bw = new BufferedWriter(new OutputStreamWriter(os));
                     bw.write("1%DaDuNguoiChoi\n");
                     bw.flush();
+                    Thread.sleep(1000);
                     temp.close();
-                } else {
+                } else {// trường hợp chưa đủ người chơi
                     os = temp.getOutputStream();
-                    bw = new BufferedWriter(new OutputStreamWriter(os));
+                    bw = new BufferedWriter(new OutputStreamWriter(os,"utf8"));
                     InputStream is = temp.getInputStream();
-                    BufferedReader br = new BufferedReader(new InputStreamReader(is));
-                    ListListenClientT[SoClient] = new ListenClientThread(this,br,SoClient);
+                    BufferedReader br = new BufferedReader(new InputStreamReader(is,"utf8"));
+                    ListListenClientT[SoClient] = new ListenClientThread(this,br,SoClient);// phát sinh thread ListListenClient để nhận message từ client này
                     ListClient[SoClient] = new Client(temp, bw, SoClient);
                     SoClient++;
+                    // nếu đủ người chơi sẽ phát sinh thread game để bắt đầu chơi
                     if (SoClient == 4) {
                         GameT = new GameThread(this);
-                    } else {
+                    } else { // nếu chưa đủ người chơi thì thông báo cho client
                         bw.write("1%ChuaDuNguoiChoi\n");
                         bw.flush();
                     }
                 }
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ListenThread.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
                 Logger.getLogger(ListenThread.class.getName()).log(Level.SEVERE, null, ex);
             }

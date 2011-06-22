@@ -11,7 +11,6 @@
 
 package hearts_server;
 import java.io.IOException;
-import java.net.Socket;
 import java.net.ServerSocket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -57,11 +56,6 @@ public class Hearts_Server extends javax.swing.JFrame {
         jTextPortLangNghe.setFont(resourceMap.getFont("jtxtPortLangNghe.font")); // NOI18N
         jTextPortLangNghe.setText(resourceMap.getString("jtxtPortLangNghe.text")); // NOI18N
         jTextPortLangNghe.setName("jtxtPortLangNghe"); // NOI18N
-        jTextPortLangNghe.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextPortLangNgheKeyPressed(evt);
-            }
-        });
 
         jButtonBatDau.setText(resourceMap.getString("jButtonBatDau.text")); // NOI18N
         jButtonBatDau.setName("jButtonBatDau"); // NOI18N
@@ -72,6 +66,7 @@ public class Hearts_Server extends javax.swing.JFrame {
         });
 
         jButtonDong.setText(resourceMap.getString("jButtonDong.text")); // NOI18N
+        jButtonDong.setEnabled(false);
         jButtonDong.setName("jButtonDong"); // NOI18N
         jButtonDong.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -93,13 +88,13 @@ public class Hearts_Server extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButtonBatDau)
-                            .addComponent(jLabel1))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jButtonBatDau, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButtonDong, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextPortLangNghe, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButtonDong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jTextPortLangNghe, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE))))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -125,9 +120,12 @@ public class Hearts_Server extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             PortLangNghe = Integer.parseInt(jTextPortLangNghe.getText().trim());
+            //khởi tạo socket với port mà người dùng nhập
             ServerS = new ServerSocket(PortLangNghe);
             jTextPortLangNghe.setEnabled(false);
             jButtonBatDau.setEnabled(false);
+             jButtonDong.setEnabled(true);
+            //khởi tạo ListenT với tham số truyền vô ServerS
             ListenT = new ListenThread(ServerS);
 
         } catch (IOException ex) {
@@ -139,16 +137,19 @@ public class Hearts_Server extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButtonBatDauMouseClicked
 
-    private void jTextPortLangNgheKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextPortLangNgheKeyPressed
-        // TODO add your handling code here:
-      if(evt.getKeyChar()<'0' || evt.getKeyChar()>'9')
-          evt.setKeyChar('0');
-    }//GEN-LAST:event_jTextPortLangNgheKeyPressed
-
     private void jButtonDongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonDongMouseClicked
-    
+        try {
             // TODO add your handling code here:
-            //ListenT.Running = false;
+            ServerS.close();
+            ListenT.ListClient=null;
+            ListenT.ListListenClientT=null;
+            jTextPortLangNghe.setEnabled(true);
+            jButtonBatDau.setEnabled(true);
+            jButtonDong.setEnabled(false);
+        } catch (IOException ex) {
+            Logger.getLogger(Hearts_Server.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
 
 
     }//GEN-LAST:event_jButtonDongMouseClicked
@@ -171,8 +172,8 @@ public class Hearts_Server extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField jTextPortLangNghe;
     // End of variables declaration//GEN-END:variables
-    private Integer PortLangNghe;
+    private Integer PortLangNghe; // Giá trị port mà server lắng nghe kết nối tại port này
     ServerSocket ServerS;
-    ListenThread ListenT;
+    ListenThread ListenT; // Thread để lắng nghe kết nối từ các client
 
 }
