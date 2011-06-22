@@ -24,6 +24,7 @@ public class ListenThread extends Thread {
     LoginJFrame LoginF;
     GameJFrame GameF;
     boolean Running;
+    int LanGui = 0;
 
     ListenThread(ConnectJFrame cf, Socket s, BufferedReader br) {
         ClientS = s;
@@ -39,7 +40,6 @@ public class ListenThread extends Thread {
         int Co;
         try {
             while (Running) {
-
                 MessageServer = BuffReader.readLine();
                 Co = Integer.parseInt(MessageServer.substring(0, MessageServer.indexOf("%")));
                 NoiDung = MessageServer.substring(MessageServer.indexOf("%") + 1);
@@ -70,8 +70,7 @@ public class ListenThread extends Thread {
                             LoginF.setVisible(false);
                             GameF = new GameJFrame(ConnectF);
 
-                            //GameF.MyName= ConnectF.MyName;
-                            //GameF.setPlayerName(0, ConnectF.MyName);
+                            //GameF.MyName= ConnectF.MyName;                            
                             GameF.setPlayerName(0, ConnectF.MyName);
                             GameF.setTitle(ConnectF.MyName);
                             NoiDung = NoiDung.substring(NoiDung.indexOf("%") + 1);
@@ -93,7 +92,7 @@ public class ListenThread extends Thread {
 //                            GameF.LabYou3.setText(GameF.YourName[2]);
 
                             //GameF.setVisible(true);
-                            GameF.myGame.newGame();
+                            //GameF.myGame.newGame();
 
                         }
                         break;
@@ -103,7 +102,11 @@ public class ListenThread extends Thread {
                         break;
                     }
                     case 3: {
-                        GameF.LabBai.setText(NoiDung);
+                        //GameF.LabBai.setText(NoiDung);
+                        GameF.createListCard(NoiDung);
+                        LanGui++;
+                        if(LanGui == 4)
+                            GameF.myGame.newGame();
                         break;
                     }
                     case 4: {
