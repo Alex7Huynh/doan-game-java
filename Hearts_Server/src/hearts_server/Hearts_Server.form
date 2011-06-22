@@ -30,14 +30,14 @@
               <Group type="103" groupAlignment="1" max="-2" attributes="0">
                   <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jButtonBatDau" alignment="1" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel1" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="jButtonBatDau" max="32767" attributes="1"/>
+                          <Component id="jLabel1" alignment="1" max="32767" attributes="1"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jButtonDong" min="-2" pref="67" max="-2" attributes="0"/>
-                          <Component id="jTextPortLangNghe" alignment="0" min="-2" pref="76" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jButtonDong" max="32767" attributes="1"/>
+                          <Component id="jTextPortLangNghe" alignment="0" pref="76" max="32767" attributes="1"/>
                       </Group>
                   </Group>
               </Group>
@@ -80,9 +80,6 @@
         <Property name="text" type="java.lang.String" resourceKey="jtxtPortLangNghe.text"/>
         <Property name="name" type="java.lang.String" value="jtxtPortLangNghe" noResource="true"/>
       </Properties>
-      <Events>
-        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextPortLangNgheKeyPressed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonBatDau">
       <Properties>
@@ -96,6 +93,7 @@
     <Component class="javax.swing.JButton" name="jButtonDong">
       <Properties>
         <Property name="text" type="java.lang.String" resourceKey="jButtonDong.text"/>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="name" type="java.lang.String" value="jButtonDong" noResource="true"/>
       </Properties>
       <Events>
