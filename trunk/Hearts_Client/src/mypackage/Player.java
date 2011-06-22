@@ -19,11 +19,11 @@ public class Player {
     private ArrayList<Card> listCard;
     private ArrayList<Card> scoreCard;
     private int score = 0;				//diem so
-    private Player nextPlayer;			//nguoi choi tiep theo
-    private boolean isFirst;			//xac dinh xem co phai la nguoi danh dau tien trong luot hien tai khong
-    private Card playCard;				//la bai danh ra
-    private int type;					//kieu nguoi choi: IS_HUMAN / IS_COMPUTER
-    private JLabel[] listCardLabel;  	//cac nut chua cac quan bai co trong tay nguoi choi
+    private Player nextPlayer;//nguoi choi tiep theo
+    private boolean isFirst;//xac dinh xem co phai la nguoi danh dau tien trong luot hien tai khong
+    private Card playCard;//la bai danh ra
+    private int type;//kieu nguoi choi: IS_HUMAN / IS_COMPUTER
+    private JLabel[] listCardLabel;//cac nut chua cac quan bai co trong tay nguoi choi
     private JLabel[] playCardLabel;
     int position;	//vi tri nguoi choi
     private ArrayList<Integer> list3Card;
@@ -492,7 +492,7 @@ public class Player {
 
         ArrayList<Integer> myList = this.get3CardPos();
         ArrayList<Integer> yourList = p.get3CardPos();
-
+        
         Card myCard, yourCard;
         int j, k;
 

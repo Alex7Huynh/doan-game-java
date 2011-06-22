@@ -1,13 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * Login.java
- *
- * Created on Jun 8, 2011, 9:40:40 PM
- */
 package hearts_client;
 
 import java.io.BufferedReader;

@@ -1,5 +1,6 @@
 package mypackage;
 
+import hearts_client.ConnectJFrame;
 import java.awt.BorderLayout;
 import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
@@ -14,11 +15,13 @@ import javax.swing.border.EtchedBorder;
 
 public class Hearts implements MouseListener, ItemListener {
 
+    public ConnectJFrame ConnectF;
     private static final long serialVersionUID = 1L;
     private ArrayList<Card> cardList;
+    private Sound mySound;
     private JFrame myFrame;
     private JMenuBar menuBar;
-    private JMenu game, help;
+    private JMenu menuGame, menuHelp, menuOption;
     private JMenuItem menuItem;
     private JMenuItem showcard;
     private Checkbox slow, normal, fast;
@@ -30,7 +33,7 @@ public class Hearts implements MouseListener, ItemListener {
     private Player firstPlayer;							//nguoi choi dau tien trong moi luot
     private String txtScore;	//String thong bao hien thi diem
     private static int labelIndex = -1;	//vi tri Label la bai duoc chon cua nguoi choi human
-    private static Card kiemtra;		//la bai danh ra cua nguoi choi dau tien trong luot
+    private static Card kiemtra;//la bai danh ra cua nguoi choi dau tien trong luot
     private Card Card2, Card3, Card4;	//la bai danh ra cua cac nguoi choi tiep theo
     private static boolean chatCo;
     private static boolean luotDau;
@@ -39,12 +42,16 @@ public class Hearts implements MouseListener, ItemListener {
     private final int MAX_SCORE = 100;			//diem so de xac dinh nguoi chien thang 
     //Animation Speed (timePlay, timeMove)
     //fast: (5, 1) normal: (30, 5) slow: (70, 7)
-    private int timePlay = 5;
-    private int timeMove = 1;
+    private int PlaySpeed = 5;
+    private int MoveSpeed = 1;
     //xac dinh bat dau mot vong choi moi
     private static boolean startNewRound = false;
     private static JButton newRoundButton;
-    //Thong bao cho nguoi choi
+    //Thành phần nội dung chat
+    private static JTextArea txtDisplayMessage;
+    private static JTextField txtSendMessage;
+    private static JButton btnSendMessage;
+    //Thông báo cho người chơi
     private static JLabel noteLabel;
     static boolean[] flag = new boolean[Player.SOQUANBAI];
     static ArrayList<Integer> pos = new ArrayList<Integer>(3);
@@ -58,18 +65,26 @@ public class Hearts implements MouseListener, ItemListener {
     //3: Human la nguoi Shoot The Moon
     private int CASE_FLAG = 0;
 
+    public void MakeConnection(ConnectJFrame connectJF) {
+        ConnectF = connectJF;
+    }
+
+    public void setTitle(String title) {
+        myFrame.setTitle(title);
+    }
+
     public void setPlayerName(int ID, String name) {
         if (ID == 0) {
             myFrame.setTitle(name);
-            pPlayerOne.setName(name);            
+            pPlayerOne.setName(name);
         } else if (ID == 1) {
-            pPlayerTwo.setName(name);            
+            pPlayerTwo.setName(name);
         } else if (ID == 2) {
-            pPlayerThree.setName(name);            
+            pPlayerThree.setName(name);
         } else if (ID == 3) {
             pPlayerFour.setName(name);
         }
-        
+
         PlayerName.set(ID, name);
         lblPlayerName[ID].setText(name);
     }
@@ -338,7 +353,7 @@ public class Hearts implements MouseListener, ItemListener {
         //====================================================================
         //					THIET LAP FRAME
         //====================================================================
-        myFrame = new JFrame("Hearts Game Java v1.0");
+        myFrame = new JFrame("Hearts Game Online v1.0");
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myFrame.setLayout(null);
         myFrame.setResizable(false);
@@ -354,13 +369,13 @@ public class Hearts implements MouseListener, ItemListener {
         myFrame.setJMenuBar(menuBar);
 
         //--------------------------------------------------------------------
-        game = new JMenu("Game");
-        game.setMnemonic('G');
-        menuBar.add(game);
+        menuGame = new JMenu("Game");
+        menuGame.setMnemonic('G');
+        menuBar.add(menuGame);
 
-        menuItem = new JMenuItem("Score...");
-        menuItem.setMnemonic('c');
-        game.add(menuItem);
+        menuItem = new JMenuItem("Statistics");
+        menuItem.setMnemonic('S');
+        menuGame.add(menuItem);
         menuItem.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
@@ -368,11 +383,11 @@ public class Hearts implements MouseListener, ItemListener {
                 //JOptionPane.showMessageDialog(null, txtScore, "Score Sheet", JOptionPane.INFORMATION_MESSAGE);
             }
         });
-        game.addSeparator();	//them dau nhom item
+        menuGame.addSeparator();	//them dau nhom item
 
-        final JMenuItem play = new JMenuItem("Automatic");
-        play.setMnemonic('t');
-        game.add(play);
+        final JMenuItem play = new JMenuItem("Automatic Play");
+        play.setMnemonic('A');
+        menuGame.add(play);
         play.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
@@ -388,20 +403,20 @@ public class Hearts implements MouseListener, ItemListener {
             }
         });
 
-        showcard = new JMenuItem("Show Computers Card");
+        showcard = new JMenuItem("Show Card");
         showcard.setMnemonic('S');
-        game.add(showcard);
+        menuGame.add(showcard);
         showcard.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                if (showcard.getText().equals("Show Computers Card")) {
-                    showcard.setText("Hide Computers Card");
+                if (showcard.getText().equals("Show Cards")) {
+                    showcard.setText("Hide Cards");
                     showcard.setMnemonic('H');
                     pPlayerTwo.showListCard(true);
                     pPlayerThree.showListCard(true);
                     pPlayerFour.showListCard(true);
                 } else {
-                    showcard.setText("Show Computers Card");
+                    showcard.setText("Show Cards");
                     showcard.setMnemonic('S');
                     pPlayerTwo.showListCard(false);
                     pPlayerThree.showListCard(false);
@@ -409,30 +424,31 @@ public class Hearts implements MouseListener, ItemListener {
                 }
             }
         });
-        game.addSeparator();	//them dau nhom item
+        menuGame.addSeparator();	//them dau nhom item
 
         menuItem = new JMenuItem("Exit");
         menuItem.setMnemonic('x');
-        game.add(menuItem);
+        menuGame.add(menuItem);
         menuItem.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
             }
         });
-
         //--------------------------------------------------------------------
-        help = new JMenu("Help");
-        help.setMnemonic('e');
-        menuBar.add(help);
+        initMenuOption();
+        //--------------------------------------------------------------------
+        menuHelp = new JMenu("Help");
+        menuHelp.setMnemonic('H');
+        menuBar.add(menuHelp);
 
         menuItem = new JMenuItem("About...");
         menuItem.setMnemonic('A');
-        help.add(menuItem);
+        menuHelp.add(menuItem);
         menuItem.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Design by: Luu Binh\nEmail: luubinh273@yahoo.com", "Hearts Game Java v1.0", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Sinh Viên:\nTrần Hưng Thuận  0812508.\nPhan Nhật Tiến   0812515.\nHuỳnh Công Toàn   0812527.\n\nGVHD: Nguyễn Văn Khiết.", "Hearts Game", JOptionPane.INFORMATION_MESSAGE);
             }
         });
 
@@ -457,13 +473,125 @@ public class Hearts implements MouseListener, ItemListener {
         north.add(slow);
         menuBar.add(north, BorderLayout.WEST);
     }
+
+    public void initMenuOption() {
+        menuOption = new JMenu("Option");
+        menuOption.setMnemonic('O');
+        menuBar.add(menuOption);
+        //--------------------Change Appearance---------------------
+        menuItem = new JMenu("Change Appearance");
+        JRadioButtonMenuItem Size16 = new JRadioButtonMenuItem("Size 16");
+        menuItem.add(Size16);
+        //menuItem.addSeparator();
+        menuOption.add(menuItem);
+        Size16.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                /*_sizeChangeCard = 1;
+                _nameDownPlayer.showListLabelCardPlayer(true, _sizeChangeCard);
+                _nameTopPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
+                _nameRightPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
+                _nameLeftPlayer.showListLabelCardPlayer(false, _sizeChangeCard);*/
+            }
+        });
+        JRadioButtonMenuItem Size14 = new JRadioButtonMenuItem("Size 14");
+        menuItem.add(Size14);
+        //menuItem.addSeparator();
+        menuOption.add(menuItem);
+        Size14.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                /*_sizeChangeCard = 2;
+                _nameDownPlayer.showListLabelCardPlayer(true, _sizeChangeCard);
+                _nameTopPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
+                _nameRightPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
+                _nameLeftPlayer.showListLabelCardPlayer(false, _sizeChangeCard);*/
+            }
+        });
+        JRadioButtonMenuItem Size12 = new JRadioButtonMenuItem("Size 12");
+        menuItem.add(Size12);
+        //menuItem.addSeparator();
+        menuOption.add(menuItem);
+        Size12.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                /*_sizeChangeCard = 3;
+                _nameDownPlayer.showListLabelCardPlayer(true, _sizeChangeCard);
+                _nameTopPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
+                _nameRightPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
+                _nameLeftPlayer.showListLabelCardPlayer(false, _sizeChangeCard);*/
+            }
+        });
+
+        JRadioButtonMenuItem Size10 = new JRadioButtonMenuItem("Size 10");
+        menuItem.add(Size10);
+        //menuItem.addSeparator();
+        menuOption.add(menuItem);
+        Size10.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                /*_sizeChangeCard = 4;
+                _nameDownPlayer.showListLabelCardPlayer(true, _sizeChangeCard);
+                _nameTopPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
+                _nameRightPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
+                _nameLeftPlayer.showListLabelCardPlayer(false, _sizeChangeCard);*/
+            }
+        });
+
+        //---------------------------------Change Speed--------------
+        menuItem = new JMenu("Change Speed");
+        JRadioButtonMenuItem menuItem_Quick = new JRadioButtonMenuItem("Quick");
+        menuItem.add(menuItem_Quick);
+        //menuItem.addSeparator();
+        menuOption.add(menuItem);
+        menuItem_Quick.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PlaySpeed = 5;
+                MoveSpeed = 1;
+                /*_speedPlayCard = 10;
+                _speedMoveCard = 2;*/
+            }
+        });
+        JRadioButtonMenuItem menuItem_Normal = new JRadioButtonMenuItem("Normal");
+        menuItem.add(menuItem_Normal);
+        //menuItem.addSeparator();
+        menuOption.add(menuItem);
+        menuItem_Normal.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PlaySpeed = 60;
+                MoveSpeed = 10;
+                //throw new UnsupportedOperationException("Not supported yet.");
+            }
+        });
+        JRadioButtonMenuItem menuItem_Slow = new JRadioButtonMenuItem("Slow");
+        menuItem.add(menuItem_Slow);
+        //menuItem.addSeparator();
+        menuOption.add(menuItem);
+        menuItem_Slow.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //throw new UnsupportedOperationException("Not supported yet.");
+                PlaySpeed = 150;
+                MoveSpeed = 16;
+            }
+        });
+    }
+
     //====================================================================
     // 							Chia bai
     //====================================================================
-
     public void createListCard(String message) {
-        String PlayerName = message.substring(0, message.indexOf("%"));
-        RealPlayerName.add(PlayerName);
+        String Name = message.substring(0, message.indexOf("%"));
+        RealPlayerName.add(Name);
         String NoiDung = message.substring(message.indexOf("%") + 1);
         String[] lstBai = new String[Card.NUM_OF_FACE];
         lstBai = NoiDung.split("%");
@@ -488,44 +616,13 @@ public class Hearts implements MouseListener, ItemListener {
             special_Deal_Card();
             return;
         }
-
-        /*String PlayerName = message.substring(0, message.indexOf("%"));
-        String NoiDung = message.substring(message.indexOf("%") + 1);
-        String[] lstBai = new String[Card.NUM_OF_FACE];
-        lstBai = NoiDung.split("%");
-        ArrayList<Card> cardList = new ArrayList<Card>();
-        for (int i = 0; i < Card.NUM_OF_FACE; ++i) {
-        String[] FaceSuit = lstBai[i].split("_");
-        int face = Integer.parseInt(FaceSuit[0]);            
-        for (int j = 0; j < Card.NUM_OF_SUIT; ++j) {
-        if (Card.Suit[j].equals(FaceSuit[1])) {
-        Card c = new Card(face, j);
-        if (pPlayerOne.getName().equals(PlayerName)) {
-        pPlayerOne.addACard(c);
-        }
-        else if (pPlayerTwo.getName().equals(PlayerName)) {
-        pPlayerTwo.addACard(c);
-        }
-        else if (pPlayerThree.getName().equals(PlayerName)) {
-        pPlayerThree.addACard(c);
-        }
-        else if (pPlayerFour.getName().equals(PlayerName)) {
-        pPlayerFour.addACard(c);
-        }
-        break;
-        }
-        }
-        }*/
         //Neu khong xet cac truong hop dac biet
-        //ArrayList<Card> cardList = Card.creatListCard();
-
-        //chia tung nhom 4 la bai co nguoi choi theo chieu kim dong ho, tinh tu human
         Card c;
         int StartIndex1 = -1;
         int StartIndex2 = -1;
         int StartIndex3 = -1;
         int StartIndex4 = -1;
-        
+
         for (int i = 0; i < PlayerName.size(); ++i) {
             if (pPlayerOne.getName().equals(RealPlayerName.get(i))) {
                 StartIndex1 = i;
@@ -538,20 +635,15 @@ public class Hearts implements MouseListener, ItemListener {
             }
         }
         for (int i = 0; i < Card.NUM_OF_FACE; ++i) {
-
-            //pJara
             c = cardList.get(i + StartIndex1 * Card.NUM_OF_FACE);
             pPlayerOne.addACard(c);
 
-            //pPauline
             c = cardList.get(i + StartIndex2 * Card.NUM_OF_FACE);
             pPlayerTwo.addACard(c);
 
-            //pMichele
             c = cardList.get(i + StartIndex3 * Card.NUM_OF_FACE);
             pPlayerThree.addACard(c);
 
-            //pBen
             c = cardList.get(i + StartIndex4 * Card.NUM_OF_FACE);
             pPlayerFour.addACard(c);
         }
@@ -568,11 +660,11 @@ public class Hearts implements MouseListener, ItemListener {
     //====================================================================
     public void special_Deal_Card() {
 
-        ArrayList<Card> cardList = Card.creatListCard();
+        ArrayList<Card> CardList = Card.creatListCard();
 
         //Chia bai cho cac nguoi theo chat
-        for (int i = 0; i < cardList.size(); i++) {
-            Card c = cardList.get(i);
+        for (int i = 0; i < CardList.size(); i++) {
+            Card c = CardList.get(i);
             //Chia ca quan bai chat Co cho pJara
             if (c.isHeart()) {
                 pPlayerOne.addACard(c);
@@ -717,7 +809,7 @@ public class Hearts implements MouseListener, ItemListener {
                 lbl.setLocation(lbl.getLocation().x + dx, lbl.getLocation().y + dy);
 
                 try {
-                    Thread.sleep(timeMove);
+                    Thread.sleep(MoveSpeed);
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -992,6 +1084,14 @@ public class Hearts implements MouseListener, ItemListener {
         pPlayerFour.sortCard();
     }
 
+    public void EnableClick(boolean enable) {
+        CLICK_ENABLE = enable;
+    }
+
+    public void CoQuyenDiCo(boolean enable) {
+        chatCo = enable;
+    }
+
     //====================================================================
     // 							New Round
     //====================================================================
@@ -1046,7 +1146,7 @@ public class Hearts implements MouseListener, ItemListener {
             System.out.println(p1.getName() + kiemtra.toString());
 
             try {
-                Thread.sleep(timePlay);
+                Thread.sleep(PlaySpeed);
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -1062,7 +1162,7 @@ public class Hearts implements MouseListener, ItemListener {
             System.out.println(p2.getName() + Card2.toString());
 
             try {
-                Thread.sleep(timePlay);
+                Thread.sleep(PlaySpeed);
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -1078,7 +1178,7 @@ public class Hearts implements MouseListener, ItemListener {
             System.out.println(p3.getName() + Card3.toString());
 
             try {
-                Thread.sleep(timePlay);
+                Thread.sleep(PlaySpeed);
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -1153,7 +1253,7 @@ public class Hearts implements MouseListener, ItemListener {
 //	}
     @Override
     public void mouseClicked(MouseEvent arg0) {
-        // TODO Auto-generated method stub	
+        //Đánh dấu label vừa được click
         if (arg0.getSource() == lblHuman[0] && CLICK_ENABLE) {
             labelIndex = 0;
         }
@@ -1193,20 +1293,32 @@ public class Hearts implements MouseListener, ItemListener {
         if (arg0.getSource() == lblHuman[12] && CLICK_ENABLE) {
             labelIndex = 12;
         }
-
+        if (0 <= labelIndex && labelIndex <= 12) {
+            mySound = new Sound();
+            mySound.playFileSound(Card.SOUND_PLAY_CLICK_CARD);
+            String Message = "1%" + PlayerName.get(0) + "%"
+                    + pPlayerOne.getListCard().get(labelIndex).toString();
+            ConnectF.sendMessage(Message);
+        }
         if (get3card) {
             if (labelIndex != -1) {
                 if (flag[labelIndex] == false) {
                     if (pos.size() < 3) {
+                        //Đẩy label lên để phân biệt
                         JLabel lbl = pPlayerOne.getListCardLabel()[labelIndex];
                         lbl.setLocation(lbl.getLocation().x, lbl.getLocation().y - 20);
+                        //Đánh dấu lá bài được chọn để xét bỏ chọn hay không
                         flag[labelIndex] = true;
+                        //Thêm vào danh sách 3 lá
                         pos.add(new Integer(labelIndex));
                     }
                 } else {
+                    //Đẩy label lên để phân biệt
                     JLabel lbl = pPlayerOne.getListCardLabel()[labelIndex];
                     lbl.setLocation(lbl.getLocation().x, lbl.getLocation().y + 20);
+                    //Đánh dấu lá bài được chọn để xét bỏ chọn hay không
                     flag[labelIndex] = false;
+                    //Bỏ lá này đi trong danh sách 3 lá
                     pos.remove(new Integer(labelIndex));
                 }
             }
@@ -1238,20 +1350,58 @@ public class Hearts implements MouseListener, ItemListener {
         // TODO Auto-generated method stub
         if (this.fast.getState()) {
             //Fast speed
-            this.timePlay = 5;
-            this.timeMove = 1;
+            this.PlaySpeed = 5;
+            this.MoveSpeed = 1;
         }
 
         if (this.normal.getState()) {
             //Normal speed
-            this.timePlay = 30;
-            this.timeMove = 5;
+            this.PlaySpeed = 30;
+            this.MoveSpeed = 5;
         }
 
         if (this.slow.getState()) {
             //Slow speed
-            this.timePlay = 70;
-            this.timeMove = 7;
+            this.PlaySpeed = 70;
+            this.MoveSpeed = 7;
         }
+    }
+
+    public void initChatField() {
+        //Hien thi hang noi dung chat
+        txtDisplayMessage = new JTextArea("Chưa gửi thông tin");
+        txtDisplayMessage.setSize(185, 65);
+        txtDisplayMessage.setLocation(610, 560);
+
+        //Text box chat
+        txtSendMessage = new JTextField("Nhập nội dung");
+        txtSendMessage.setSize(122, 25);
+        txtSendMessage.setLocation(610, 625);
+
+        //Button send noi dung chat
+        btnSendMessage = new JButton("Send");
+        btnSendMessage.setSize(63, 25);
+        btnSendMessage.setLocation(732, 625);
+        btnSendMessage.setBackground(Color.GRAY);
+        btnSendMessage.setForeground(Color.RED);
+        btnSendMessage.setVisible(true);
+        btnSendMessage.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                txtDisplayMessage.setText(pPlayerOne.getName() + ": " + txtSendMessage.getText().trim());
+                ConnectF.sendMessage("2%" + txtSendMessage.getText().trim());
+            }
+        });
+
+        myFrame.add(txtDisplayMessage);
+        myFrame.add(txtSendMessage);
+        myFrame.add(btnSendMessage);
+    }
+
+    public void receiveMessage(String message) {
+        String Message = txtDisplayMessage.getText() + "\n";
+        Message += message;
+        txtDisplayMessage.setText(Message);
     }
 }

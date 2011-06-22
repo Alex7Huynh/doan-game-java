@@ -155,7 +155,7 @@ public class GameJFrame extends javax.swing.JFrame {
         }
         });*/
         //myGame = new Hearts();        
-        myGame.newGame();
+        //myGame.newGame();
     }
     public static Hearts myGame;
 
@@ -165,6 +165,14 @@ public class GameJFrame extends javax.swing.JFrame {
     public void createListCard(String message)
     {
         myGame.createListCard(message);
+    }
+    public void ToiLuotChoi()
+    {
+        myGame.EnableClick(true);
+    }
+    public void CoQuyenDiCo()
+    {
+        myGame.CoQuyenDiCo(true);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JLabel LabBai;
