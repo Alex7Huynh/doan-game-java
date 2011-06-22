@@ -12,6 +12,8 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import mypackage.Hearts;
+
 /**
  *
  * @author Czytelnik
@@ -22,7 +24,8 @@ public class ListenThread extends Thread {
     BufferedReader BuffReader;
     ConnectJFrame ConnectF;
     LoginJFrame LoginF;
-    GameJFrame GameF;
+    //GameJFrame GameF;
+    Hearts myHearts;
     boolean Running;
     int LanGui = 0;
 
@@ -68,11 +71,16 @@ public class ListenThread extends Thread {
                         }
                         if (NoiDung.startsWith("BatDauChoi")) {
                             LoginF.setVisible(false);
-                            GameF = new GameJFrame(ConnectF);
+                            //GameF = new GameJFrame(ConnectF);
+                            
+                            myHearts = new Hearts();
+                            myHearts.MakeConnection(ConnectF);
 
-                            //GameF.MyName= ConnectF.MyName;                            
-                            GameF.setPlayerName(0, ConnectF.MyName);
-                            GameF.setTitle(ConnectF.MyName);
+                            //GameF.MyName= ConnectF.MyName;
+                            //GameF.setPlayerName(0, ConnectF.MyName);
+                            myHearts.setPlayerName(0, ConnectF.MyName);
+                            //GameF.setTitle(ConnectF.MyName);
+                            myHearts.setTitle(ConnectF.MyName);
                             NoiDung = NoiDung.substring(NoiDung.indexOf("%") + 1);
                             String temp[] = NoiDung.split("%");
                             int dem = 0;
@@ -84,7 +92,8 @@ public class ListenThread extends Thread {
                             }
                             for (int i = 0; i < 3; i++) {
                                 //GameF.YourName[i]=temp[++dem%4];
-                                GameF.setPlayerName(i + 1, temp[++dem % 4]);
+                                //GameF.setPlayerName(i + 1, temp[++dem % 4]);
+                                myHearts.setPlayerName(i + 1, temp[++dem % 4]);
                             }
 //                            GameF.LabMy.setText(GameF.MyName);
 //                            GameF.LabYou1.setText(GameF.YourName[0]);
@@ -98,52 +107,69 @@ public class ListenThread extends Thread {
                         break;
                     }
                     case 2: {
-                        GameF.LabMeg.setText(NoiDung);
+                        //GameF.LabMeg.setText(NoiDung);
+                        Hearts.notice(NoiDung);
                         break;
                     }
                     case 3: {
                         //GameF.LabBai.setText(NoiDung);
-                        GameF.createListCard(NoiDung);
+                        //GameF.createListCard(NoiDung);
+                        myHearts.createListCard(NoiDung);
                         LanGui++;
                         if(LanGui == 4)
-                            GameF.myGame.newGame();
+                            //GameF.myGame.newGame();
+                            myHearts.newGame();
                         break;
                     }
                     case 4: {
-                        GameF.LabMeg.setText(NoiDung);
+                        //GameF.LabMeg.setText(NoiDung);
+                        Hearts.notice(NoiDung);
                         break;
                     }
                     case 5: {
-                        GameF.LabMeg.setText(NoiDung);
+                        //GameF.LabMeg.setText(NoiDung);
+                        //GameF.ToiLuotChoi();
+                        myHearts.EnableClick(true);
                         break;
                     }
                     case 6: {
-                        GameF.LabMeg.setText(NoiDung);
+                        //GameF.LabMeg.setText(NoiDung);
+                        Hearts.notice(NoiDung);
                         break;
                     }
                     case 7: {
-                        GameF.LabMeg.setText(NoiDung);
+                        //GameF.LabMeg.setText(NoiDung);
+                        //GameF.CoQuyenDiCo();
+                        myHearts.CoQuyenDiCo(true);
                         break;
                     }
                     case 8: {
-                        GameF.LabMeg.setText(NoiDung);
+                        //GameF.LabMeg.setText(NoiDung);
+                        Hearts.notice(NoiDung);
                         break;
                     }
                     case 9: {
-                        GameF.LabMeg.setText(NoiDung);
+                        //GameF.LabMeg.setText(NoiDung);
+                        Hearts.notice(NoiDung);
                         break;
                     }
                     case 10: {
-                        GameF.LabMeg.setText(NoiDung);
+                        //GameF.LabMeg.setText(NoiDung);
+                        Hearts.notice(NoiDung);
                         break;
                     }
                     case 11: {
-                        GameF.LabMeg.setText(NoiDung);
+                        //GameF.LabMeg.setText(NoiDung);
+                        Hearts.notice(NoiDung);
                         break;
                     }
-
+                    case 12: {
+                        Hearts.notice(NoiDung);
+                    }
+                    case 13: {
+                        myHearts.receiveMessage(NoiDung);
+                    }
                 }
-
             }
         } catch (IOException ex) {
             Logger.getLogger(ListenThread.class.getName()).log(Level.SEVERE, null, ex);

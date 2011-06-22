@@ -11,6 +11,7 @@
 
 package hearts_client;
 
+import java.awt.Color;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,8 +22,8 @@ public class LoginJFrame extends javax.swing.JFrame {
     public ConnectJFrame ConnectF;
     /** Creates new form LoginJFrame */
     public LoginJFrame(ConnectJFrame cf) {
-        initComponents();
-        ConnectF=cf;
+        initComponents();        
+        ConnectF = cf;
     }
     public LoginJFrame() {
         initComponents();

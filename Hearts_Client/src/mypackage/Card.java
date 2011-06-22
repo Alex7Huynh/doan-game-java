@@ -6,9 +6,13 @@ import java.util.Random;
 
 public class Card {
 	
-	private static final long serialVersionUID = 1L;
-	
-	public static final int NUM_OF_SUIT = 4;
+	//private static final long serialVersionUID = 1L;
+        //Âm thanh
+	public static final String SOUND_PLAY_CLICK_CARD = "resources/sound/clickcard.wav";//File name dùng để click lên lá bài
+        public static final String SOUND_PLAY_GAMEOVER = "resources/sound/gameOver.wav";//File name dùng để thong bao game over
+        public static final String SOUND_PLAY_DEALGAME = "resources/sound/delaCard.wav";//Sound "Chia bai"
+        //Số lá bài tổng cộng, chất bài, lá bài trong 1 chất
+        public static final int NUM_OF_SUIT = 4;
 	public static final int NUM_OF_FACE = 13;
 	public static final int NUM_OF_CARD = 52;
 	
