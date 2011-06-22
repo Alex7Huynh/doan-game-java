@@ -147,9 +147,9 @@ public class ConnectJFrame extends javax.swing.JFrame {
         try {
             ClientS = new Socket(jTextIP.getText(), Integer.parseInt(jTextPort.getText().trim()));
             InputStream is = ClientS.getInputStream();
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            BufferedReader br = new BufferedReader(new InputStreamReader(is,"utf8"));
             OutputStream os = ClientS.getOutputStream();
-            BuffWriter = new BufferedWriter(new OutputStreamWriter(os));
+            BuffWriter = new BufferedWriter(new OutputStreamWriter(os,"utf8"));
             ListenT =new ListenThread(this,ClientS, br);
             BuffWriter.write("Hello\n");
             BuffWriter.flush();
