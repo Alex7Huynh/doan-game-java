@@ -109,6 +109,7 @@ public class ListenThread extends Thread {
                     case 2: {
                         //GameF.LabMeg.setText(NoiDung);
                         Hearts.notice(NoiDung);
+                        myHearts.xuLyKetQuaLuotChuoi(NoiDung);
                         break;
                     }
                     case 3: {
@@ -135,17 +136,19 @@ public class ListenThread extends Thread {
                     case 6: {
                         //GameF.LabMeg.setText(NoiDung);
                         Hearts.notice(NoiDung);
+                        myHearts.showPlayCard(NoiDung);
                         break;
                     }
                     case 7: {
                         //GameF.LabMeg.setText(NoiDung);
-                        //GameF.CoQuyenDiCo();
+                        Hearts.notice(NoiDung);
                         myHearts.CoQuyenDiCo(true);
                         break;
                     }
                     case 8: {
                         //GameF.LabMeg.setText(NoiDung);
                         Hearts.notice(NoiDung);
+                        myHearts.thongBaoVanChoiKetThuc(NoiDung);
                         break;
                     }
                     case 9: {
