@@ -541,8 +541,8 @@ public class Player {
         //right.chose3Card();
         this.chose3Card();
         String Message = "1%" + listCard.get(list3Card.get(0)).toString()
-                + listCard.get(list3Card.get(1)).toString()
-                + listCard.get(list3Card.get(2)).toString();
+                + "%" + listCard.get(list3Card.get(1)).toString()
+                + "%" + listCard.get(list3Card.get(2)).toString();
                 Hearts.ConnectF.sendMessage(Message);
                 
         /*switch (turn) {
@@ -640,5 +640,17 @@ public class Player {
     public void newGame() {
         this.score = 0;
         this.newRound();
+    }
+    
+    public void clearChangeCard()
+    {
+        if(list3Card != null)
+            list3Card.clear();
+        else
+            list3Card = new ArrayList<Integer>();
+    }
+    public void setChangeCard(int ID)
+    {        
+        list3Card.add(new Integer(ID));     
     }
 }

@@ -321,38 +321,44 @@ public class GameThread extends Thread {
                     }
                 }
             }
+            for (int i = 0; i < 4; ++i) {
+                for (int j = 0; j < 4; ++j) {
+                    ListenT.ListClient[i].BuffWriter.write("11%" + ListenT.ListClient[j].Name + "%" + MessageClient[j] + "\n");
+                    ListenT.ListClient[i].BuffWriter.flush();
+                }
+            }
             //Gui bài lại cho client
             //Các Trường hợp tùy theo số thự tự ván hiện tại
-            if (VanBai % 4 == 1) {
-                ListenT.ListClient[0].BuffWriter.write("11%" + MessageClient[3] + "\n");
-                ListenT.ListClient[0].BuffWriter.flush();
-                ListenT.ListClient[1].BuffWriter.write("11%" + MessageClient[0] + "\n");
-                ListenT.ListClient[1].BuffWriter.flush();
-                ListenT.ListClient[2].BuffWriter.write("11%" + MessageClient[1] + "\n");
-                ListenT.ListClient[2].BuffWriter.flush();
-                ListenT.ListClient[3].BuffWriter.write("11%" + MessageClient[2] + "\n");
-                ListenT.ListClient[3].BuffWriter.flush();
+            /*if (VanBai % 4 == 1) {
+            ListenT.ListClient[0].BuffWriter.write("11%" + MessageClient[3] + "\n");
+            ListenT.ListClient[0].BuffWriter.flush();
+            ListenT.ListClient[1].BuffWriter.write("11%" + MessageClient[0] + "\n");
+            ListenT.ListClient[1].BuffWriter.flush();
+            ListenT.ListClient[2].BuffWriter.write("11%" + MessageClient[1] + "\n");
+            ListenT.ListClient[2].BuffWriter.flush();
+            ListenT.ListClient[3].BuffWriter.write("11%" + MessageClient[2] + "\n");
+            ListenT.ListClient[3].BuffWriter.flush();
             }
             if (VanBai % 4 == 2) {
-                ListenT.ListClient[0].BuffWriter.write("11%" + MessageClient[1] + "\n");
-                ListenT.ListClient[0].BuffWriter.flush();
-                ListenT.ListClient[1].BuffWriter.write("11%" + MessageClient[2] + "\n");
-                ListenT.ListClient[1].BuffWriter.flush();
-                ListenT.ListClient[2].BuffWriter.write("11%" + MessageClient[3] + "\n");
-                ListenT.ListClient[2].BuffWriter.flush();
-                ListenT.ListClient[3].BuffWriter.write("11%" + MessageClient[0] + "\n");
-                ListenT.ListClient[3].BuffWriter.flush();
+            ListenT.ListClient[0].BuffWriter.write("11%" + MessageClient[1] + "\n");
+            ListenT.ListClient[0].BuffWriter.flush();
+            ListenT.ListClient[1].BuffWriter.write("11%" + MessageClient[2] + "\n");
+            ListenT.ListClient[1].BuffWriter.flush();
+            ListenT.ListClient[2].BuffWriter.write("11%" + MessageClient[3] + "\n");
+            ListenT.ListClient[2].BuffWriter.flush();
+            ListenT.ListClient[3].BuffWriter.write("11%" + MessageClient[0] + "\n");
+            ListenT.ListClient[3].BuffWriter.flush();
             }
             if (VanBai % 4 == 3) {
-                ListenT.ListClient[0].BuffWriter.write("11%" + MessageClient[2] + "\n");
-                ListenT.ListClient[0].BuffWriter.flush();
-                ListenT.ListClient[1].BuffWriter.write("11%" + MessageClient[3] + "\n");
-                ListenT.ListClient[1].BuffWriter.flush();
-                ListenT.ListClient[2].BuffWriter.write("11%" + MessageClient[0] + "\n");
-                ListenT.ListClient[2].BuffWriter.flush();
-                ListenT.ListClient[3].BuffWriter.write("11%" + MessageClient[1] + "\n");
-                ListenT.ListClient[3].BuffWriter.flush();
-            }
+            ListenT.ListClient[0].BuffWriter.write("11%" + MessageClient[2] + "\n");
+            ListenT.ListClient[0].BuffWriter.flush();
+            ListenT.ListClient[1].BuffWriter.write("11%" + MessageClient[3] + "\n");
+            ListenT.ListClient[1].BuffWriter.flush();
+            ListenT.ListClient[2].BuffWriter.write("11%" + MessageClient[0] + "\n");
+            ListenT.ListClient[2].BuffWriter.flush();
+            ListenT.ListClient[3].BuffWriter.write("11%" + MessageClient[1] + "\n");
+            ListenT.ListClient[3].BuffWriter.flush();
+            }*/
         } catch (IOException ex) {
             Logger.getLogger(GameThread.class.getName()).log(Level.SEVERE, null, ex);
         }
