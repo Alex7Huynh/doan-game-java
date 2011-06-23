@@ -98,113 +98,113 @@ public class GameThread extends Thread {
                 }
                 //Gui Chuoi Bai Cho 4 Client
                 for (int i = 0; i < 4; i++) {
-                    for (int j = 0; j < 4; j++) {
-                        ListenT.ListClient[i].BuffWriter.write(ChuoiBaiGuiClient[j] + "\n");
-                        ListenT.ListClient[i].BuffWriter.flush();
-                    }
+                    ListenT.ListClient[i].BuffWriter.write(ChuoiBaiGuiClient[i]+"\n");
+                    ListenT.ListClient[i].BuffWriter.flush();
                 }
                 //Xem Co Trao Doi Bai Khong
                 if (VanBai % 4 != 0) {
                     LuotDi = QuaTrinhTraoDoiBai(VanBai, LuotDi);
 
-                    // kiểm tra xem co client nào lấy 2 chuồn đem trao đổi không.
-                    // gán biến Lượt Đi cho client nào giữ 2 chuồn sau khi trao đổi bài
-
-                    String LoaiBai = "";
-                    String BaiClient[] = new String[4];
-                    boolean DiCo = false;
-                    for (int i = 0; i < 13; i++) {
-                        for (int j = 0; j < 4; j++) {
-                            ListenT.ListClient[LuotDi].BuffWriter.write("5%DenLuotDi\n");
-                            ListenT.ListClient[LuotDi].BuffWriter.flush();
-                            while (MessageClient[LuotDi].equals("")) {
-                                Thread.sleep(2000);
-                            }
-                            BaiClient[LuotDi] = MessageClient[LuotDi];
-                            MessageClient[LuotDi] = "";
+                    for (int i = 0; i < 4; i++) {
+                        MessageClient[i] = "";
+                    }
+                }
+                
+                String LoaiBai = "";
+                String BaiClient[] = new String[4];
+                boolean DiCo = false;
+                for (int i = 0; i < 13; i++) {
+                    for (int j = 0; j < 4; j++) {
+                        ListenT.ListClient[LuotDi].BuffWriter.write("5%DenLuotDi\n");
+                        ListenT.ListClient[LuotDi].BuffWriter.flush();
+                        while (MessageClient[LuotDi].equals("")) {
+                            Thread.sleep(2000);
+                        }
+                        BaiClient[LuotDi] = MessageClient[LuotDi];
+                        MessageClient[LuotDi] = "";
+                        for (int k = 1; k < 4; k++) {
+                            ListenT.ListClient[(LuotDi + k) % 4].BuffWriter.write("6%" + ListenT.ListClient[LuotDi].Name + "%" + BaiClient[LuotDi] + "\n");
+                            ListenT.ListClient[(LuotDi + k) % 4].BuffWriter.flush();
+                        }
+                        // nếu là lượt đầu tiên thì lưu lại loại bài để tính điểm
+                        if (j == 0) {
+                            LoaiBai = BaiClient[LuotDi].substring(BaiClient[LuotDi].indexOf("_") + 1);
                             for (int k = 1; k < 4; k++) {
-                                ListenT.ListClient[(LuotDi + k) % 4].BuffWriter.write("6%" + ListenT.ListClient[LuotDi].Name + "%" + BaiClient[LuotDi] + "\n");
+                                ListenT.ListClient[(LuotDi + k) % 4].BuffWriter.write("12%" + LoaiBai + "\n");
                                 ListenT.ListClient[(LuotDi + k) % 4].BuffWriter.flush();
                             }
-                            // nếu là lượt đầu tiên thì lưu lại loại bài để tính điểm
-                            if (j == 0) {
-                                LoaiBai = BaiClient[LuotDi].substring(BaiClient[LuotDi].indexOf("_") + 1);
-                                for (int k = 1; k < 4; k++) {
-                                    ListenT.ListClient[(LuotDi + k) % 4].BuffWriter.write("12%" + LoaiBai + "\n");
-                                    ListenT.ListClient[(LuotDi + k) % 4].BuffWriter.flush();
-                                }
-                            }
-                            // kiểm tra xem có quyền đi cơ chưa. nếu chưa có quyền đi cơ mà có 1 client đi cơ thì gửi thông báo
-                            //được quyền đi cơ cho 4 client
-                            if (DiCo == false) {
-                                if (BaiClient[LuotDi].substring(BaiClient[LuotDi].indexOf("_") + 1).equals("Co")) {
-                                    DiCo = true;
-                                    for (int l = 0; l < 4; l++) {
-                                        ListenT.ListClient[l].BuffWriter.write("7%CoQuyenDiCo\n");
-                                        ListenT.ListClient[l].BuffWriter.flush();
-                                    }
-                                }
-                            }
-                            LuotDi = (LuotDi + 1) % 4;
                         }
-                        //Kết thúc 1 lượt chơi
-                        int BaiMax = 0;
-                        int DiemThua = 0;
-                        int ClientThua = 0;
-                        for (int j = 0; j < 4; j++) {
-                            if (BaiClient[j].substring(BaiClient[j].indexOf("_") + 1).equals(LoaiBai)) {
-                                int temp = Integer.parseInt(BaiClient[j].substring(0, BaiClient[j].indexOf("_")));
-                                if (temp > BaiMax) {
-                                    BaiMax = temp;
-                                    ClientThua = j;
+                        // kiểm tra xem có quyền đi cơ chưa. nếu chưa có quyền đi cơ mà có 1 client đi cơ thì gửi thông báo
+                        //được quyền đi cơ cho 4 client
+                        if (DiCo == false) {
+                            if (BaiClient[LuotDi].substring(BaiClient[LuotDi].indexOf("_") + 1).equals("Co")) {
+                                DiCo = true;
+                                for (int l = 0; l < 4; l++) {
+                                    ListenT.ListClient[l].BuffWriter.write("7%CoQuyenDiCo\n");
+                                    ListenT.ListClient[l].BuffWriter.flush();
                                 }
-                            }
-                            //Tính điểm thua
-                            if (BaiClient[j].indexOf("Co") != -1) {
-                                DiemThua++;
-                            }
-                            if (BaiClient[j].equals("12_Bich")) {
-                                DiemThua += 13;
                             }
                         }
-
-                        DiemVanHienTai[ClientThua] += DiemThua;
-                        //ListenT.ListClient[ClientThua].Diem += DiemThua;
-                        LuotDi = ClientThua;
-                        for (int j = 0; j < 4; j++) {
-                            ListenT.ListClient[j].BuffWriter.write("2%" + ListenT.ListClient[ClientThua].Name + "%" + DiemVanHienTai[ClientThua] + "\n");
-                            ListenT.ListClient[j].BuffWriter.flush();
+                        LuotDi = (LuotDi + 1) % 4;
+                    }
+                    //Kết thúc 1 lượt chơi
+                    int BaiMax = 0;
+                    int DiemThua = 0;
+                    int ClientThua = 0;
+                    for (int j = 0; j < 4; j++) {
+                        if (BaiClient[j].substring(BaiClient[j].indexOf("_") + 1).equals(LoaiBai)) {
+                            int temp = Integer.parseInt(BaiClient[j].substring(0, BaiClient[j].indexOf("_")));
+                            if (temp > BaiMax) {
+                                BaiMax = temp;
+                                ClientThua = j;
+                            }
+                        }
+                        //Tính điểm thua
+                        if (BaiClient[j].indexOf("Co") != -1) {
+                            DiemThua++;
+                        }
+                        if (BaiClient[j].equals("12_Bich")) {
+                            DiemThua += 13;
                         }
                     }
 
-                    //Kết thúc 1 ván chơi
-                    // kiểm tra có trường hợp 1 client gom 26 điểm không
-                    int Client26 = -1;
+                    DiemVanHienTai[ClientThua] += DiemThua;
+                    //ListenT.ListClient[ClientThua].Diem += DiemThua;
+                    LuotDi = ClientThua;
+                    for (int j = 0; j < 4; j++) {
+                        ListenT.ListClient[j].BuffWriter.write("2%" + ListenT.ListClient[ClientThua].Name + "%" + DiemVanHienTai[ClientThua] + "\n");
+                        ListenT.ListClient[j].BuffWriter.flush();
+                    }
+                }
+
+                //Kết thúc 1 ván chơi
+                // kiểm tra có trường hợp 1 client gom 26 điểm không
+                int Client26 = -1;
+                for (int i = 0; i < 4; i++) {
+                    if (DiemVanHienTai[i] == 26) {
+                        Client26 = i;
+                        break;
+                    }
+                }
+
+                // Nếu có trường hợp Client26 thì tính diểm lại cho các client ván chơi này.
+                if (Client26 != -1) {
                     for (int i = 0; i < 4; i++) {
-                        if (DiemVanHienTai[i] == 26) {
-                            Client26 = i;
-                            break;
+                        if (i != Client26) {
+                            DiemVanHienTai[i] = 26;
+                        } else {
+                            DiemVanHienTai[i] = 0;
                         }
                     }
+                }
+                //gui ket quan van choi cho 4 client
+                for (int i = 0; i < 4; i++) {
+                    ListenT.ListClient[i].BuffWriter.write("10%" + ListenT.ListClient[0].Name + "%" + DiemVanHienTai[0] + "%" + ListenT.ListClient[1].Name + "%" + DiemVanHienTai[1] + "%" + ListenT.ListClient[2].Name + "%" + DiemVanHienTai[2] + "%" + ListenT.ListClient[3].Name + "%" + DiemVanHienTai[3] + "\n");
+                    ListenT.ListClient[i].BuffWriter.flush();
+                    ListenT.ListClient[i].TongDiem += DiemVanHienTai[i];
+                }
 
-                    // Nếu có trường hợp Client26 thì tính diểm lại cho các client ván chơi này.
-                    if (Client26 != -1) {
-                        for (int i = 0; i < 4; i++) {
-                            if (i != Client26) {
-                                DiemVanHienTai[i] = 26;
-                            } else {
-                                DiemVanHienTai[i] = 0;
-                            }
-                        }
-                    }
-                    //gui ket quan van choi cho 4 client
-                    for (int i = 0; i < 4; i++) {
-                        ListenT.ListClient[i].BuffWriter.write("10%" + ListenT.ListClient[0].Name + "%" + DiemVanHienTai[0] + "%" + ListenT.ListClient[1].Name + "%" + DiemVanHienTai[1] + "%" + ListenT.ListClient[2].Name + "%" + DiemVanHienTai[2] + "%" + ListenT.ListClient[3].Name + "%" + DiemVanHienTai[3] + "\n");
-                        ListenT.ListClient[i].BuffWriter.flush();
-                        ListenT.ListClient[i].TongDiem += DiemVanHienTai[i];
-                    }
-
-                }// Kết thúc trò chơi
+                // Kết thúc trò chơi
                 for (int i = 0; i < 4; i++) {
 
                     ListenT.ListClient[i].BuffWriter.write("8%" + ListenT.ListClient[0].Name + "%" + ListenT.ListClient[0].TongDiem + "%" + ListenT.ListClient[1].Name + "%" + ListenT.ListClient[1].TongDiem + "%" + ListenT.ListClient[2].Name + "%" + ListenT.ListClient[2].TongDiem + "%" + ListenT.ListClient[3].Name + "%" + ListenT.ListClient[3].TongDiem + "\n");
@@ -321,44 +321,46 @@ public class GameThread extends Thread {
                     }
                 }
             }
-            for (int i = 0; i < 4; ++i) {
-                for (int j = 0; j < 4; ++j) {
-                    ListenT.ListClient[i].BuffWriter.write("11%" + ListenT.ListClient[j].Name + "%" + MessageClient[j] + "\n");
-                    ListenT.ListClient[i].BuffWriter.flush();
-                }
+            
+            /*for (int i = 0; i < 4; ++i) {
+            for (int j = 0; j < 4; ++j) {
+            ListenT.ListClient[i].BuffWriter.write("11%" + ListenT.ListClient[j].Name + "%" + MessageClient[j] + "\n");
+            ListenT.ListClient[i].BuffWriter.flush();
             }
+            }*/
+            
             //Gui bài lại cho client
             //Các Trường hợp tùy theo số thự tự ván hiện tại
-            /*if (VanBai % 4 == 1) {
-            ListenT.ListClient[0].BuffWriter.write("11%" + MessageClient[3] + "\n");
-            ListenT.ListClient[0].BuffWriter.flush();
-            ListenT.ListClient[1].BuffWriter.write("11%" + MessageClient[0] + "\n");
-            ListenT.ListClient[1].BuffWriter.flush();
-            ListenT.ListClient[2].BuffWriter.write("11%" + MessageClient[1] + "\n");
-            ListenT.ListClient[2].BuffWriter.flush();
-            ListenT.ListClient[3].BuffWriter.write("11%" + MessageClient[2] + "\n");
-            ListenT.ListClient[3].BuffWriter.flush();
+            if (VanBai % 4 == 1) {
+                ListenT.ListClient[0].BuffWriter.write("11%" + MessageClient[3] + "\n");
+                ListenT.ListClient[0].BuffWriter.flush();
+                ListenT.ListClient[1].BuffWriter.write("11%" + MessageClient[0] + "\n");
+                ListenT.ListClient[1].BuffWriter.flush();
+                ListenT.ListClient[2].BuffWriter.write("11%" + MessageClient[1] + "\n");
+                ListenT.ListClient[2].BuffWriter.flush();
+                ListenT.ListClient[3].BuffWriter.write("11%" + MessageClient[2] + "\n");
+                ListenT.ListClient[3].BuffWriter.flush();
             }
             if (VanBai % 4 == 2) {
-            ListenT.ListClient[0].BuffWriter.write("11%" + MessageClient[1] + "\n");
-            ListenT.ListClient[0].BuffWriter.flush();
-            ListenT.ListClient[1].BuffWriter.write("11%" + MessageClient[2] + "\n");
-            ListenT.ListClient[1].BuffWriter.flush();
-            ListenT.ListClient[2].BuffWriter.write("11%" + MessageClient[3] + "\n");
-            ListenT.ListClient[2].BuffWriter.flush();
-            ListenT.ListClient[3].BuffWriter.write("11%" + MessageClient[0] + "\n");
-            ListenT.ListClient[3].BuffWriter.flush();
+                ListenT.ListClient[0].BuffWriter.write("11%" + MessageClient[1] + "\n");
+                ListenT.ListClient[0].BuffWriter.flush();
+                ListenT.ListClient[1].BuffWriter.write("11%" + MessageClient[2] + "\n");
+                ListenT.ListClient[1].BuffWriter.flush();
+                ListenT.ListClient[2].BuffWriter.write("11%" + MessageClient[3] + "\n");
+                ListenT.ListClient[2].BuffWriter.flush();
+                ListenT.ListClient[3].BuffWriter.write("11%" + MessageClient[0] + "\n");
+                ListenT.ListClient[3].BuffWriter.flush();
             }
             if (VanBai % 4 == 3) {
-            ListenT.ListClient[0].BuffWriter.write("11%" + MessageClient[2] + "\n");
-            ListenT.ListClient[0].BuffWriter.flush();
-            ListenT.ListClient[1].BuffWriter.write("11%" + MessageClient[3] + "\n");
-            ListenT.ListClient[1].BuffWriter.flush();
-            ListenT.ListClient[2].BuffWriter.write("11%" + MessageClient[0] + "\n");
-            ListenT.ListClient[2].BuffWriter.flush();
-            ListenT.ListClient[3].BuffWriter.write("11%" + MessageClient[1] + "\n");
-            ListenT.ListClient[3].BuffWriter.flush();
-            }*/
+                ListenT.ListClient[0].BuffWriter.write("11%" + MessageClient[2] + "\n");
+                ListenT.ListClient[0].BuffWriter.flush();
+                ListenT.ListClient[1].BuffWriter.write("11%" + MessageClient[3] + "\n");
+                ListenT.ListClient[1].BuffWriter.flush();
+                ListenT.ListClient[2].BuffWriter.write("11%" + MessageClient[0] + "\n");
+                ListenT.ListClient[2].BuffWriter.flush();
+                ListenT.ListClient[3].BuffWriter.write("11%" + MessageClient[1] + "\n");
+                ListenT.ListClient[3].BuffWriter.flush();
+            }
         } catch (IOException ex) {
             Logger.getLogger(GameThread.class.getName()).log(Level.SEVERE, null, ex);
         }
