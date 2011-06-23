@@ -91,7 +91,7 @@ public class GameThread extends Thread {
                 }
                 String ChuoiBaiGuiClient[] = new String[4];
                 for (int i = 0; i < 4; i++) {
-                    ChuoiBaiGuiClient[i] = "3%" + ListenT.ListClient[i].Name;
+                    ChuoiBaiGuiClient[i] = "3";
                     for (int j = 0; j < 13; j++) {
                         ChuoiBaiGuiClient[i] += "%" + ListBaiClient[i][j];
                     }
