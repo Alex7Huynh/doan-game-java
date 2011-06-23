@@ -15,7 +15,7 @@ import javax.swing.border.EtchedBorder;
 
 public class Hearts implements MouseListener, ItemListener {
 
-    public ConnectJFrame ConnectF;
+    public static ConnectJFrame ConnectF;
     private static final long serialVersionUID = 1L;
     private ArrayList<Card> cardList;
     private Sound mySound;
@@ -28,6 +28,7 @@ public class Hearts implements MouseListener, ItemListener {
     private JLabel[] lblHuman;	//cac vi tri quan bai cua HUMAN	  
     private JLabel[] lblPlayerName; //Vi tri ten nguoi choi
     private Player pPlayerOne, pPlayerTwo, pPlayerThree, pPlayerFour;	    //4 nguoi choi trong game
+    private Player p1 = null, p2 = null, p3 = null, p4 = null;
     public ArrayList<String> PlayerName;
     public ArrayList<String> RealPlayerName;
     private Player firstPlayer;							//nguoi choi dau tien trong moi luot
@@ -64,8 +65,13 @@ public class Hearts implements MouseListener, ItemListener {
     //2: Human la nguoi danh dau tien trong vong choi
     //3: Human la nguoi Shoot The Moon
     private int CASE_FLAG = 0;
-
+    
+    public void ReceiveChangeCard(String message)
+    {
+        
+    }
     public void MakeConnection(ConnectJFrame connectJF) {
+        ConnectF = new ConnectJFrame();
         ConnectF = connectJF;
     }
 
@@ -1014,7 +1020,7 @@ public class Hearts implements MouseListener, ItemListener {
             if (pos.size() != 3) {
                 newRoundButton.setEnabled(false);
             } else {
-                newRoundButton.setEnabled(true);
+                newRoundButton.setEnabled(true);                
             }
         }
 
@@ -1060,23 +1066,51 @@ public class Hearts implements MouseListener, ItemListener {
             //Thus hien pass card
             if (PASS_NUMBER >= 0 && PASS_NUMBER <= 2) {
                 pPlayerOne.passCard(PASS_NUMBER);
-
-                notice("Nhan OK de bat dau choi.");
-                newRoundButton.setText("OK");
-
-                startNewRound = false;
-                while (!startNewRound) {
-                }
-
-                pPlayerOne.repaintChangeCard();
-                pPlayerTwo.repaintChangeCard();
-                pPlayerThree.repaintChangeCard();
-                pPlayerFour.repaintChangeCard();
+                
+//                notice("Nhan OK de bat dau choi.");
+//                newRoundButton.setText("OK");
+//
+//                startNewRound = false;
+//                while (!startNewRound) {
+//                }
+//
+//                pPlayerOne.repaintChangeCard();
+//                pPlayerTwo.repaintChangeCard();
+//                pPlayerThree.repaintChangeCard();
+//                pPlayerFour.repaintChangeCard();
             }
 
-            newRoundButton.setVisible(false);
+            //newRoundButton.setVisible(false);
 
         }//if
+
+        //Sap xep cac la bai cua 4 nguoi choi
+//        pPlayerOne.sortCard();
+//        pPlayerTwo.sortCard();
+//        pPlayerThree.sortCard();
+//        pPlayerFour.sortCard();
+    }
+    public void continuePassCard()
+    {
+        pPlayerOne.continuepassCard(PASS_NUMBER);
+    }
+    public void continueCheckStartNewRound()
+    {
+        notice("Nhan OK de bat dau choi.");
+        newRoundButton.setText("OK");
+
+        startNewRound = false;
+        while (!startNewRound) {
+        }
+
+        pPlayerOne.repaintChangeCard();
+        pPlayerTwo.repaintChangeCard();
+        pPlayerThree.repaintChangeCard();
+        pPlayerFour.repaintChangeCard();
+
+        newRoundButton.setVisible(false);
+
+        //if
 
         //Sap xep cac la bai cua 4 nguoi choi
         pPlayerOne.sortCard();
@@ -1084,7 +1118,6 @@ public class Hearts implements MouseListener, ItemListener {
         pPlayerThree.sortCard();
         pPlayerFour.sortCard();
     }
-
     public void EnableClick(boolean enable) {
         CLICK_ENABLE = enable;
     }
@@ -1092,24 +1125,8 @@ public class Hearts implements MouseListener, ItemListener {
     public void CoQuyenDiCo(boolean enable) {
         chatCo = enable;
     }
-
-    //====================================================================
-    // 							New Round
-    //====================================================================
-    public void newRound() {
-
-        Player p1, p2 = null, p3 = null, p4 = null;
-
-        //showcard.setEnabled(false);
-        showcard.setText("Show Cards");
-
-        pPlayerOne.newRound();
-        pPlayerTwo.newRound();
-        pPlayerThree.newRound();
-        pPlayerFour.newRound();
-
-        this.checkStartNewRound();
-
+    public void continueNewRound()
+    {       
         pPlayerOne.showListCard(true);
         pPlayerTwo.showListCard(false);
         pPlayerThree.showListCard(false);
@@ -1229,7 +1246,144 @@ public class Hearts implements MouseListener, ItemListener {
         //Tinh diem, kiem tra de bat dau vong moi
         this.scoring();
     }
+    //====================================================================
+    // 							New Round
+    //====================================================================
+    public void newRound() {
 
+        //Player p1 = null, p2 = null, p3 = null, p4 = null;
+
+        //showcard.setEnabled(false);
+        showcard.setText("Show Cards");
+
+        pPlayerOne.newRound();
+        pPlayerTwo.newRound();
+        pPlayerThree.newRound();
+        pPlayerFour.newRound();
+
+        this.checkStartNewRound();
+        
+//
+//        pPlayerOne.showListCard(true);
+//        pPlayerTwo.showListCard(false);
+//        pPlayerThree.showListCard(false);
+//        pPlayerFour.showListCard(false);
+//
+//        //showcard.setEnabled(true);
+//
+//        chatCo = false;
+//        luotDau = true;
+//        CLICK_ENABLE = true;
+//
+//        //nguoi choi dau tien trong vong
+//        firstPlayer = findFisrtPlayer();
+//
+//        for (int i = 0; i < Player.SOQUANBAI; i++) {
+//
+//            p1 = firstPlayer;
+//            System.out.println(p1.getName() + " is fisrt");
+//            p2 = p1.getNextPlayer();
+//            p3 = p2.getNextPlayer();
+//            p4 = p3.getNextPlayer();
+//
+//            p1.setIsFirst(true);
+//            p2.setIsFirst(false);
+//            p3.setIsFirst(false);
+//            p4.setIsFirst(false);
+//
+//            //firstPlayer danh dau tien
+//            p1.play(chatCo, luotDau, kiemtra);
+//            kiemtra = p1.getPLayCard();
+//            p1.showPlayCardLabel(0, kiemtra);
+//            if (p1.isHuman()) {
+//                CLICK_ENABLE = false;
+//            }
+//            System.out.println(p1.getName() + kiemtra.toString());
+//
+//            try {
+//                Thread.sleep(PlaySpeed);
+//            } catch (InterruptedException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//            }
+//
+//            //luot danh cua nguoi thu 2
+//            p2.play(chatCo, luotDau, kiemtra);
+//            Card2 = p2.getPLayCard();
+//            p2.showPlayCardLabel(1, Card2);
+//            if (p2.isHuman()) {
+//                CLICK_ENABLE = false;
+//            }
+//            System.out.println(p2.getName() + Card2.toString());
+//
+//            try {
+//                Thread.sleep(PlaySpeed);
+//            } catch (InterruptedException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//            }
+//
+//            //luot danh cua nguoi thu 3
+//            p3.play(chatCo, luotDau, kiemtra);
+//            Card3 = p3.getPLayCard();
+//            p3.showPlayCardLabel(2, Card3);
+//            if (p3.isHuman()) {
+//                CLICK_ENABLE = false;
+//            }
+//            System.out.println(p3.getName() + Card3.toString());
+//
+//            try {
+//                Thread.sleep(PlaySpeed);
+//            } catch (InterruptedException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//            }
+//
+//            //luot danh cua nguoi thu 4
+//            p4.play(chatCo, luotDau, kiemtra);
+//            Card4 = p4.getPLayCard();
+//            p4.showPlayCardLabel(3, Card4);
+//            if (p4.isHuman()) {
+//                CLICK_ENABLE = false;
+//            }
+//            System.out.println(p4.getName() + Card4.toString());
+//
+//            //Danh dau da xong luot dau
+//            if (luotDau) {
+//                luotDau = false;
+//            }
+//            //Lay chatCo
+//            if (!chatCo) {
+//                chatCo = kiemtra.isHeart() || Card2.isHeart() || Card3.isHeart() || Card4.isHeart();
+//            }
+//
+//            //Nguoi choi dau tien trong luot tiep theo
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//            }
+//
+//            firstPlayer = findFisrtPlayer();
+//            move(p1, firstPlayer);
+//
+//            firstPlayer.addAScoreCard(kiemtra);
+//            firstPlayer.addAScoreCard(Card2);
+//            firstPlayer.addAScoreCard(Card3);
+//            firstPlayer.addAScoreCard(Card4);
+//
+//            //Hien thi diem qua tung luot cua nguoi choi
+//            printTheScore();
+//
+//            //kiem tra khoi tao luot moi
+//            CLICK_ENABLE = true;
+//        }
+//
+//        //Tinh diem, kiem tra de bat dau vong moi
+//        this.scoring();
+    }
+    
     //====================================================================
     // 							New Game
     //====================================================================
@@ -1392,6 +1546,7 @@ public class Hearts implements MouseListener, ItemListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 txtDisplayMessage.setText(pPlayerOne.getName() + ": " + txtSendMessage.getText().trim());
+                Hearts.notice("2%" + txtSendMessage.getText().trim());
                 ConnectF.sendMessage("2%" + txtSendMessage.getText().trim());
             }
         });

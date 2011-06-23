@@ -72,7 +72,7 @@ public class ListenThread extends Thread {
                         if (NoiDung.startsWith("BatDauChoi")) {
                             LoginF.setVisible(false);
                             //GameF = new GameJFrame(ConnectF);
-                            
+
                             myHearts = new Hearts();
                             myHearts.MakeConnection(ConnectF);
 
@@ -116,9 +116,11 @@ public class ListenThread extends Thread {
                         //GameF.createListCard(NoiDung);
                         myHearts.createListCard(NoiDung);
                         LanGui++;
-                        if(LanGui == 4)
+                        if (LanGui == 4) {
                             //GameF.myGame.newGame();
+                            LanGui = 0;
                             myHearts.newGame();
+                        }
                         break;
                     }
                     case 4: {
@@ -129,6 +131,7 @@ public class ListenThread extends Thread {
                     case 5: {
                         //GameF.LabMeg.setText(NoiDung);
                         //GameF.ToiLuotChoi();
+                        Hearts.notice(NoiDung);
                         myHearts.EnableClick(true);
                         break;
                     }
@@ -161,6 +164,13 @@ public class ListenThread extends Thread {
                     case 11: {
                         //GameF.LabMeg.setText(NoiDung);
                         Hearts.notice(NoiDung);
+                        myHearts.ReceiveChangeCard(NoiDung);
+                        LanGui++;
+                        if (LanGui == 4) {
+                            myHearts.continuePassCard();
+                            myHearts.continueCheckStartNewRound();
+                            myHearts.continueNewRound();
+                        }
                         break;
                     }
                     case 12: {
