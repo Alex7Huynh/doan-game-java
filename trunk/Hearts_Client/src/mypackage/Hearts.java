@@ -112,7 +112,7 @@ public class Hearts implements MouseListener, ItemListener {
         initPlayerNameLabel();
         initCardPlayLabel();
         initPlayerCardLabel();
-
+        initChatField();
         //===============================================================
         //					Start new Round
         //===============================================================
@@ -361,6 +361,7 @@ public class Hearts implements MouseListener, ItemListener {
         myFrame.setLocation(150, 0);
         JPanel panelFrame = (JPanel) myFrame.getContentPane();
         panelFrame.setBackground(new Color(80, 120, 60));
+        
 
         //====================================================================
         //					 THIET LAP MENU
@@ -1100,7 +1101,7 @@ public class Hearts implements MouseListener, ItemListener {
         Player p1, p2 = null, p3 = null, p4 = null;
 
         //showcard.setEnabled(false);
-        showcard.setText("Show Computers Card");
+        showcard.setText("Show Cards");
 
         pPlayerOne.newRound();
         pPlayerTwo.newRound();
@@ -1298,7 +1299,8 @@ public class Hearts implements MouseListener, ItemListener {
             mySound.playFileSound(Card.SOUND_PLAY_CLICK_CARD);
             String Message = "1%" + PlayerName.get(0) + "%"
                     + pPlayerOne.getListCard().get(labelIndex).toString();
-            ConnectF.sendMessage(Message);
+            Hearts.notice(Message);
+            //ConnectF.sendMessage(Message);
         }
         if (get3card) {
             if (labelIndex != -1) {

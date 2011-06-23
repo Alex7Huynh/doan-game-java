@@ -66,12 +66,8 @@ public class GameThread extends Thread {
             }
             int VanBai = 1;
             int LuotDi = 0;
-<<<<<<< .mine
-            int DiemVanHienTai[] = new int[4];
-=======
-            int DiemVanHienTai[] = new int[4];
 
->>>>>>> .r54
+            int DiemVanHienTai[] = new int[4];
 
             while (ListenT.ListClient[0].TongDiem < 100 && ListenT.ListClient[1].TongDiem < 100 && ListenT.ListClient[2].TongDiem < 100 && ListenT.ListClient[3].TongDiem < 100) {
                 for (int i = 0; i < 4; i++) {
@@ -102,22 +98,15 @@ public class GameThread extends Thread {
                 }
                 //Gui Chuoi Bai Cho 4 Client
                 for (int i = 0; i < 4; i++) {
-<<<<<<< .mine
-                    ListenT.ListClient[i].BuffWriter.write(ChuoiBaiGuiClient[i] + "\n");
-                    ListenT.ListClient[i].BuffWriter.flush();
-=======
                     for (int j = 0; j < 4; j++) {
                         ListenT.ListClient[i].BuffWriter.write(ChuoiBaiGuiClient[j] + "\n");
                         ListenT.ListClient[i].BuffWriter.flush();
                     }
->>>>>>> .r54
                 }
                 //Xem Co Trao Doi Bai Khong
                 if (VanBai % 4 != 0) {
-                   LuotDi=QuaTrinhTraoDoiBai(VanBai,LuotDi);
+                    LuotDi = QuaTrinhTraoDoiBai(VanBai, LuotDi);
                     for (int i = 0; i < 4; i++) {
-<<<<<<< .mine
-=======
                         ListenT.ListClient[i].BuffWriter.write("4%TraoDoiBai\n");
                         ListenT.ListClient[i].BuffWriter.flush();
                     }
@@ -227,7 +216,6 @@ public class GameThread extends Thread {
                     }
 
                     for (int i = 0; i < 4; i++) {
->>>>>>> .r54
                         MessageClient[i] = "";
                     }
                 }
@@ -288,29 +276,16 @@ public class GameThread extends Thread {
                             DiemThua += 13;
                         }
                     }
-<<<<<<< .mine
-                    DiemVanHienTai[ClientThua] += DiemThua;
-=======
+
                     DiemVanHienTai[ClientThua] += DiemThua;
                     //ListenT.ListClient[ClientThua].Diem += DiemThua;
->>>>>>> .r54
                     LuotDi = ClientThua;
                     for (int j = 0; j < 4; j++) {
                         ListenT.ListClient[j].BuffWriter.write("2%" + ListenT.ListClient[ClientThua].Name + "%" + DiemVanHienTai[ClientThua] + "\n");
                         ListenT.ListClient[j].BuffWriter.flush();
                     }
                 }
-<<<<<<< .mine
-                //Kết thúc 1 ván chơi
-                // kiểm tra có trường hợp 1 client gom 26 điểm không
-                int Client26 = -1;
-                for (int i = 0; i < 4; i++) {
-                    if (DiemVanHienTai[i] == 26) {
-                        Client26 = i;
-                        break;
-                    }
-                }
-=======
+
                 //Kết thúc 1 ván chơi
                 // kiểm tra có trường hợp 1 client gom 26 điểm không
                 int Client26 = -1;
@@ -321,7 +296,6 @@ public class GameThread extends Thread {
                     }
                 }
 
->>>>>>> .r54
                 // Nếu có trường hợp Client26 thì tính diểm lại cho các client ván chơi này.
                 if (Client26 != -1) {
                     for (int i = 0; i < 4; i++) {
@@ -341,7 +315,7 @@ public class GameThread extends Thread {
 
             }// Kết thúc trò chơi
             for (int i = 0; i < 4; i++) {
-<<<<<<< .mine
+
                 ListenT.ListClient[i].BuffWriter.write("8%" + ListenT.ListClient[0].Name + "%" + ListenT.ListClient[0].TongDiem + "%" + ListenT.ListClient[1].Name + "%" + ListenT.ListClient[1].TongDiem + "%" + ListenT.ListClient[2].Name + "%" + ListenT.ListClient[2].TongDiem + "%" + ListenT.ListClient[3].Name + "%" + ListenT.ListClient[3].TongDiem + "\n");
                 ListenT.ListClient[i].BuffWriter.flush();
                 Thread.sleep(2000);
@@ -351,14 +325,6 @@ public class GameThread extends Thread {
                 ListenT.ListClient[i].Soc.close();
             }
             ListenT.SoClient = 0;
-=======
-                ListenT.ListClient[i].BuffWriter.write("8%" + ListenT.ListClient[0].Name + "%" + ListenT.ListClient[0].TongDiem + "%" + ListenT.ListClient[1].Name + "%" + ListenT.ListClient[1].TongDiem + "%" + ListenT.ListClient[2].Name + "%" + ListenT.ListClient[2].TongDiem + "%" + ListenT.ListClient[3].Name + "%" + ListenT.ListClient[3].TongDiem + "\n");
-                ListenT.ListClient[i].BuffWriter.flush();
-                ListenT.ListListenClientT[i].stop();
-            }
-
-
->>>>>>> .r54
         } catch (InterruptedException ex) {
             Logger.getLogger(GameThread.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -382,7 +348,7 @@ public class GameThread extends Thread {
     }
 
     int QuaTrinhTraoDoiBai(int VanBai, int LDi) {
-       int LuotDi = LDi;
+        int LuotDi = LDi;
         try {
             for (int i = 0; i < 4; i++) {
                 ListenT.ListClient[i].BuffWriter.write("4%TraoDoiBai\n");
@@ -398,7 +364,7 @@ public class GameThread extends Thread {
             }
             // kiểm tra xem co client nào lấy 2 chuồn đem trao đổi không.
             // gán biến Lượt Đi cho client nào giữ 2 chuồn sau khi trao đổi bài
-            if (MessageClient[0].indexOf("%2_Chuon") != -1|| MessageClient[0].startsWith("2_Chuon")) {
+            if (MessageClient[0].indexOf("%2_Chuon") != -1 || MessageClient[0].startsWith("2_Chuon")) {
                 int th = VanBai % 4;
                 switch (th) {
                     case 1: {
@@ -415,7 +381,7 @@ public class GameThread extends Thread {
                     }
                 }
             }
-            if (MessageClient[1].indexOf("%2_Chuon") != -1|| MessageClient[1].startsWith("2_Chuon")) {
+            if (MessageClient[1].indexOf("%2_Chuon") != -1 || MessageClient[1].startsWith("2_Chuon")) {
                 int th = VanBai % 4;
                 switch (th) {
                     case 1: {
@@ -432,7 +398,7 @@ public class GameThread extends Thread {
                     }
                 }
             }
-            if (MessageClient[2].indexOf("%2_Chuon") != -1|| MessageClient[2].startsWith("2_Chuon")) {
+            if (MessageClient[2].indexOf("%2_Chuon") != -1 || MessageClient[2].startsWith("2_Chuon")) {
                 int th = VanBai % 4;
                 switch (th) {
                     case 1: {
@@ -449,7 +415,7 @@ public class GameThread extends Thread {
                     }
                 }
             }
-            if (MessageClient[3].indexOf("%2_Chuon") != -1|| MessageClient[3].startsWith("2_Chuon")) {
+            if (MessageClient[3].indexOf("%2_Chuon") != -1 || MessageClient[3].startsWith("2_Chuon")) {
                 int th = VanBai % 4;
                 switch (th) {
                     case 1: {
