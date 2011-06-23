@@ -65,12 +65,53 @@ public class Hearts implements MouseListener, ItemListener {
     //2: Human la nguoi danh dau tien trong vong choi
     //3: Human la nguoi Shoot The Moon
     private int CASE_FLAG = 0;
-    
-    public void ReceiveChangeCard(String message)
-    {
-        
+
+    public void receiveChangeCard(String message) {
+        String Name = message.substring(0, message.indexOf("%"));
+        String NoiDung = message.substring(message.indexOf("%") + 1);
+        String[] lstBai = new String[Card.NUM_OF_FACE];
+        lstBai = NoiDung.split("%");
+        //if (pPlayerOne.getName().equals(RealPlayerName.get(i))) {        
+        if (pPlayerOne.getName().equals(Name)) {
+            pPlayerOne.clearChangeCard();
+            for (int i = 0; i < 3; ++i) {
+                for (int j = 0; j < Card.NUM_OF_FACE; ++j) {
+                    if (pPlayerOne.getListCard().get(j).toString().equals(lstBai[i])) {
+                        pPlayerOne.setChangeCard(j);
+                    }
+                }
+            }
+        } else if (pPlayerTwo.getName().equals(Name)) {
+            pPlayerTwo.clearChangeCard();
+            for (int i = 0; i < 3; ++i) {
+                for (int j = 0; j < Card.NUM_OF_FACE; ++j) {
+                    if (pPlayerTwo.getListCard().get(j).toString().equals(lstBai[i])) {
+                        pPlayerTwo.setChangeCard(j);
+                    }
+                }
+            }
+        } else if (pPlayerThree.getName().equals(Name)) {
+            pPlayerThree.clearChangeCard();
+            for (int i = 0; i < 3; ++i) {
+                for (int j = 0; j < Card.NUM_OF_FACE; ++j) {
+                    if (pPlayerThree.getListCard().get(j).toString().equals(lstBai[i])) {
+                        pPlayerThree.setChangeCard(j);
+                    }
+                }
+            }
+        } else if (pPlayerFour.getName().equals(Name)) {
+            pPlayerFour.clearChangeCard();
+            for (int i = 0; i < 3; ++i) {
+                for (int j = 0; j < Card.NUM_OF_FACE; ++j) {
+                    if (pPlayerFour.getListCard().get(j).toString().equals(lstBai[i])) {
+                        pPlayerFour.setChangeCard(j);
+                    }
+                }
+            }
+        }
     }
-    public void MakeConnection(ConnectJFrame connectJF) {
+
+    public void makeConnection(ConnectJFrame connectJF) {
         ConnectF = new ConnectJFrame();
         ConnectF = connectJF;
     }
@@ -367,7 +408,7 @@ public class Hearts implements MouseListener, ItemListener {
         myFrame.setLocation(150, 0);
         JPanel panelFrame = (JPanel) myFrame.getContentPane();
         panelFrame.setBackground(new Color(80, 120, 60));
-        
+
 
         //====================================================================
         //					 THIET LAP MENU
@@ -1020,7 +1061,7 @@ public class Hearts implements MouseListener, ItemListener {
             if (pos.size() != 3) {
                 newRoundButton.setEnabled(false);
             } else {
-                newRoundButton.setEnabled(true);                
+                newRoundButton.setEnabled(true);
             }
         }
 
@@ -1030,14 +1071,7 @@ public class Hearts implements MouseListener, ItemListener {
         return pos;
     }
 
-    //====================================================================
-    // 						Check Start New Round
-    //====================================================================
-    public void checkStartNewRound() {
-
-        //chia bai
-        this.dealCard();
-
+    public void continueCheckStartNewRound() {
         //Neu khong xet cac truong hop dac biet
         if (this.CASE_FLAG == 0) {
 
@@ -1066,23 +1100,63 @@ public class Hearts implements MouseListener, ItemListener {
             //Thus hien pass card
             if (PASS_NUMBER >= 0 && PASS_NUMBER <= 2) {
                 pPlayerOne.passCard(PASS_NUMBER);
-                
-//                notice("Nhan OK de bat dau choi.");
-//                newRoundButton.setText("OK");
-//
-//                startNewRound = false;
-//                while (!startNewRound) {
-//                }
-//
-//                pPlayerOne.repaintChangeCard();
-//                pPlayerTwo.repaintChangeCard();
-//                pPlayerThree.repaintChangeCard();
-//                pPlayerFour.repaintChangeCard();
             }
+        }
+    }
+    //====================================================================
+    // 						Check Start New Round
+    //====================================================================
 
-            //newRoundButton.setVisible(false);
+    public void checkStartNewRound() {
 
-        }//if
+        //chia bai
+        this.dealCard();
+
+        /*        //Neu khong xet cac truong hop dac biet
+        if (this.CASE_FLAG == 0) {
+        
+        String txt = "Chon 3 la bai de doi cho ";
+        PASS_NUMBER = (++PASS_NUMBER) % 4;
+        
+        switch (PASS_NUMBER) {
+        case 0:
+        txt += pPlayerTwo.getName();
+        newRoundButton.setText("Pass Left");
+        break;
+        
+        case 1:
+        txt += pPlayerFour.getName();
+        newRoundButton.setText("Pass Right");
+        break;
+        
+        case 2:
+        txt += pPlayerThree.getName();
+        newRoundButton.setText("Pass Cross");
+        break;
+        }
+        notice(txt);
+        newRoundButton.setVisible(true);
+        
+        //Thus hien pass card
+        if (PASS_NUMBER >= 0 && PASS_NUMBER <= 2) {
+        pPlayerOne.passCard(PASS_NUMBER);
+        
+        //                notice("Nhan OK de bat dau choi.");
+        //                newRoundButton.setText("OK");
+        //
+        //                startNewRound = false;
+        //                while (!startNewRound) {
+        //                }
+        //
+        //                pPlayerOne.repaintChangeCard();
+        //                pPlayerTwo.repaintChangeCard();
+        //                pPlayerThree.repaintChangeCard();
+        //                pPlayerFour.repaintChangeCard();
+        }
+        
+        //newRoundButton.setVisible(false);
+        
+        }//if*/
 
         //Sap xep cac la bai cua 4 nguoi choi
 //        pPlayerOne.sortCard();
@@ -1090,12 +1164,12 @@ public class Hearts implements MouseListener, ItemListener {
 //        pPlayerThree.sortCard();
 //        pPlayerFour.sortCard();
     }
-    public void continuePassCard()
-    {
+
+    public void continuePassCard() {
         pPlayerOne.continuepassCard(PASS_NUMBER);
     }
-    public void continueCheckStartNewRound()
-    {
+
+    public void continueCheckStartNewRound2() {
         notice("Nhan OK de bat dau choi.");
         newRoundButton.setText("OK");
 
@@ -1118,6 +1192,7 @@ public class Hearts implements MouseListener, ItemListener {
         pPlayerThree.sortCard();
         pPlayerFour.sortCard();
     }
+
     public void EnableClick(boolean enable) {
         CLICK_ENABLE = enable;
     }
@@ -1125,8 +1200,8 @@ public class Hearts implements MouseListener, ItemListener {
     public void CoQuyenDiCo(boolean enable) {
         chatCo = enable;
     }
-    public void continueNewRound()
-    {       
+
+    public void continueNewRound() {
         pPlayerOne.showListCard(true);
         pPlayerTwo.showListCard(false);
         pPlayerThree.showListCard(false);
@@ -1249,6 +1324,7 @@ public class Hearts implements MouseListener, ItemListener {
     //====================================================================
     // 							New Round
     //====================================================================
+
     public void newRound() {
 
         //Player p1 = null, p2 = null, p3 = null, p4 = null;
@@ -1262,7 +1338,7 @@ public class Hearts implements MouseListener, ItemListener {
         pPlayerFour.newRound();
 
         this.checkStartNewRound();
-        
+
 //
 //        pPlayerOne.showListCard(true);
 //        pPlayerTwo.showListCard(false);
@@ -1383,7 +1459,7 @@ public class Hearts implements MouseListener, ItemListener {
 //        //Tinh diem, kiem tra de bat dau vong moi
 //        this.scoring();
     }
-    
+
     //====================================================================
     // 							New Game
     //====================================================================
@@ -1393,9 +1469,9 @@ public class Hearts implements MouseListener, ItemListener {
         pPlayerTwo.newGame();
         pPlayerThree.newGame();
         pPlayerFour.newGame();
-        while (true) {
-            this.newRound();
-        }
+        //while (true) {
+        this.newRound();
+        //}
     }
 
     //====================================================================

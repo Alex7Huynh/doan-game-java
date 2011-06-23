@@ -74,7 +74,7 @@ public class ListenThread extends Thread {
                             //GameF = new GameJFrame(ConnectF);
 
                             myHearts = new Hearts();
-                            myHearts.MakeConnection(ConnectF);
+                            myHearts.makeConnection(ConnectF);
 
                             //GameF.MyName= ConnectF.MyName;
                             //GameF.setPlayerName(0, ConnectF.MyName);
@@ -126,6 +126,7 @@ public class ListenThread extends Thread {
                     case 4: {
                         //GameF.LabMeg.setText(NoiDung);
                         Hearts.notice(NoiDung);
+                        myHearts.continueCheckStartNewRound();
                         break;
                     }
                     case 5: {
@@ -164,11 +165,11 @@ public class ListenThread extends Thread {
                     case 11: {
                         //GameF.LabMeg.setText(NoiDung);
                         Hearts.notice(NoiDung);
-                        myHearts.ReceiveChangeCard(NoiDung);
+                        myHearts.receiveChangeCard(NoiDung);
                         LanGui++;
                         if (LanGui == 4) {
                             myHearts.continuePassCard();
-                            myHearts.continueCheckStartNewRound();
+                            myHearts.continueCheckStartNewRound2();
                             myHearts.continueNewRound();
                         }
                         break;
