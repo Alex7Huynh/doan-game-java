@@ -531,10 +531,10 @@ public class Player {
          *          left				right
          *             		this
          */
-        Player left, cross, right;
-        left = this.getNextPlayer();
-        cross = left.getNextPlayer();
-        right = cross.getNextPlayer();
+//        Player left, cross, right;
+//        left = this.getNextPlayer();
+//        cross = left.getNextPlayer();
+//        right = cross.getNextPlayer();
 
         //left.chose3Card();
         //cross.chose3Card();

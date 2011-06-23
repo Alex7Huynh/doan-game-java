@@ -115,12 +115,8 @@ public class ListenThread extends Thread {
                         //GameF.LabBai.setText(NoiDung);
                         //GameF.createListCard(NoiDung);
                         myHearts.createListCard(NoiDung);
-                        LanGui++;
-                        if (LanGui == 4) {
-                            //GameF.myGame.newGame();
-                            LanGui = 0;
-                            myHearts.newGame();
-                        }
+                        myHearts.newGame();
+
                         break;
                     }
                     case 4: {
@@ -176,9 +172,11 @@ public class ListenThread extends Thread {
                     }
                     case 12: {
                         Hearts.notice(NoiDung);
+                        break;
                     }
                     case 13: {
                         myHearts.receiveMessage(NoiDung);
+                        break;
                     }
                 }
             }
