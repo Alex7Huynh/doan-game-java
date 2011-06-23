@@ -1,5 +1,6 @@
 package mypackage;
 
+import com.sun.org.apache.bcel.internal.generic.LSTORE;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -535,11 +536,42 @@ public class Player {
         cross = left.getNextPlayer();
         right = cross.getNextPlayer();
 
-        left.chose3Card();
-        cross.chose3Card();
-        right.chose3Card();
+        //left.chose3Card();
+        //cross.chose3Card();
+        //right.chose3Card();
         this.chose3Card();
+        String Message = "1%" + listCard.get(list3Card.get(0)).toString()
+                + listCard.get(list3Card.get(1)).toString()
+                + listCard.get(list3Card.get(2)).toString();
+                Hearts.ConnectF.sendMessage(Message);
+                
+        /*switch (turn) {
+            //Pass Left
+            case 0:
+                this.change3CardToOther(left);
+                cross.change3CardToOther(right);
+                break;
 
+            //Pass Right
+            case 1:
+                this.change3CardToOther(right);
+                cross.change3CardToOther(left);
+                break;
+
+            //Pass Cross	
+            case 2:
+                this.change3CardToOther(cross);
+                left.change3CardToOther(right);
+                break;
+        }*/
+    }
+    public void continuepassCard(int turn)
+    {
+        Player left, cross, right;
+        left = this.getNextPlayer();
+        cross = left.getNextPlayer();
+        right = cross.getNextPlayer();
+        
         switch (turn) {
             //Pass Left
             case 0:
