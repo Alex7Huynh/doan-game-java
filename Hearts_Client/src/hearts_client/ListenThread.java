@@ -165,12 +165,11 @@ public class ListenThread extends Thread {
                         //GameF.LabMeg.setText(NoiDung);
                         Hearts.notice(NoiDung);
                         myHearts.receiveChangeCard(NoiDung);
-                        LanGui++;
-                        if (LanGui == 4) {
-                            myHearts.continuePassCard();
-                            myHearts.continueCheckStartNewRound2();
-                            myHearts.continueNewRound();
-                        }
+
+                        //myHearts.continuePassCard();
+                        myHearts.continueCheckStartNewRound2();
+                        myHearts.continueNewRound();
+
                         break;
                     }
                     case 12: {

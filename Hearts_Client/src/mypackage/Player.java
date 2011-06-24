@@ -565,7 +565,7 @@ public class Player {
                 break;
         }*/
     }
-    public void continuepassCard(int turn)
+    /*public void continuepassCard(int turn)
     {
         Player left, cross, right;
         left = this.getNextPlayer();
@@ -591,7 +591,7 @@ public class Player {
                 left.change3CardToOther(right);
                 break;
         }
-    }
+    }*/
 
     //
     public void repaintChangeCard() {

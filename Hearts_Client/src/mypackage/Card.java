@@ -81,7 +81,17 @@ public class Card {
 	public String toString() {
 		return ( Face[face] + "_" + Suit[suit]);
 	}
-	
+	public static Card toCard(String message) {
+            int Face = Integer.parseInt(message.substring(0, message.indexOf("_"))) - 2;
+            String Suit = message.substring(message.indexOf("_") + 1);
+            for (int i = 0; i < Card.NUM_OF_SUIT; ++i) {
+                if (Card.Suit[i].equals(Suit)) {
+                    Card c = new Card(Face, i);
+                    return c;
+                }
+            }
+            return null;
+        }
 	//equals
 	public boolean equals(Card arg0) {
 		if(face == arg0.getFace() && suit == arg0.getSuit())
