@@ -395,7 +395,7 @@ public class Player {
         }
 
         //this.listCardLabel[Player.SOQUANBAI].setIcon(new ImageIcon(Card.BACK_PICTURE));
-        this.listCardLabel[Player.SOQUANBAI].setVisible(false);
+        //this.listCardLabel[Player.SOQUANBAI].setVisible(false);
     }
 
     //========================================================================
