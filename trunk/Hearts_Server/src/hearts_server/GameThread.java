@@ -120,7 +120,7 @@ public class GameThread extends Thread {
                         while (MessageClient[LuotDi].equals("")) {
                             Thread.sleep(2000);
                         }
-                        BaiClient[LuotDi] = MessageClient[LuotDi];
+                        BaiClient[LuotDi] = MessageClient[LuotDi].substring(MessageClient[LuotDi].indexOf("%") + 1);
                         MessageClient[LuotDi] = "";
                         for (int k = 1; k < 4; k++) {
                             ListenT.ListClient[(LuotDi + k) % 4].BuffWriter.write("6%" + ListenT.ListClient[LuotDi].Name + "%" + BaiClient[LuotDi] + "\n");
