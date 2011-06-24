@@ -166,12 +166,13 @@ public class Player {
     //		luotDau = true: luot danh dau tien cua vong hien tai
     //		kiemtra: la bai cua nguoi danh dau tien trong luot do
     //========================================================================
-    public boolean isValid(Card c, boolean chatCo, boolean luotDau, Card kiemtra) {
+    public boolean isValid(Card c, boolean chatCo, boolean luotDau, String chatBaiKiemTra) {
 
         if (c == null) {
             return false;
         }
-
+        if("".equals(chatBaiKiemTra))
+            isFirst = true;
         //Neu la nguoi danh dau tien trong luot hien tai
         if (isFirst) {
             //Neu la luot dau tien cua vong ma khong phai la quan 2 chuon thi ko hop le
@@ -214,16 +215,16 @@ public class Player {
         } //Neu la nguoi danh sau
         else {
             //Neu c co cung chat voi kiemtra
-            if (c.getSuit() == kiemtra.getSuit()) {
+            if (Card.Suit[c.getSuit()].equals(chatBaiKiemTra)) {
                 return true;
             } //Neu c khong cung chat voi kiemtra
             else {
                 //Kiem tra xem tren tay co quan nao cung chat voi kiemtra khong
                 for (int i = 0; i < listCard.size(); i++) {
                     if (listCard.get(i) != null) {
-                        if (listCard.get(i).getSuit() == kiemtra.getSuit()) {
+                        if (Card.Suit[listCard.get(i).getSuit()].equals(chatBaiKiemTra)) {
                             if (this.isHuman()) {
-                                Hearts.notice("Ban phai chon 1 la bai chat " + Card.suitText[kiemtra.getSuit()] + ".");
+                                Hearts.notice("Ban phai chon 1 la bai chat " + chatBaiKiemTra + ".");
                             }
                             return false;
                         }
@@ -285,14 +286,14 @@ public class Player {
     //========================================================================
     //							play	
     //========================================================================
-    public void play(boolean chatCo, boolean luotDau, Card kiemtra) {
+    public void play(boolean chatCo, boolean luotDau, String chatBaiKiemTra) {
         switch (type) {
             case IS_COMPUTER:
                 Hearts.notice("Den luot choi cua " + this.name + " ...");
                 for (int i = 0; i < SOQUANBAI; i++) {
                     int index = this.randomIndex[i];
                     Card comCard = listCard.get(index);
-                    if (isValid(comCard, chatCo, luotDau, kiemtra)) {
+                    if (isValid(comCard, chatCo, luotDau, chatBaiKiemTra)) {
                         this.playCard = comCard;
                         this.listCardLabel[index].setVisible(false);
                         this.listCard.set(index, null);

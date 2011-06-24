@@ -6,10 +6,12 @@ import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Panel;
 import java.awt.Point;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 
@@ -25,7 +27,17 @@ public class Hearts implements MouseListener, ItemListener {
     private JMenuItem menuItem;
     //private JMenuItem showcard;
     private Checkbox slow, normal, fast;
-    private JLabel[] lblHuman;	//cac vi tri quan bai cua HUMAN	  
+    //Danh sách các label chứa quân bài của từng người chơi
+    private JLabel[] lblListCardBottom;	//cac vi tri quan bai cua HUMAN	  
+    private JLabel[] lblListCardLeft;
+    private JLabel[] lblListCardTop;
+    private JLabel[] lblListCardRight;
+    //Danh sách các label chứa quân bài của người đánh ra
+    private JLabel[] lblCenterCardBottom;
+    private JLabel[] lblCenterCardLeft;
+    private JLabel[] lblCenterCardTop;
+    private JLabel[] lblCenterCardRight;
+    //Danh sách các label chứa tên người
     private JLabel[] lblPlayerName; //Vi tri ten nguoi choi
     private Player pPlayerOne, pPlayerTwo, pPlayerThree, pPlayerFour;	    //4 nguoi choi trong game
     private Player p1 = null, p2 = null, p3 = null, p4 = null;
@@ -35,7 +47,8 @@ public class Hearts implements MouseListener, ItemListener {
     private Player firstPlayer;							//nguoi choi dau tien trong moi luot
     private String txtScore;	//String thong bao hien thi diem
     private static int labelIndex = -1;	//vi tri Label la bai duoc chon cua nguoi choi human
-    private static Card kiemtra;//la bai danh ra cua nguoi choi dau tien trong luot
+    //private static Card kiemtra;//la bai danh ra cua nguoi choi dau tien trong luot
+    private static String chatBaiKiemTra = "";
     private Card Card2, Card3, Card4;	//la bai danh ra cua cac nguoi choi tiep theo
     private static boolean chatCo;
     private static boolean luotDau;
@@ -50,8 +63,7 @@ public class Hearts implements MouseListener, ItemListener {
     private static boolean startNewRound = false;
     private static JButton newRoundButton;
     //Thành phần nội dung chat
-    private static JTextArea txtDisplayMessage;
-    private static JTextField txtSendMessage;
+    private static JTextArea txtDisplayMessage, txtSendMessage;
     private static JButton btnSendMessage;
     //Thông báo cho người chơi
     private static JLabel noteLabel;
@@ -67,10 +79,43 @@ public class Hearts implements MouseListener, ItemListener {
     //3: Human la nguoi Shoot The Moon
     private int CASE_FLAG = 0;
 
+    public void nhanChatBaiLuotChoi(String message) {
+        chatBaiKiemTra = message;
+    }
+
+    public void playCard() {
+        pPlayerOne.play(chatCo, luotDau, chatBaiKiemTra);
+        //Hiển thị lá bài vừa đánh
+        Card c = pPlayerOne.getPLayCard();
+        pPlayerOne.showPlayCardLabel(0, c);
+        //Nếu là người đi đầu tiên thì gán lại chất bài kiểm tra
+        if ("".equals(chatBaiKiemTra)) {
+            chatBaiKiemTra = Card.Suit[c.getSuit()];
+        }
+        //Không được click nữa
+        CLICK_ENABLE = false;
+        //Đánh dấu hết lượt đầu tiên
+        if (luotDau) {
+            luotDau = false;
+        }
+        //Gửi lá bài vừa đánh cho server
+        String Message = "1%" + PlayerName.get(0) + "%"
+                + pPlayerOne.getPLayCard().toString();
+        Hearts.notice(Message);
+        ConnectF.sendMessage(Message);
+
+        /*try {
+        Thread.sleep(PlaySpeed);
+        } catch (InterruptedException e) {
+        e.printStackTrace();
+        }*/
+    }
+
     public void xuLyKetQuaMotVanChoi(String message) {
     }
 
     public void xuLyKetQuaLuotChuoi(String message) {
+        //Lưu lại điểm số người thắng lượt chơi
         String Name = message.substring(0, message.indexOf("%"));
         int Diem = Integer.parseInt(message.substring(message.indexOf("%") + 1));
         for (int i = 0; i < 4; ++i) {
@@ -79,6 +124,8 @@ public class Hearts implements MouseListener, ItemListener {
                 break;
             }
         }
+        //Di chuyển 4 quân bài về phía người thắng
+        move(Name);
     }
 
     public void thongBaoVanChoiKetThuc(String message) {
@@ -97,34 +144,81 @@ public class Hearts implements MouseListener, ItemListener {
         }
         showGameScore("Game Over");
     }
+    /*
+     * Hiển thị lá bài một client khác vừa gửi tới (mã 6)
+     */
 
     public void showPlayCard(String message) {
         String Name = message.substring(0, message.indexOf("%"));
-        String NoiDung = message.substring(message.indexOf("%") + 1);
-        String path = Card.PICTURES_FOLDER + NoiDung + Card.PICTURES_EXTEND;
+        String LaBai = message.substring(message.indexOf("%") + 1);
+        String path = Card.PICTURES_FOLDER + LaBai + Card.PICTURES_EXTEND;
+        //Lá bài đầu tiên trong lượt đi
+        if ("".equals(chatBaiKiemTra)) {
+            chatBaiKiemTra = LaBai.substring(LaBai.indexOf("_"));
+        }
 
-        if (Name.equals(PlayerName.get(0))) {
+        /*if (Name.equals(PlayerName.get(0))) {
             for (int i = 0; i < 4; ++i) {
+                //Hiển thị lá bài nhận được
                 lblCardPlay1[i].setIcon(new ImageIcon(path));
                 lblCardPlay1[i].setVisible(true);
+                //Bỏ đi một lá trong danh sách bài
+                Random a = new Random();
+                while (true) {
+                    int b = a.nextInt(13);
+                    if (lblPlayCardLeft[b].isVisible()) {
+                        lblPlayCardLeft[b].setVisible(false);
+                        break;
+                    }
+                }
             }
-        }
+        }*/
         if (Name.equals(PlayerName.get(1))) {
-            for (int i = 0; i < 4; ++i) {
-                lblCardPlay2[i].setIcon(new ImageIcon(path));
-                lblCardPlay2[i].setVisible(true);
+            for (int i = 0; i < 1; ++i) {
+                //Hiển thị lá bài nhận được
+                lblCenterCardLeft[i].setIcon(new ImageIcon(path));
+                lblCenterCardLeft[i].setVisible(true);
+                //Bỏ đi một lá trong danh sách bài
+                Random a = new Random();
+                while (true) {
+                    int b = a.nextInt(13);
+                    if (lblListCardLeft[b].isVisible()) {
+                        lblListCardLeft[b].setVisible(false);
+                        break;
+                    }
+                }
             }
         }
         if (Name.equals(PlayerName.get(2))) {
-            for (int i = 0; i < 4; ++i) {
-                lblCardPlay3[i].setIcon(new ImageIcon(path));
-                lblCardPlay3[i].setVisible(true);
+            for (int i = 0; i < 1; ++i) {
+                //Hiển thị lá bài nhận được
+                lblCenterCardTop[i].setIcon(new ImageIcon(path));
+                lblCenterCardTop[i].setVisible(true);
+                //Bỏ đi một lá trong danh sách bài
+                Random a = new Random();
+                while (true) {
+                    int b = a.nextInt(13);
+                    if (lblListCardTop[b].isVisible()) {
+                        lblListCardTop[b].setVisible(false);
+                        break;
+                    }
+                }
             }
         }
         if (Name.equals(PlayerName.get(3))) {
-            for (int i = 0; i < 4; ++i) {
-                lblCardPlay4[i].setIcon(new ImageIcon(path));
-                lblCardPlay4[i].setVisible(true);
+            for (int i = 0; i < 1; ++i) {
+                //Hiển thị lá bài nhận được
+                lblCenterCardRight[i].setIcon(new ImageIcon(path));
+                lblCenterCardRight[i].setVisible(true);
+                //Bỏ đi một lá trong danh sách bài
+                Random a = new Random();
+                while (true) {
+                    int b = a.nextInt(13);
+                    if (lblListCardRight[b].isVisible()) {
+                        lblListCardRight[b].setVisible(false);
+                        break;
+                    }
+                }
             }
         }
     }
@@ -196,7 +290,7 @@ public class Hearts implements MouseListener, ItemListener {
         initPlayer();
         initMenu();
         initPlayerNameLabel();
-        initCardPlayLabel();
+        initCenterCardLabel();
         initPlayerCardLabel();
         initChatField();
         //===============================================================
@@ -256,31 +350,31 @@ public class Hearts implements MouseListener, ItemListener {
         //====================================================================
         //					Bottom's cards
         //====================================================================
-        lblHuman = new JLabel[MAX_CARD];
+        lblListCardBottom = new JLabel[MAX_CARD];
         for (int i = 0; i < MAX_CARD; i++) {
-            lblHuman[i] = new JLabel();
-            lblHuman[i].setSize(size);
-            lblHuman[i].setLocation(i * dx + 225, 475);
-            lblHuman[i].addMouseListener(this);
+            lblListCardBottom[i] = new JLabel();
+            lblListCardBottom[i].setSize(size);
+            lblListCardBottom[i].setLocation(i * dx + 225, 475);
+            lblListCardBottom[i].addMouseListener(this);
         }
         for (int i = MAX_CARD - 1; i >= 0; i--) {
-            myFrame.add(lblHuman[i]);
+            myFrame.add(lblListCardBottom[i]);
         }
-        pPlayerOne.setListCardLabel(lblHuman);
+        pPlayerOne.setListCardLabel(lblListCardBottom);
 
 
         //====================================================================
         //					Left's cards
         //====================================================================
-        JLabel[] lblComputer1 = new JLabel[MAX_CARD];
+        lblListCardLeft = new JLabel[MAX_CARD];
         for (int i = 0; i < MAX_CARD; i++) {
-            lblComputer1[i] = new JLabel();
-            lblComputer1[i].setSize(size);
-            lblComputer1[i].setLocation(10, i * dy + 135);
-            lblComputer1[i].setIcon(new ImageIcon(Card.BACK_PICTURE));
+            lblListCardLeft[i] = new JLabel();
+            lblListCardLeft[i].setSize(size);
+            lblListCardLeft[i].setLocation(10, i * dy + 135);
+            lblListCardLeft[i].setIcon(new ImageIcon(Card.BACK_PICTURE));
         }
         for (int i = MAX_CARD - 1; i >= 0; i--) {
-            myFrame.add(lblComputer1[i]);
+            myFrame.add(lblListCardLeft[i]);
         }
         //pPlayerTwo.setListCardLabel(lblComputer1);
 
@@ -288,15 +382,15 @@ public class Hearts implements MouseListener, ItemListener {
         //===============================================================
         //					Top's cards
         //===============================================================
-        JLabel[] lblComputer2 = new JLabel[MAX_CARD];
+        lblListCardTop = new JLabel[MAX_CARD];
         for (int i = 0; i < MAX_CARD; i++) {
-            lblComputer2[i] = new JLabel();
-            lblComputer2[i].setSize(size);
-            lblComputer2[i].setLocation(i * dx + 225, 15);
-            lblComputer2[i].setIcon(new ImageIcon(Card.BACK_PICTURE));
+            lblListCardTop[i] = new JLabel();
+            lblListCardTop[i].setSize(size);
+            lblListCardTop[i].setLocation(i * dx + 225, 15);
+            lblListCardTop[i].setIcon(new ImageIcon(Card.BACK_PICTURE));
         }
         for (int i = 0; i < MAX_CARD; i++) {
-            myFrame.add(lblComputer2[i]);
+            myFrame.add(lblListCardTop[i]);
         }
         //pPlayerThree.setListCardLabel(lblComputer2);
 
@@ -304,86 +398,83 @@ public class Hearts implements MouseListener, ItemListener {
         //===============================================================
         //					Right's cards
         //===============================================================
-        JLabel[] lblComputer3 = new JLabel[MAX_CARD];
+        lblListCardRight = new JLabel[MAX_CARD];
         for (int i = 0; i < MAX_CARD; i++) {
-            lblComputer3[i] = new JLabel();
-            lblComputer3[i].setSize(size);
-            lblComputer3[i].setLocation(665, i * dy + 135);
-            lblComputer3[i].setIcon(new ImageIcon(Card.BACK_PICTURE));
+            lblListCardRight[i] = new JLabel();
+            lblListCardRight[i].setSize(size);
+            lblListCardRight[i].setLocation(665, i * dy + 135);
+            lblListCardRight[i].setIcon(new ImageIcon(Card.BACK_PICTURE));
         }
         for (int i = 0; i < MAX_CARD; i++) {
-            myFrame.add(lblComputer3[i]);
+            myFrame.add(lblListCardRight[i]);
         }
         //pPlayerFour.setListCardLabel(lblComputer3);
     }
-    private JLabel[] lblCardPlay1;
-    private JLabel[] lblCardPlay2;
-    private JLabel[] lblCardPlay3;
-    private JLabel[] lblCardPlay4;
+    
 
-    private void initCardPlayLabel() {
+    private void initCenterCardLabel() {
         //====================================================================
         //				CARDPLAY'S LABEL
         //====================================================================
         //QUAN DANH RA CUA pJara
-        lblCardPlay1 = new JLabel[4];
-        for (int i = 0; i < lblCardPlay1.length; i++) {
-            lblCardPlay1[i] = new JLabel();
-            lblCardPlay1[i].setSize(114, 154);
-            lblCardPlay1[i].setLocation(360, 280);
-            lblCardPlay1[i].setVisible(false);
+        lblCenterCardBottom = new JLabel[4];
+        for (int i = 0; i < lblCenterCardBottom.length; i++) {
+            lblCenterCardBottom[i] = new JLabel();
+            lblCenterCardBottom[i].setSize(114, 154);
+            lblCenterCardBottom[i].setLocation(360, 280);
+            lblCenterCardBottom[i].setVisible(false);
         }
-        pPlayerOne.setPlayCardLabel(lblCardPlay1);
+        pPlayerOne.setPlayCardLabel(lblCenterCardBottom);
 
         //QUAN DANH RA CUA pPauline
-        lblCardPlay2 = new JLabel[4];
-        for (int i = 0; i < lblCardPlay2.length; i++) {
-            lblCardPlay2[i] = new JLabel();
-            lblCardPlay2[i].setSize(114, 154);
-            lblCardPlay2[i].setLocation(335, 250);
-            lblCardPlay2[i].setVisible(false);
+        lblCenterCardLeft = new JLabel[4];
+        for (int i = 0; i < lblCenterCardLeft.length; i++) {
+            lblCenterCardLeft[i] = new JLabel();
+            lblCenterCardLeft[i].setSize(114, 154);
+            lblCenterCardLeft[i].setLocation(335, 250);
+            lblCenterCardLeft[i].setVisible(false);
         }
         //pPlayerTwo.setPlayCardLabel(lbl2);
 
         //QUAN DANH RA CUA pMichele
-        lblCardPlay3 = new JLabel[4];
-        for (int i = 0; i < lblCardPlay3.length; i++) {
-            lblCardPlay3[i] = new JLabel();
-            lblCardPlay3[i].setSize(114, 154);
-            lblCardPlay3[i].setLocation(360, 215);
-            lblCardPlay3[i].setVisible(false);
+        lblCenterCardTop = new JLabel[4];
+        for (int i = 0; i < lblCenterCardTop.length; i++) {
+            lblCenterCardTop[i] = new JLabel();
+            lblCenterCardTop[i].setSize(114, 154);
+            lblCenterCardTop[i].setLocation(360, 215);
+            lblCenterCardTop[i].setVisible(false);
         }
         //pPlayerThree.setPlayCardLabel(lbl3);
 
         //QUAN DANH RA CUA pBen   	
-        lblCardPlay4 = new JLabel[4];
-        for (int i = 0; i < lblCardPlay3.length; i++) {
-            lblCardPlay4[i] = new JLabel();
-            lblCardPlay4[i].setSize(114, 154);
-            lblCardPlay4[i].setLocation(395, 250);
-            lblCardPlay4[i].setVisible(false);
+        lblCenterCardRight = new JLabel[4];
+        for (int i = 0; i < lblCenterCardTop.length; i++) {
+            lblCenterCardRight[i] = new JLabel();
+            lblCenterCardRight[i].setSize(114, 154);
+            lblCenterCardRight[i].setLocation(395, 250);
+            lblCenterCardRight[i].setVisible(false);
         }
         //pPlayerFour.setPlayCardLabel(lbl4);
 
-        myFrame.add(lblCardPlay4[3]);
-        myFrame.add(lblCardPlay3[2]);
-        myFrame.add(lblCardPlay2[1]);
-        myFrame.add(lblCardPlay1[0]);
+        myFrame.add(lblCenterCardRight[3]);
+        myFrame.add(lblCenterCardTop[2]);
+        myFrame.add(lblCenterCardLeft[1]);
+        myFrame.add(lblCenterCardBottom[0]);
 
-        myFrame.add(lblCardPlay1[3]);
-        myFrame.add(lblCardPlay4[2]);
-        myFrame.add(lblCardPlay3[1]);
-        myFrame.add(lblCardPlay2[0]);
+        myFrame.add(lblCenterCardBottom[3]);
+        myFrame.add(lblCenterCardRight[2]);
+        myFrame.add(lblCenterCardTop[1]);
+        myFrame.add(lblCenterCardLeft[0]);
 
-        myFrame.add(lblCardPlay2[3]);
-        myFrame.add(lblCardPlay1[2]);
-        myFrame.add(lblCardPlay4[1]);
-        myFrame.add(lblCardPlay3[0]);
+        myFrame.add(lblCenterCardLeft[3]);
+        myFrame.add(lblCenterCardBottom[2]);
+        myFrame.add(lblCenterCardRight[1]);
+        myFrame.add(lblCenterCardTop[0]);
 
-        myFrame.add(lblCardPlay3[3]);
-        myFrame.add(lblCardPlay2[2]);
-        myFrame.add(lblCardPlay1[1]);
-        myFrame.add(lblCardPlay4[0]);
+        myFrame.add(lblCenterCardTop[3]);
+        myFrame.add(lblCenterCardLeft[2]);
+        myFrame.add(lblCenterCardBottom[1]);
+        myFrame.add(lblCenterCardRight[0]);
     }
 
     private void initPlayerNameLabel() {
@@ -393,26 +484,30 @@ public class Hearts implements MouseListener, ItemListener {
         lblPlayerName = new JLabel[4];
         //pJara
         lblPlayerName[0] = new JLabel(pPlayerOne.getName());
+        lblPlayerName[0].setFont(new Font("Arial", Font.BOLD, 14));
         lblPlayerName[0].setSize(100, 20);
-        lblPlayerName[0].setLocation(180, 550);
+        lblPlayerName[0].setLocation(150, 600);
         lblPlayerName[0].setForeground(Color.red);
         myFrame.add(lblPlayerName[0]);
         //pPauline
         lblPlayerName[1] = new JLabel("B");
+        lblPlayerName[1].setFont(new Font("Arial", Font.BOLD, 14));
         lblPlayerName[1].setSize(100, 20);
         lblPlayerName[1].setLocation(40, 100);
         lblPlayerName[1].setForeground(Color.red);
         myFrame.add(lblPlayerName[1]);
         //pMichele
         lblPlayerName[2] = new JLabel("C");
+        lblPlayerName[2].setFont(new Font("Arial", Font.BOLD, 14));
         lblPlayerName[2].setSize(100, 20);
-        lblPlayerName[2].setLocation(620, 40);
+        lblPlayerName[2].setLocation(640, 40);
         lblPlayerName[2].setForeground(Color.red);
         myFrame.add(lblPlayerName[2]);
         //pBen
         lblPlayerName[3] = new JLabel("D");
-        lblPlayerName[3].setSize(100, 20);
-        lblPlayerName[3].setLocation(700, 540);
+        lblPlayerName[3].setFont(new Font("Arial", Font.BOLD, 14));
+        lblPlayerName[3].setSize(100, 40);
+        lblPlayerName[3].setLocation(680, 540);
         lblPlayerName[3].setForeground(Color.red);
         myFrame.add(lblPlayerName[3]);
     }
@@ -446,10 +541,10 @@ public class Hearts implements MouseListener, ItemListener {
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myFrame.setLayout(null);
         myFrame.setResizable(false);
-        myFrame.setSize(800, 750);
-        myFrame.setLocation(150, 0);
+        myFrame.setSize(1024, 740);
+        myFrame.setLocation(0, 0);
         JPanel panelFrame = (JPanel) myFrame.getContentPane();
-        panelFrame.setBackground(new Color(80, 120, 60));
+        panelFrame.setBackground(new Color(102, 153, 0));
 
 
         //====================================================================
@@ -803,9 +898,11 @@ public class Hearts implements MouseListener, ItemListener {
         while (true) {
             if (labelIndex != -1) {
                 c = p.getListCard().get(labelIndex);
-                if (p.isValid(c, chatCo, luotDau, kiemtra)) {
+                if (p.isValid(c, chatCo, luotDau, chatBaiKiemTra)) {
                     p.getListCard().set(labelIndex, null);
                     break;
+                } else {
+                    labelIndex = -1;
                 }
             }
         }
@@ -817,50 +914,49 @@ public class Hearts implements MouseListener, ItemListener {
     //====================================================================
     // 							findFisrtPlayer
     //====================================================================
-    public Player findFisrtPlayer() {
-        //Neu la luot danh dau tien cua vong, tim nguoi co quan 2 chuon
-        if (luotDau) {
-            if (pPlayerOne.hasTwoClub()) {
-                return pPlayerOne;
-            }
-            if (pPlayerFour.hasTwoClub()) {
-                return pPlayerFour;
-            }
-            if (pPlayerTwo.hasTwoClub()) {
-                return pPlayerTwo;
-            }
-            if (pPlayerThree.hasTwoClub()) {
-                return pPlayerThree;
-            }
-        } //Neu khong, tim nguoi thang trong luot hien tai 
-        else {
-            Card maxCard = kiemtra;
-            if (Card2.isGreatThan(maxCard)) {
-                maxCard = Card2;
-            }
-            if (Card3.isGreatThan(maxCard)) {
-                maxCard = Card3;
-            }
-            if (Card4.isGreatThan(maxCard)) {
-                maxCard = Card4;
-            }
-
-            if (pPlayerOne.getPLayCard().equals(maxCard)) {
-                return pPlayerOne;
-            }
-            if (pPlayerFour.getPLayCard().equals(maxCard)) {
-                return pPlayerFour;
-            }
-            if (pPlayerTwo.getPLayCard().equals(maxCard)) {
-                return pPlayerTwo;
-            }
-            if (pPlayerThree.getPLayCard().equals(maxCard)) {
-                return pPlayerThree;
-            }
-        }
-        return null;
+    /*public Player findFisrtPlayer() {
+    //Neu la luot danh dau tien cua vong, tim nguoi co quan 2 chuon
+    if (luotDau) {
+    if (pPlayerOne.hasTwoClub()) {
+    return pPlayerOne;
     }
-
+    if (pPlayerFour.hasTwoClub()) {
+    return pPlayerFour;
+    }
+    if (pPlayerTwo.hasTwoClub()) {
+    return pPlayerTwo;
+    }
+    if (pPlayerThree.hasTwoClub()) {
+    return pPlayerThree;
+    }
+    } //Neu khong, tim nguoi thang trong luot hien tai 
+    else {
+    Card maxCard = kiemtra;
+    if (Card2.isGreatThan(maxCard)) {
+    maxCard = Card2;
+    }
+    if (Card3.isGreatThan(maxCard)) {
+    maxCard = Card3;
+    }
+    if (Card4.isGreatThan(maxCard)) {
+    maxCard = Card4;
+    }
+    
+    if (pPlayerOne.getPLayCard().equals(maxCard)) {
+    return pPlayerOne;
+    }
+    if (pPlayerFour.getPLayCard().equals(maxCard)) {
+    return pPlayerFour;
+    }
+    if (pPlayerTwo.getPLayCard().equals(maxCard)) {
+    return pPlayerTwo;
+    }
+    if (pPlayerThree.getPLayCard().equals(maxCard)) {
+    return pPlayerThree;
+    }
+    }
+    return null;
+    }*/
     //====================================================================
     //				Di chuyen cac label theo cac do dich dx, dy
     //====================================================================	
@@ -883,13 +979,12 @@ public class Hearts implements MouseListener, ItemListener {
     //====================================================================
     //					Thao tac di move tong quat
     //====================================================================
-    public void move(Player p, Player winner) {
-
+    public void move(String winner) {
         JLabel[] lbl = new JLabel[4];
-        lbl[0] = p.getPlayCardLabel()[0];
-        lbl[1] = p.getNextPlayer().getPlayCardLabel()[1];
-        lbl[2] = p.getNextPlayer().getNextPlayer().getPlayCardLabel()[2];
-        lbl[3] = p.getNextPlayer().getNextPlayer().getNextPlayer().getPlayCardLabel()[3];
+        lbl[0] = lblCenterCardBottom[0];
+        lbl[1] = lblCenterCardLeft[0];
+        lbl[2] = lblCenterCardTop[0];
+        lbl[3] = lblCenterCardRight[0];
 
         //Toa do ban dau cua cac label
         Point[] point = new Point[4];
@@ -898,17 +993,17 @@ public class Hearts implements MouseListener, ItemListener {
             point[i] = lbl[i].getLocation();
         }
 
-        if (winner == pPlayerOne) {
-            move(lbl, 0, 15);  	//pJara
+        if (winner.equals(PlayerName.get(0))) {
+            move(lbl, 0, 15);
         }
-        if (winner == pPlayerTwo) {
-            move(lbl, -20, 0);  //pPauline
+        if (winner.equals(PlayerName.get(1))) {
+            move(lbl, -20, 0);
         }
-        if (winner == pPlayerThree) {
-            move(lbl, 0, -15);  //pMichele
+        if (winner.equals(PlayerName.get(2))) {
+            move(lbl, 0, -15);
         }
-        if (winner == pPlayerFour) {
-            move(lbl, 20, 0); 	//pBen
+        if (winner.equals(PlayerName.get(3))) {
+            move(lbl, 20, 0);
         }
         for (int i = 0; i < lbl.length; i++) {
             lbl[i].setVisible(false);
@@ -1214,7 +1309,7 @@ public class Hearts implements MouseListener, ItemListener {
     }
 
     public void continueNewRound() {
-        //pPlayerOne.showListCard(true);
+        pPlayerOne.showListCard(true);
         //pPlayerTwo.showListCard(false);
         //pPlayerThree.showListCard(false);
         //pPlayerFour.showListCard(false);
@@ -1299,9 +1394,9 @@ public class Hearts implements MouseListener, ItemListener {
         System.out.println(p4.getName() + Card4.toString());*/
 
         //Danh dau da xong luot dau
-        if (luotDau) {
-            luotDau = false;
-        }
+//        if (luotDau) {
+//            luotDau = false;
+//        }
         //Lay chatCo
 //            if (!chatCo) {
 //                chatCo = kiemtra.isHeart() || Card2.isHeart() || Card3.isHeart() || Card4.isHeart();
@@ -1327,7 +1422,7 @@ public class Hearts implements MouseListener, ItemListener {
         //printTheScore();
 
         //kiem tra khoi tao luot moi
-        CLICK_ENABLE = true;
+        //CLICK_ENABLE = true;
         //}
 
         //Tinh diem, kiem tra de bat dau vong moi
@@ -1492,62 +1587,64 @@ public class Hearts implements MouseListener, ItemListener {
     //====================================================================
     // 							 Main method
     //====================================================================
-//	public static void main(String[] args) {
-//		// TODO Auto-generated method stub
-//		Hearts myGame = new Hearts();
-//		myGame.newGame();
-//	}
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        Hearts myGame = new Hearts();
+        myGame.newGame();
+    }
+
     @Override
     public void mouseClicked(MouseEvent arg0) {
         //Đánh dấu label vừa được click
-        if (arg0.getSource() == lblHuman[0] && CLICK_ENABLE) {
+        if (arg0.getSource() == lblListCardBottom[0] && CLICK_ENABLE) {
             labelIndex = 0;
         }
-        if (arg0.getSource() == lblHuman[1] && CLICK_ENABLE) {
+        if (arg0.getSource() == lblListCardBottom[1] && CLICK_ENABLE) {
             labelIndex = 1;
         }
-        if (arg0.getSource() == lblHuman[2] && CLICK_ENABLE) {
+        if (arg0.getSource() == lblListCardBottom[2] && CLICK_ENABLE) {
             labelIndex = 2;
         }
-        if (arg0.getSource() == lblHuman[3] && CLICK_ENABLE) {
+        if (arg0.getSource() == lblListCardBottom[3] && CLICK_ENABLE) {
             labelIndex = 3;
         }
-        if (arg0.getSource() == lblHuman[4] && CLICK_ENABLE) {
+        if (arg0.getSource() == lblListCardBottom[4] && CLICK_ENABLE) {
             labelIndex = 4;
         }
-        if (arg0.getSource() == lblHuman[5] && CLICK_ENABLE) {
+        if (arg0.getSource() == lblListCardBottom[5] && CLICK_ENABLE) {
             labelIndex = 5;
         }
-        if (arg0.getSource() == lblHuman[6] && CLICK_ENABLE) {
+        if (arg0.getSource() == lblListCardBottom[6] && CLICK_ENABLE) {
             labelIndex = 6;
         }
-        if (arg0.getSource() == lblHuman[7] && CLICK_ENABLE) {
+        if (arg0.getSource() == lblListCardBottom[7] && CLICK_ENABLE) {
             labelIndex = 7;
         }
-        if (arg0.getSource() == lblHuman[8] && CLICK_ENABLE) {
+        if (arg0.getSource() == lblListCardBottom[8] && CLICK_ENABLE) {
             labelIndex = 8;
         }
-        if (arg0.getSource() == lblHuman[9] && CLICK_ENABLE) {
+        if (arg0.getSource() == lblListCardBottom[9] && CLICK_ENABLE) {
             labelIndex = 9;
         }
-        if (arg0.getSource() == lblHuman[10] && CLICK_ENABLE) {
+        if (arg0.getSource() == lblListCardBottom[10] && CLICK_ENABLE) {
             labelIndex = 10;
         }
-        if (arg0.getSource() == lblHuman[11] && CLICK_ENABLE) {
+        if (arg0.getSource() == lblListCardBottom[11] && CLICK_ENABLE) {
             labelIndex = 11;
         }
-        if (arg0.getSource() == lblHuman[12] && CLICK_ENABLE) {
+        if (arg0.getSource() == lblListCardBottom[12] && CLICK_ENABLE) {
             labelIndex = 12;
         }
         if (0 <= labelIndex && labelIndex <= 12) {
             mySound = new Sound();
             mySound.playFileSound(Card.SOUND_PLAY_CLICK_CARD);
-            if (!get3card) {
-                String Message = "1%" + PlayerName.get(0) + "%"
-                        + pPlayerOne.getListCard().get(labelIndex).toString();
-                Hearts.notice(Message);
-                ConnectF.sendMessage(Message);
-            }
+
+            /*if (!get3card) {
+            String Message = "1%" + PlayerName.get(0) + "%"
+            + pPlayerOne.getListCard().get(labelIndex).toString();
+            Hearts.notice(Message);
+            ConnectF.sendMessage(Message);
+            }*/
         }
         if (get3card) {
             if (labelIndex != -1) {
@@ -1618,19 +1715,20 @@ public class Hearts implements MouseListener, ItemListener {
 
     private void initChatField() {
         //Hien thi hang noi dung chat
-        txtDisplayMessage = new JTextArea("Chưa gửi thông tin");
-        txtDisplayMessage.setSize(185, 65);
-        txtDisplayMessage.setLocation(610, 560);
+        txtDisplayMessage = new JTextArea("Nội dung chat");
+        txtDisplayMessage.setSize(200, 550);
+        txtDisplayMessage.setLocation(800, 10);
 
         //Text box chat
-        txtSendMessage = new JTextField("Nhập nội dung");
-        txtSendMessage.setSize(122, 25);
-        txtSendMessage.setLocation(610, 625);
+        txtSendMessage = new JTextArea("Nhập nội dung");
+        txtSendMessage.setSize(122, 100);
+        txtSendMessage.setLocation(800, 570);
 
         //Button send noi dung chat
-        btnSendMessage = new JButton("Send");
-        btnSendMessage.setSize(63, 25);
-        btnSendMessage.setLocation(732, 625);
+        btnSendMessage = new JButton("CHAT");
+        btnSendMessage.setFont(new Font("Arial", Font.BOLD, 12));
+        btnSendMessage.setSize(65, 100);
+        btnSendMessage.setLocation(930, 570);
         btnSendMessage.setBackground(Color.GRAY);
         btnSendMessage.setForeground(Color.RED);
         btnSendMessage.setVisible(true);

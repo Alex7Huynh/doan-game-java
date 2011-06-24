@@ -131,6 +131,7 @@ public class ListenThread extends Thread {
                         //GameF.ToiLuotChoi();
                         Hearts.notice(NoiDung);
                         myHearts.EnableClick(true);
+                        myHearts.playCard();
                         break;
                     }
                     case 6: {
@@ -174,6 +175,7 @@ public class ListenThread extends Thread {
                     }
                     case 12: {
                         Hearts.notice(NoiDung);
+                        myHearts.nhanChatBaiLuotChoi(NoiDung);
                         break;
                     }
                     case 13: {
