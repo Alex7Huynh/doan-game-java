@@ -12,6 +12,8 @@ import java.awt.Point;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 
@@ -57,8 +59,8 @@ public class Hearts implements MouseListener, ItemListener {
     private final int MAX_SCORE = 100;			//diem so de xac dinh nguoi chien thang 
     //Animation Speed (timePlay, timeMove)
     //fast: (5, 1) normal: (30, 5) slow: (70, 7)
-    private int PlaySpeed = 150;
-    private int MoveSpeed = 16;
+    private int PlaySpeed = 5;
+    private int MoveSpeed = 1;
     //xac dinh bat dau mot vong choi moi
     private static boolean startNewRound = false;
     private static JButton newRoundButton;
@@ -133,7 +135,7 @@ public class Hearts implements MouseListener, ItemListener {
         NguoiChoi = message.split("%");
         for (int i = 0; i < 4; ++i) {
             String Name = message.substring(0, NguoiChoi[i].indexOf("$"));
-            int Diem = Integer.parseInt(message.substring(NguoiChoi[i].indexOf("$") + 1));
+            int Diem = Integer.parseInt(NguoiChoi[i].substring(NguoiChoi[i].indexOf("$") + 1));
 
             for (int j = 0; j < 4; ++j) {
                 if (Name.equals(PlayerName.get(i))) {
@@ -142,7 +144,7 @@ public class Hearts implements MouseListener, ItemListener {
                 }
             }
         }
-        showGameScore("Game Over");
+        showGameScore("Van choi ket thuc");
     }
     /*
      * Hiển thị lá bài một client khác vừa gửi tới (mã 6)
@@ -158,71 +160,68 @@ public class Hearts implements MouseListener, ItemListener {
         }
 
         /*if (Name.equals(PlayerName.get(0))) {
-            for (int i = 0; i < 4; ++i) {
-                //Hiển thị lá bài nhận được
-                lblCardPlay1[i].setIcon(new ImageIcon(path));
-                lblCardPlay1[i].setVisible(true);
-                //Bỏ đi một lá trong danh sách bài
-                Random a = new Random();
-                while (true) {
-                    int b = a.nextInt(13);
-                    if (lblPlayCardLeft[b].isVisible()) {
-                        lblPlayCardLeft[b].setVisible(false);
-                        break;
-                    }
-                }
-            }
+        for (int i = 0; i < 4; ++i) {
+        //Hiển thị lá bài nhận được
+        lblCardPlay1[i].setIcon(new ImageIcon(path));
+        lblCardPlay1[i].setVisible(true);
+        //Bỏ đi một lá trong danh sách bài
+        Random a = new Random();
+        while (true) {
+        int b = a.nextInt(13);
+        if (lblPlayCardLeft[b].isVisible()) {
+        lblPlayCardLeft[b].setVisible(false);
+        break;
+        }
+        }
+        }
         }*/
         if (Name.equals(PlayerName.get(1))) {
-            for (int i = 0; i < 1; ++i) {
-                //Hiển thị lá bài nhận được
-                lblCenterCardLeft[i].setIcon(new ImageIcon(path));
-                lblCenterCardLeft[i].setVisible(true);
-                //Bỏ đi một lá trong danh sách bài
-                Random a = new Random();
-                while (true) {
-                    int b = a.nextInt(13);
-                    if (lblListCardLeft[b].isVisible()) {
-                        lblListCardLeft[b].setVisible(false);
-                        break;
-                    }
+            //Hiển thị lá bài nhận được
+            lblCenterCardLeft[0].setIcon(new ImageIcon(path));
+            lblCenterCardLeft[0].setVisible(true);
+            //Bỏ đi một lá trong danh sách bài
+            Random a = new Random();
+            while (true) {
+                int b = a.nextInt(13);
+                if (lblListCardLeft[b].isVisible()) {
+                    lblListCardLeft[b].setVisible(false);
+                    break;
                 }
             }
         }
         if (Name.equals(PlayerName.get(2))) {
-            for (int i = 0; i < 1; ++i) {
-                //Hiển thị lá bài nhận được
-                lblCenterCardTop[i].setIcon(new ImageIcon(path));
-                lblCenterCardTop[i].setVisible(true);
-                //Bỏ đi một lá trong danh sách bài
-                Random a = new Random();
-                while (true) {
-                    int b = a.nextInt(13);
-                    if (lblListCardTop[b].isVisible()) {
-                        lblListCardTop[b].setVisible(false);
-                        break;
-                    }
+            //Hiển thị lá bài nhận được
+            lblCenterCardTop[0].setIcon(new ImageIcon(path));
+            lblCenterCardTop[0].setVisible(true);
+            //Bỏ đi một lá trong danh sách bài
+            Random a = new Random();
+            while (true) {
+                int b = a.nextInt(13);
+                if (lblListCardTop[b].isVisible()) {
+                    lblListCardTop[b].setVisible(false);
+                    break;
                 }
             }
         }
         if (Name.equals(PlayerName.get(3))) {
-            for (int i = 0; i < 1; ++i) {
-                //Hiển thị lá bài nhận được
-                lblCenterCardRight[i].setIcon(new ImageIcon(path));
-                lblCenterCardRight[i].setVisible(true);
-                //Bỏ đi một lá trong danh sách bài
-                Random a = new Random();
-                while (true) {
-                    int b = a.nextInt(13);
-                    if (lblListCardRight[b].isVisible()) {
-                        lblListCardRight[b].setVisible(false);
-                        break;
-                    }
+            //Hiển thị lá bài nhận được
+            lblCenterCardRight[0].setIcon(new ImageIcon(path));
+            lblCenterCardRight[0].setVisible(true);
+            //Bỏ đi một lá trong danh sách bài
+            Random a = new Random();
+            while (true) {
+                int b = a.nextInt(13);
+                if (lblListCardRight[b].isVisible()) {
+                    lblListCardRight[b].setVisible(false);
+                    break;
                 }
             }
         }
     }
-
+    
+    /*
+     * Nhận 3 lá bài sau khi đổi (mã 11)
+     */
     public void receiveChangeCard(String message) {
         //3 lá nhận được
         String[] lstBai = new String[3];
@@ -283,8 +282,8 @@ public class Hearts implements MouseListener, ItemListener {
         Scores = new int[4];
         for (int i = 0; i < 4; ++i) {
             Scores[i] = 0;
-        }
-
+        }        
+        
         myCardList = new ArrayList<Card>();
         RealPlayerName = new ArrayList<String>();
         initPlayer();
@@ -345,7 +344,7 @@ public class Hearts implements MouseListener, ItemListener {
         Dimension size = new Dimension(114, 154);
         int dx = 22;
         int dy = 20;
-        int MAX_CARD = Player.SOQUANBAI + 1;
+        int MAX_CARD = Player.SOQUANBAI;
 
         //====================================================================
         //					Bottom's cards
@@ -410,13 +409,12 @@ public class Hearts implements MouseListener, ItemListener {
         }
         //pPlayerFour.setListCardLabel(lblComputer3);
     }
-    
 
     private void initCenterCardLabel() {
         //====================================================================
         //				CARDPLAY'S LABEL
         //====================================================================
-        //QUAN DANH RA CUA pJara
+        //Bottom of center card
         lblCenterCardBottom = new JLabel[4];
         for (int i = 0; i < lblCenterCardBottom.length; i++) {
             lblCenterCardBottom[i] = new JLabel();
@@ -426,7 +424,7 @@ public class Hearts implements MouseListener, ItemListener {
         }
         pPlayerOne.setPlayCardLabel(lblCenterCardBottom);
 
-        //QUAN DANH RA CUA pPauline
+        //Left of center card
         lblCenterCardLeft = new JLabel[4];
         for (int i = 0; i < lblCenterCardLeft.length; i++) {
             lblCenterCardLeft[i] = new JLabel();
@@ -436,7 +434,7 @@ public class Hearts implements MouseListener, ItemListener {
         }
         //pPlayerTwo.setPlayCardLabel(lbl2);
 
-        //QUAN DANH RA CUA pMichele
+        //Top of center card
         lblCenterCardTop = new JLabel[4];
         for (int i = 0; i < lblCenterCardTop.length; i++) {
             lblCenterCardTop[i] = new JLabel();
@@ -446,7 +444,7 @@ public class Hearts implements MouseListener, ItemListener {
         }
         //pPlayerThree.setPlayCardLabel(lbl3);
 
-        //QUAN DANH RA CUA pBen   	
+        //Right of center card
         lblCenterCardRight = new JLabel[4];
         for (int i = 0; i < lblCenterCardTop.length; i++) {
             lblCenterCardRight[i] = new JLabel();
@@ -570,23 +568,23 @@ public class Hearts implements MouseListener, ItemListener {
         });
         menuGame.addSeparator();	//them dau nhom item
 
-        final JMenuItem play = new JMenuItem("Automatic Play");
+        /*final JMenuItem play = new JMenuItem("Automatic Play");
         play.setMnemonic('A');
         menuGame.add(play);
         play.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                if (pPlayerOne.isHuman()) {
-                    pPlayerOne.setType(Player.IS_COMPUTER);
-                    play.setText("Manually");
-                    play.setMnemonic('M');
-                } else {
-                    pPlayerOne.setType(Player.IS_HUMAN);
-                    play.setText("Automatic");
-                    play.setMnemonic('A');
-                }
-            }
-        });
+        
+        public void actionPerformed(ActionEvent e) {
+        if (pPlayerOne.isHuman()) {
+        pPlayerOne.setType(Player.IS_COMPUTER);
+        play.setText("Manually");
+        play.setMnemonic('M');
+        } else {
+        pPlayerOne.setType(Player.IS_HUMAN);
+        play.setText("Automatic");
+        play.setMnemonic('A');
+        }
+        }
+        });*/
         /*
         showcard = new JMenuItem("Show Card");
         showcard.setMnemonic('S');
@@ -905,6 +903,11 @@ public class Hearts implements MouseListener, ItemListener {
                     labelIndex = -1;
                 }
             }
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Hearts.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         p.getListCardLabel()[labelIndex].setVisible(false);
         labelIndex = -1;
@@ -1014,87 +1017,82 @@ public class Hearts implements MouseListener, ItemListener {
     //====================================================================
     //						whoShootTheMoon
     //====================================================================
-    public Player whoShootTheMoon() {
-        if (pPlayerOne.isShootTheMoon()) {
-            return pPlayerOne;
-        }
-        if (pPlayerFour.isShootTheMoon()) {
-            return pPlayerFour;
-        }
-        if (pPlayerTwo.isShootTheMoon()) {
-            return pPlayerTwo;
-        }
-        if (pPlayerThree.isShootTheMoon()) {
-            return pPlayerThree;
-        }
-        return null;
+    /*public Player whoShootTheMoon() {
+    if (pPlayerOne.isShootTheMoon()) {
+    return pPlayerOne;
     }
-
+    if (pPlayerFour.isShootTheMoon()) {
+    return pPlayerFour;
+    }
+    if (pPlayerTwo.isShootTheMoon()) {
+    return pPlayerTwo;
+    }
+    if (pPlayerThree.isShootTheMoon()) {
+    return pPlayerThree;
+    }
+    return null;
+    }*/
     //====================================================================
     //						Check Shoot The Moon
     //====================================================================
-    public void checkShootThenMoon() {
-        Player p = this.whoShootTheMoon();
-        if (p != null) {
-            p.addScore(-SHOOT_MOON_SCORE);
-            p.getNextPlayer().addScore(SHOOT_MOON_SCORE);
-            p.getNextPlayer().getNextPlayer().addScore(SHOOT_MOON_SCORE);
-            p.getNextPlayer().getNextPlayer().getNextPlayer().addScore(SHOOT_MOON_SCORE);
-        }
+    /*public void checkShootThenMoon() {
+    Player p = this.whoShootTheMoon();
+    if (p != null) {
+    p.addScore(-SHOOT_MOON_SCORE);
+    p.getNextPlayer().addScore(SHOOT_MOON_SCORE);
+    p.getNextPlayer().getNextPlayer().addScore(SHOOT_MOON_SCORE);
+    p.getNextPlayer().getNextPlayer().getNextPlayer().addScore(SHOOT_MOON_SCORE);
     }
-
+    }*/
     //====================================================================
     //						whoIsMinScore
     //====================================================================
-    public Player whoIsMinScore() {
-        Player p = pPlayerOne;
-        if (p.getScore() > pPlayerTwo.getScore()) {
-            p = pPlayerTwo;
-        }
-        if (p.getScore() > pPlayerThree.getScore()) {
-            p = pPlayerThree;
-        }
-        if (p.getScore() > pPlayerFour.getScore()) {
-            p = pPlayerFour;
-        }
-        return p;
+    /*public Player whoIsMinScore() {
+    Player p = pPlayerOne;
+    if (p.getScore() > pPlayerTwo.getScore()) {
+    p = pPlayerTwo;
     }
-
+    if (p.getScore() > pPlayerThree.getScore()) {
+    p = pPlayerThree;
+    }
+    if (p.getScore() > pPlayerFour.getScore()) {
+    p = pPlayerFour;
+    }
+    return p;
+    }*/
     //====================================================================
     //						whoIs100Score
     //====================================================================
-    public Player whoIs100Score() {
-        if (pPlayerOne.getScore() >= MAX_SCORE) {
-            return pPlayerOne;
-        }
-        if (pPlayerTwo.getScore() >= MAX_SCORE) {
-            return pPlayerTwo;
-        }
-        if (pPlayerThree.getScore() >= MAX_SCORE) {
-            return pPlayerThree;
-        }
-        if (pPlayerFour.getScore() >= MAX_SCORE) {
-            return pPlayerFour;
-        }
-        return null;
+    /*public Player whoIs100Score() {
+    if (pPlayerOne.getScore() >= MAX_SCORE) {
+    return pPlayerOne;
     }
-
+    if (pPlayerTwo.getScore() >= MAX_SCORE) {
+    return pPlayerTwo;
+    }
+    if (pPlayerThree.getScore() >= MAX_SCORE) {
+    return pPlayerThree;
+    }
+    if (pPlayerFour.getScore() >= MAX_SCORE) {
+    return pPlayerFour;
+    }
+    return null;
+    }*/
     //====================================================================
     //						Check 100 Score
     //====================================================================
-    public boolean check100Score() {
-        Player p = this.whoIs100Score();
-        if (p != null) {
-            Player winner = this.whoIsMinScore();
-            txtScore += winner.getName() + " is the winner!";
-            //JOptionPane.showMessageDialog(null, txtScore, "Score Sheet", JOptionPane.INFORMATION_MESSAGE);
-            this.showGameScore("Score");
-            this.newGame();
-            return true;
-        }
-        return false;
+    /*public boolean check100Score() {
+    Player p = this.whoIs100Score();
+    if (p != null) {
+    Player winner = this.whoIsMinScore();
+    txtScore += winner.getName() + " is the winner!";
+    //JOptionPane.showMessageDialog(null, txtScore, "Score Sheet", JOptionPane.INFORMATION_MESSAGE);
+    this.showGameScore("Score");
+    this.newGame();
+    return true;
     }
-
+    return false;
+    }*/
     //====================================================================
     //						Print The Score
     //====================================================================
@@ -1116,41 +1114,43 @@ public class Hearts implements MouseListener, ItemListener {
     //====================================================================
     //							setTxtScore
     //====================================================================
-    public void setTxtScore() {
-        txtScore += "  " + ((pPlayerOne.getScore() < 10) ? ("  " + pPlayerOne.getScore()) : (pPlayerOne.getScore())) + "                ";
-        txtScore += (pPlayerTwo.getScore() < 10 ? ("  " + pPlayerTwo.getScore()) : (pPlayerTwo.getScore())) + "                 ";
-        txtScore += (pPlayerThree.getScore() < 10 ? ("  " + pPlayerThree.getScore()) : (pPlayerThree.getScore())) + "                ";//
-        txtScore += (pPlayerFour.getScore() < 10 ? ("  " + pPlayerFour.getScore()) : (pPlayerFour.getScore())) + "\n";
-    }
-
+    /*public void setTxtScore() {
+    txtScore += "  " + ((pPlayerOne.getScore() < 10) ? ("  " + pPlayerOne.getScore()) : (pPlayerOne.getScore())) + "                ";
+    txtScore += (pPlayerTwo.getScore() < 10 ? ("  " + pPlayerTwo.getScore()) : (pPlayerTwo.getScore())) + "                 ";
+    txtScore += (pPlayerThree.getScore() < 10 ? ("  " + pPlayerThree.getScore()) : (pPlayerThree.getScore())) + "                ";//
+    txtScore += (pPlayerFour.getScore() < 10 ? ("  " + pPlayerFour.getScore()) : (pPlayerFour.getScore())) + "\n";
+    }*/
     //====================================================================
     //							Show Game Score
     //====================================================================
     public void showGameScore(String s) {
         notice(s);
+        txtScore += "  " + ((Scores[0] < 10) ? ("  " + Scores[0]) : (Scores[0])) + "                ";
+        txtScore += (Scores[1] < 10 ? ("  " + Scores[1]) : (Scores[1])) + "                 ";
+        txtScore += (Scores[2] < 10 ? ("  " + Scores[2]) : (Scores[2])) + "                ";
+        txtScore += (Scores[3] < 10 ? ("  " + Scores[3]) : (Scores[3])) + "\n";
         JOptionPane.showMessageDialog(null, txtScore, "Score Sheet", JOptionPane.INFORMATION_MESSAGE);
     }
 
     //====================================================================
     //							SCORING
     //====================================================================
-    public void scoring() {
-        //Hien thi danh sach quan bai quan bai an duoc cua 4 nguoi choi
-        pPlayerOne.showListScoreCard();
-        pPlayerFour.showListScoreCard();
-        pPlayerThree.showListScoreCard();
-        pPlayerTwo.showListScoreCard();
-
-        System.out.printf("\n============= NEW ROUND ============\n");
-
-        this.checkShootThenMoon();
-        this.setTxtScore();
-        if (!this.check100Score()) //JOptionPane.showMessageDialog(null, txtScore, "Score Sheet", JOptionPane.INFORMATION_MESSAGE);
-        {
-            this.showGameScore("Score");
-        }
+    /*public void scoring() {
+    //Hien thi danh sach quan bai quan bai an duoc cua 4 nguoi choi
+    pPlayerOne.showListScoreCard();
+    pPlayerFour.showListScoreCard();
+    pPlayerThree.showListScoreCard();
+    pPlayerTwo.showListScoreCard();
+    
+    System.out.printf("\n============= NEW ROUND ============\n");
+    
+    this.checkShootThenMoon();
+    this.setTxtScore();
+    if (!this.check100Score()) //JOptionPane.showMessageDialog(null, txtScore, "Score Sheet", JOptionPane.INFORMATION_MESSAGE);
+    {
+    this.showGameScore("Score");
     }
-
+    }*/
     //
     public static ArrayList<Integer> humanChose3Card() {
         labelIndex = -1;
@@ -1170,6 +1170,11 @@ public class Hearts implements MouseListener, ItemListener {
                 newRoundButton.setEnabled(false);
             } else {
                 newRoundButton.setEnabled(true);
+            }
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Hearts.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -1282,6 +1287,11 @@ public class Hearts implements MouseListener, ItemListener {
 
         startNewRound = false;
         while (!startNewRound) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Hearts.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         pPlayerOne.repaintChangeCard();
@@ -1403,12 +1413,12 @@ public class Hearts implements MouseListener, ItemListener {
 //            }
 
         //Nguoi choi dau tien trong luot tiep theo
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
         //Di chuyển 4 lá bài về phía người thắng - người đi đầu tiên lượt kế ti
         //firstPlayer = findFisrtPlayer();
         //move(p1, firstPlayer);
@@ -1571,9 +1581,9 @@ public class Hearts implements MouseListener, ItemListener {
     // 							New Game
     //====================================================================
     public void newGame() {
-        txtScore = PlayerName.get(0) + "         "
-                + PlayerName.get(1) + "        "
-                + PlayerName.get(2) + "         "
+        txtScore = PlayerName.get(0) + "             "
+                + PlayerName.get(1) + "             "
+                + PlayerName.get(2) + "             "
                 + PlayerName.get(3) + "\n";
         pPlayerOne.newGame();
         //pPlayerTwo.newGame();
@@ -1582,15 +1592,6 @@ public class Hearts implements MouseListener, ItemListener {
         //while (true) {
         this.newRound();
         //}
-    }
-
-    //====================================================================
-    // 							 Main method
-    //====================================================================
-    public static void main(String[] args) {
-        // TODO Auto-generated method stub
-        Hearts myGame = new Hearts();
-        myGame.newGame();
     }
 
     @Override
@@ -1751,5 +1752,16 @@ public class Hearts implements MouseListener, ItemListener {
         String Message = txtDisplayMessage.getText() + "\n";
         Message += message;
         txtDisplayMessage.setText(Message);
+    }
+    
+    //====================================================================
+    // 							 Main method
+    //====================================================================
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        Hearts myGame = new Hearts();
+        myGame.newGame();
+        
+        myGame.showGameScore("Game Over");
     }
 }

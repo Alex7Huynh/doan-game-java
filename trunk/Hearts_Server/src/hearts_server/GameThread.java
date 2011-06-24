@@ -199,7 +199,7 @@ public class GameThread extends Thread {
                 }
                 //gui ket quan van choi cho 4 client
                 for (int i = 0; i < 4; i++) {
-                    ListenT.ListClient[i].BuffWriter.write("8%" + ListenT.ListClient[0].Name + "%" + DiemVanHienTai[0] + "%" + ListenT.ListClient[1].Name + "%" + DiemVanHienTai[1] + "%" + ListenT.ListClient[2].Name + "%" + DiemVanHienTai[2] + "%" + ListenT.ListClient[3].Name + "%" + DiemVanHienTai[3] + "\n");
+                    ListenT.ListClient[i].BuffWriter.write("8%" + ListenT.ListClient[0].Name + "$" + DiemVanHienTai[0] + "%" + ListenT.ListClient[1].Name + "$" + DiemVanHienTai[1] + "%" + ListenT.ListClient[2].Name + "$" + DiemVanHienTai[2] + "%" + ListenT.ListClient[3].Name + "$" + DiemVanHienTai[3] + "\n");
                     ListenT.ListClient[i].BuffWriter.flush();
                     ListenT.ListClient[i].TongDiem += DiemVanHienTai[i];
                 }
@@ -207,7 +207,7 @@ public class GameThread extends Thread {
                 // Kết thúc trò chơi
                 for (int i = 0; i < 4; i++) {
 
-                    ListenT.ListClient[i].BuffWriter.write("10%" + ListenT.ListClient[0].Name + "%" + ListenT.ListClient[0].TongDiem + "%" + ListenT.ListClient[1].Name + "%" + ListenT.ListClient[1].TongDiem + "%" + ListenT.ListClient[2].Name + "%" + ListenT.ListClient[2].TongDiem + "%" + ListenT.ListClient[3].Name + "%" + ListenT.ListClient[3].TongDiem + "\n");
+                    ListenT.ListClient[i].BuffWriter.write("10%" + ListenT.ListClient[0].Name + "$" + ListenT.ListClient[0].TongDiem + "%" + ListenT.ListClient[1].Name + "$" + ListenT.ListClient[1].TongDiem + "%" + ListenT.ListClient[2].Name + "$" + ListenT.ListClient[2].TongDiem + "%" + ListenT.ListClient[3].Name + "$" + ListenT.ListClient[3].TongDiem + "\n");
                     ListenT.ListClient[i].BuffWriter.flush();
                     Thread.sleep(2000);
                     ListenT.ListListenClientT[i].stop();
