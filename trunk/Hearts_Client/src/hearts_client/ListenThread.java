@@ -116,17 +116,19 @@ public class ListenThread extends Thread {
                     }
                     case 9: {                        
                         Hearts.notice(NoiDung);
+                        myHearts.thongBaoNgungChoi(NoiDung);
                         break;
                     }
                     case 10: {                        
-                        Hearts.notice("8%"+NoiDung);
+                        Hearts.notice("10%"+NoiDung);
+                        myHearts.thongBaoTroChoiKetThuc(NoiDung);                        
+                        ClientS.close();
+                        LoginF.setVisible(true);
                         break;
                     }
                     case 11: {                        
                         Hearts.notice(NoiDung);
                         myHearts.receiveChangeCard(NoiDung);                        
-                        myHearts.continueCheckStartNewRound2();
-                        myHearts.continueNewRound();
                         break;
                     }
                     case 12: {
@@ -141,6 +143,11 @@ public class ListenThread extends Thread {
                 }
             }
         } catch (IOException ex) {
+            try {
+                ClientS.close();
+            } catch (IOException ex1) {
+                Logger.getLogger(ListenThread.class.getName()).log(Level.SEVERE, null, ex1);
+            }
             Logger.getLogger(ListenThread.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
