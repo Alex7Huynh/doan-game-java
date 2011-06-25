@@ -416,10 +416,10 @@ public class Hearts implements MouseListener, ItemListener {
     private void changeBackCardType(int ID, int n) {
                 setBackCardLabel(ID+1);
                 for(int i = 0; i < n; ++i)
-                    if(rbmBackCard[i].isSelected()) {
+                    //if(rbmBackCard[i].isSelected()) {
                         rbmBackCard[i].setSelected(false);
-                        break;
-                    }
+                        /*break;
+                    }*/
                 rbmBackCard[ID].setSelected(true);
             }
     
@@ -1164,7 +1164,7 @@ public class Hearts implements MouseListener, ItemListener {
             temp += " ";
         }
         if (saved) {
-            txtScore = temp;
+            txtScore = temp + "\n";
         }
         JOptionPane.showMessageDialog(null, temp, s, JOptionPane.INFORMATION_MESSAGE);
     }
