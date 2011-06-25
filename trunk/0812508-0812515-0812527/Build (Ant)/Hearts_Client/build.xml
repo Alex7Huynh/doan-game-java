@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Hearts_Client" default="default" basedir="." xmlns:j2seproject1="http://www.netbeans.org/ns/j2se-project/1" xmlns:j2seproject3="http://www.netbeans.org/ns/j2se-project/3">
+<project name="Hearts_Client" default="run_jar" basedir="." xmlns:j2seproject1="http://www.netbeans.org/ns/j2se-project/1" xmlns:j2seproject3="http://www.netbeans.org/ns/j2se-project/3">
 	<target  name="default" depends="jar"/>
    <target name="initConfig">
       <property file="nbproject/private/config.properties"/>
@@ -618,4 +618,8 @@
          </propertyset>
       </ant>
    </target>
+      <!-- mac dinh la chay file jar trong thu muc dist-->
+     <target name="run_jar" depends="jar">
+    <java jar="dist/Hearts_Client.jar" fork="true" spawn="true"/>
+  </target>
 </project>
