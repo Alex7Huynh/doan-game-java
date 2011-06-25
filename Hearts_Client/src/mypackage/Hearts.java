@@ -15,7 +15,6 @@ import javax.swing.border.EtchedBorder;
 
 public class Hearts implements MouseListener, ItemListener {
     //ConnectJFrame để gửi thông điệp cho server
-
     public static ConnectJFrame ConnectF;
     //Danh sách lá bài
     private ArrayList<Card> myListCard;
@@ -310,10 +309,20 @@ public class Hearts implements MouseListener, ItemListener {
     }
     
     /*
+     * Thông báo khi có client ngừng chơi
+     * Mã 9
+     */
+    public void thongBaoNgungChoi(String message) {
+        JOptionPane.showMessageDialog(null, 
+                message + " đã ngừng chơi. Trò chơi kết thúc!", 
+                "Thong bao", 
+                JOptionPane.INFORMATION_MESSAGE);
+    }
+    /*
      * Xử lý khi trò chơi kết thúc
      * Mã 10
      */
-    public void xuLyKetQuaTroChoi(String message) {
+    public void thongBaoTroChoiKetThuc(String message) {
         String[] NguoiChoi = new String[4];
         NguoiChoi = message.split("%");
         for (int i = 0; i < 4; ++i) {
@@ -329,9 +338,8 @@ public class Hearts implements MouseListener, ItemListener {
         }
         showGameScore("Tro choi ket thuc", true);
         mySound.playFileSound(Card.SOUND_PLAY_GAMEOVER);
-        //Đóng kết nối
-
-        //Chuyển sang màn hình đăng nhập
+        
+        System.exit(0);        
     }    
 
     /*
@@ -350,6 +358,27 @@ public class Hearts implements MouseListener, ItemListener {
             Card c = Card.toCard(lstBai[i]);
             mainPlayer.getListCard().set(j, c);
         }
+        //Thông báo
+        notice("Nhan OK de bat dau choi.");
+        newRoundButton.setText("OK");
+        startNewRound = false;
+        while (!startNewRound) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Hearts.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        //Sắp xếp lại danh sách
+        mainPlayer.repaintChangeCard();
+        newRoundButton.setVisible(false);
+        mainPlayer.sortCard();
+        //Hiển thị lá bài
+        mainPlayer.showListCard(true, 1);
+        
+        chatCo = false;
+        //luotDau = true;
+        //CLICK_ENABLE = true;
     }
 
     /*
@@ -379,9 +408,29 @@ public class Hearts implements MouseListener, ItemListener {
         ConnectF = connectJF;
     }
 
-    private void setVisible(JLabel[] label) {
+    private void setBackCardVisible(JLabel[] label) {
         for (int i = 0; i < label.length; ++i) {
             label[i].setVisible(true);
+        }
+    }
+    
+    private void changeBackCardType(int ID, int n) {
+                setBackCardLabel(ID+1);
+                for(int i = 0; i < n; ++i)
+                    if(rbmBackCard[i].isSelected()) {
+                        rbmBackCard[i].setSelected(false);
+                        break;
+                    }
+                rbmBackCard[ID].setSelected(true);
+            }
+    
+    public void setBackCardLabel(int type) {
+        Card.BACK_PICTURE = "resources/pictures_back/back_" + type + ".png";
+        
+        for (int i = 0; i < Card.NUM_OF_FACE; ++i) {
+            lblListCardLeft[i].setIcon(new ImageIcon(Card.BACK_PICTURE));
+            lblListCardTop[i].setIcon(new ImageIcon(Card.BACK_PICTURE));
+            lblListCardRight[i].setIcon(new ImageIcon(Card.BACK_PICTURE));
         }
     }
 
@@ -606,7 +655,7 @@ public class Hearts implements MouseListener, ItemListener {
         });
     }
 
-    public void initMenuOption() {
+    private void initMenuOption() {
         menuOption = new JMenu("Option");
         menuOption.setMnemonic('O');
         menuBar.add(menuOption);
@@ -675,17 +724,84 @@ public class Hearts implements MouseListener, ItemListener {
                 Type4.setSelected(true);
             }
         });
-        //Thay đổi lá sấp
+        /*
+         * Thay đổi lá sấp         * 
+         */
         menuItem = new JMenu("Change back card");
-        int nBackCard = 8;
+        final int nBackCard = 8;        
         /*final JRadioButtonMenuItem[] */        rbmBackCard = new JRadioButtonMenuItem[nBackCard];
         for (int i = 0; i < nBackCard; ++i) {
             rbmBackCard[i] = new JRadioButtonMenuItem("Type " + (i + 1));
             rbmBackCard[i].addItemListener(this);
             menuItem.add(rbmBackCard[i]);
         }
+        
+        //Type 1
         rbmBackCard[0].setSelected(true);
         menuOption.add(menuItem);
+        rbmBackCard[0].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {                
+               changeBackCardType(0, nBackCard);
+                
+            }
+        });        
+        //Type 2        
+        menuOption.add(menuItem);
+        rbmBackCard[1].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {                
+                changeBackCardType(1, nBackCard);
+            }            
+        });
+        //Type 3        
+        menuOption.add(menuItem);
+        rbmBackCard[2].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {                
+                changeBackCardType(2, nBackCard);
+            }            
+        });
+        //Type 4        
+        menuOption.add(menuItem);
+        rbmBackCard[3].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {                
+                changeBackCardType(3, nBackCard);
+            }            
+        });
+        //Type 5        
+        menuOption.add(menuItem);
+        rbmBackCard[4].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {                
+                changeBackCardType(4, nBackCard);
+            }            
+        });        
+        //Type 6        
+        menuOption.add(menuItem);
+        rbmBackCard[5].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {                
+                changeBackCardType(5, nBackCard);
+            }            
+        });
+        //Type 7        
+        menuOption.add(menuItem);
+        rbmBackCard[6].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {                
+                changeBackCardType(6, nBackCard);
+            }            
+        });
+        //Type 8        
+        menuOption.add(menuItem);
+        rbmBackCard[7].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {                
+                changeBackCardType(7, nBackCard);
+            }            
+        });
         /*
          * Change speed
          */
@@ -796,25 +912,8 @@ public class Hearts implements MouseListener, ItemListener {
                 rbmTheme4.setSelected(true);
             }
         });
-    }
-    private void setTheme(int ColorID)
-    {
-        JPanel panelFrame = (JPanel) myFrame.getContentPane();        
-        if(ColorID == 1)
-            panelFrame.setBackground(new Color(102, 153, 0));
-        else if(ColorID == 2)
-            panelFrame.setBackground(new Color(153, 153, 255));
-        else if(ColorID == 3)
-            panelFrame.setBackground(new Color(255, 204, 0));
-        else if(ColorID == 4)
-        {
-            Random rand = new Random();
-            int red = rand.nextInt(255);
-            int green = rand.nextInt(255);
-            int blue = rand.nextInt(255);
-            panelFrame.setBackground(new Color(red, green, blue));
-        }
-    }
+    }    
+    
     private void initChatField() {
         //Hien thi hang noi dung chat
         txtDisplayMessage = new JTextArea("Nội dung chat\n");
@@ -857,6 +956,24 @@ public class Hearts implements MouseListener, ItemListener {
 
         mainPlayer.showListCard(true, 1);
         mySound.playFileSound(Card.SOUND_PLAY_DEALGAME);
+    }
+    
+    private void setTheme(int ColorID) {
+        JPanel panelFrame = (JPanel) myFrame.getContentPane();        
+        if(ColorID == 1)
+            panelFrame.setBackground(new Color(102, 153, 0));
+        else if(ColorID == 2)
+            panelFrame.setBackground(new Color(153, 153, 255));
+        else if(ColorID == 3)
+            panelFrame.setBackground(new Color(255, 204, 0));
+        else if(ColorID == 4)
+        {
+            Random rand = new Random();
+            int red = rand.nextInt(255);
+            int green = rand.nextInt(255);
+            int blue = rand.nextInt(255);
+            panelFrame.setBackground(new Color(red, green, blue));
+        }
     }
 
     /*
@@ -992,44 +1109,16 @@ public class Hearts implements MouseListener, ItemListener {
         get3card = false;
         return pos;
     }
-
-    /*
-     * 
-     */
-    public void continueCheckStartNewRound2() {
-        notice("Nhan OK de bat dau choi.");
-        newRoundButton.setText("OK");
-        startNewRound = false;
-        while (!startNewRound) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Hearts.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-        mainPlayer.repaintChangeCard();
-        newRoundButton.setVisible(false);
-        mainPlayer.sortCard();
-    }
-
-    public void continueNewRound() {
-        mainPlayer.showListCard(true, 1);
-
-        chatCo = false;
-        luotDau = true;
-        CLICK_ENABLE = true;
-    }
-
+    
     public void newRound() {
         CenterCardIndex = -1;
         chatBaiKiemTra = "";
         chatCo = false;
         luotDau = false;
 
-        setVisible(lblListCardLeft);
-        setVisible(lblListCardTop);
-        setVisible(lblListCardRight);
+        setBackCardVisible(lblListCardLeft);
+        setBackCardVisible(lblListCardTop);
+        setBackCardVisible(lblListCardRight);
         mainPlayer.newRound();
 
         this.dealCard();
@@ -1078,7 +1167,7 @@ public class Hearts implements MouseListener, ItemListener {
         if (saved) {
             txtScore = temp;
         }
-        JOptionPane.showMessageDialog(null, temp, "Score Sheet", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, temp, s, JOptionPane.INFORMATION_MESSAGE);
     }
 
     /*
@@ -1092,7 +1181,7 @@ public class Hearts implements MouseListener, ItemListener {
         mainPlayer.newGame();
         this.newRound();
     }
-
+    
     @Override
     public void mouseClicked(MouseEvent arg0) {
         if (!CLICK_ENABLE) {
