@@ -93,8 +93,7 @@ public class Hearts implements MouseListener, ItemListener {
         newRoundButton.addActionListener(new ActionListener() {
 
             @Override
-            public void actionPerformed(ActionEvent arg0) {
-                // TODO Auto-generated method stub
+            public void actionPerformed(ActionEvent arg0) {                
                 startNewRound = true;
             }
         });
@@ -338,8 +337,8 @@ public class Hearts implements MouseListener, ItemListener {
         }
         showGameScore("Tro choi ket thuc", true);
         mySound.playFileSound(Card.SOUND_PLAY_GAMEOVER);
-        
-        System.exit(0);        
+        myFrame.dispose();
+        //System.exit(0);        
     }    
 
     /*
@@ -377,7 +376,7 @@ public class Hearts implements MouseListener, ItemListener {
         mainPlayer.showListCard(true, 1);
         
         chatCo = false;
-        //luotDau = true;
+        luotDau = true;
         //CLICK_ENABLE = true;
     }
 
@@ -387,10 +386,10 @@ public class Hearts implements MouseListener, ItemListener {
      */
     public void nhanChatBaiLuotChoi(String message) {
         chatBaiKiemTra = message;
-        String tmp = txtDisplayMessage.getText();
+        /*String tmp = txtDisplayMessage.getText();
         tmp += "Chat bai kiem tra: " + chatBaiKiemTra + "\n";
         tmp += "Đi đầu tiên = " + (mainPlayer.getIsFirst() == true ? "1" : "0" + "\n");
-        txtDisplayMessage.setText(tmp);
+        txtDisplayMessage.setText(tmp);*/
     }
 
     /*
@@ -937,8 +936,8 @@ public class Hearts implements MouseListener, ItemListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //txtDisplayMessage.setText(pPlayerOne.getName() + ": " + txtSendMessage.getText().trim());
-                String tmp = txtDisplayMessage.getText() + "Luot dau = " + (mainPlayer.getIsFirst() == true ? "1" : "0");
-                txtDisplayMessage.setText(tmp);
+                /*String tmp = txtDisplayMessage.getText() + "Luot dau = " + (mainPlayer.getIsFirst() == true ? "1" : "0");
+                txtDisplayMessage.setText(tmp);*/
                 Hearts.notice("2%" + txtSendMessage.getText().trim());
                 ConnectF.sendMessage("2%" + txtSendMessage.getText().trim());
             }
@@ -1304,13 +1303,15 @@ public class Hearts implements MouseListener, ItemListener {
      * Main method
      * (For testing only)
      */
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         // TODO Auto-generated method stub
         Hearts myGame = new Hearts();
         myGame.newGame();
-        /*
+        
         myGame.showGameScore("Game Over", false);
         String mes = "A$3%B$3%C$16%D$4";
-        myGame.thongBaoVanChoiKetThuc(mes);*/
-    }
+        myGame.thongBaoVanChoiKetThuc(mes);
+        
+        myGame.thongBaoTroChoiKetThuc(mes);
+    }*/
 }

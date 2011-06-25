@@ -123,7 +123,7 @@ public class ListenThread extends Thread {
                         Hearts.notice("10%"+NoiDung);
                         myHearts.thongBaoTroChoiKetThuc(NoiDung);                        
                         ClientS.close();
-                        LoginF.setVisible(true);
+                        ConnectF.setVisible(true);
                         break;
                     }
                     case 11: {                        
