@@ -303,7 +303,7 @@ public class Player {
                 break;
             case IS_HUMAN:
                 Hearts.notice("Chon 1 la bai de choi.");
-                this.playCard = Hearts.humanPlay(this);
+                this.playCard = Hearts.chooseACard(this);
                 break;
         }
     }
@@ -338,6 +338,8 @@ public class Player {
     //addACard: Them 1 la bai vao bo bai cua nguoi choi
     //========================================================================
     public void addACard(Card c) {
+        if(listCard.size() == 13)
+            listCard.clear();
         listCard.add(c);
     }
 
@@ -484,7 +486,7 @@ public class Player {
 
             //IS_HUMAN
             case IS_HUMAN:
-                this.list3Card = Hearts.humanChose3Card();
+                this.list3Card = Hearts.changeThreeCards();
                 break;
         }
     }
@@ -524,8 +526,7 @@ public class Player {
             }
         }
     }
-
-    //
+        
     public void passCard(int turn) {
         /*	SO DO DOI
          * 					cross
