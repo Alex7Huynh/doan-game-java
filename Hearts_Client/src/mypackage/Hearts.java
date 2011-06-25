@@ -21,7 +21,7 @@ public class Hearts implements MouseListener, ItemListener {
 
     public static ConnectJFrame ConnectF;
     private static final long serialVersionUID = 1L;
-    private ArrayList<Card> myCardList;
+    private ArrayList<Card> myListCard;
     private Sound mySound;
     private JFrame myFrame;
     private JMenuBar menuBar;
@@ -41,25 +41,23 @@ public class Hearts implements MouseListener, ItemListener {
     private JLabel[] lblCenterCardRight;
     //Danh sách các label chứa tên người
     private JLabel[] lblPlayerName; //Vi tri ten nguoi choi
-    private Player pPlayerOne, pPlayerTwo, pPlayerThree, pPlayerFour;	    //4 nguoi choi trong game
-    private Player p1 = null, p2 = null, p3 = null, p4 = null;
-    public ArrayList<String> PlayerName; //D A B C
-    public ArrayList<String> RealPlayerName;    //A B C D
+    private Player pPlayerOne;
+            //, pPlayerTwo, pPlayerThree, pPlayerFour;	    //4 nguoi choi trong game    
+    public ArrayList<String> PlayerName; //D A B C    
     public int[] Scores;
-    private Player firstPlayer;							//nguoi choi dau tien trong moi luot
     private String txtScore;	//String thong bao hien thi diem
     private static int labelIndex = -1;	//vi tri Label la bai duoc chon cua nguoi choi human
     //private static Card kiemtra;//la bai danh ra cua nguoi choi dau tien trong luot
-    private static String chatBaiKiemTra = "";
-    private Card Card2, Card3, Card4;	//la bai danh ra cua cac nguoi choi tiep theo
+    private static String chatBaiKiemTra;
     private static boolean chatCo;
     private static boolean luotDau;
-    private static boolean CLICK_ENABLE;		//cho phep click len Label la bai cua nguoi choi human
-    private final int SHOOT_MOON_SCORE = 26;	//diem so trong truong hop Shoot The Moon
-    private final int MAX_SCORE = 100;			//diem so de xac dinh nguoi chien thang 
+    private static boolean CLICK_ENABLE;//cho phep click len Label la bai cua nguoi choi human
+    //private final int SHOOT_MOON_SCORE = 26;	//diem so trong truong hop Shoot The Moon
+    //private final int MAX_SCORE = 100;			//diem so de xac dinh nguoi chien thang 
+    private int CenterCardIndex;
     //Animation Speed (timePlay, timeMove)
     //fast: (5, 1) normal: (30, 5) slow: (70, 7)
-    private int PlaySpeed = 5;
+    //private int PlaySpeed = 5;
     private int MoveSpeed = 1;
     //xac dinh bat dau mot vong choi moi
     private static boolean startNewRound = false;
@@ -81,15 +79,94 @@ public class Hearts implements MouseListener, ItemListener {
     //3: Human la nguoi Shoot The Moon
     private int CASE_FLAG = 0;
 
-    public void nhanChatBaiLuotChoi(String message) {
-        chatBaiKiemTra = message;
+    /*
+     * Xử lý kết quả một lượt chơi - gom bài về người thắng
+     * Mã 2
+     */
+    public void xuLyKetQuaLuotChuoi(String message) {
+        //Lưu lại điểm số người thắng lượt chơi
+        CenterCardIndex = - 1;
+        String Name = message.substring(0, message.indexOf("%"));
+        int Diem = Integer.parseInt(message.substring(message.indexOf("%") + 1));
+        for (int i = 0; i < 4; ++i) {
+            if (Name.equals(PlayerName.get(i))) {
+                Scores[i] = Diem;
+                break;
+            }
+        }
+        //Di chuyển 4 quân bài về phía người thắng
+        move(Name);
     }
 
+    /*
+     * Nhận danh sách bài
+     * Mã 3
+     */
+    public void createListCard(String message) {
+        String[] lstBai = new String[Card.NUM_OF_FACE];
+        lstBai = message.split("%");
+
+        for (int i = 0; i < Card.NUM_OF_FACE; ++i) {
+            String[] FaceSuit = lstBai[i].split("_");
+            int face = Integer.parseInt(FaceSuit[0]) - 2;
+            for (int j = 0; j < Card.NUM_OF_SUIT; ++j) {
+                if (Card.Suit[j].equals(FaceSuit[1])) {
+                    Card c = new Card(face, j);
+                    myListCard.add(c);
+                    break;
+                }
+            }
+        }
+    }
+
+    /*
+     * Thông báo có trao đổi bài - bắt đầu cho trao đổi bài
+     * Mã 4
+     */
+    public void passCard() {
+        //Neu khong xet cac truong hop dac biet
+        if (this.CASE_FLAG == 0) {
+
+            String txt = "Chon 3 la bai de doi cho ";
+            PASS_NUMBER = (++PASS_NUMBER) % 4;
+
+            switch (PASS_NUMBER) {
+                case 0:
+                    txt += PlayerName.get(1);
+                    newRoundButton.setText("Pass Left");
+                    break;
+
+                case 1:
+                    txt += PlayerName.get(3);
+                    newRoundButton.setText("Pass Right");
+                    break;
+
+                case 2:
+                    txt += PlayerName.get(2);
+                    newRoundButton.setText("Pass Cross");
+                    break;
+            }
+            notice(txt);
+            newRoundButton.setVisible(true);
+
+            //Thus hien pass card
+            if (PASS_NUMBER >= 0 && PASS_NUMBER <= 2) {
+                pPlayerOne.passCard(PASS_NUMBER);
+            }
+        }
+    }
+
+    /*
+     * Đến lượt đi - được quyền chọn bài
+     * Mã 5
+     */
     public void playCard() {
+        CLICK_ENABLE = true;
         pPlayerOne.play(chatCo, luotDau, chatBaiKiemTra);
         //Hiển thị lá bài vừa đánh
         Card c = pPlayerOne.getPLayCard();
-        pPlayerOne.showPlayCardLabel(0, c);
+        CenterCardIndex++;
+        pPlayerOne.showPlayCardLabel(CenterCardIndex, c);
         //Nếu là người đi đầu tiên thì gán lại chất bài kiểm tra
         if ("".equals(chatBaiKiemTra)) {
             chatBaiKiemTra = Card.Suit[c.getSuit()];
@@ -105,51 +182,12 @@ public class Hearts implements MouseListener, ItemListener {
                 + pPlayerOne.getPLayCard().toString();
         Hearts.notice(Message);
         ConnectF.sendMessage(Message);
-
-        /*try {
-        Thread.sleep(PlaySpeed);
-        } catch (InterruptedException e) {
-        e.printStackTrace();
-        }*/
     }
 
-    public void xuLyKetQuaMotVanChoi(String message) {
-    }
-
-    public void xuLyKetQuaLuotChuoi(String message) {
-        //Lưu lại điểm số người thắng lượt chơi
-        String Name = message.substring(0, message.indexOf("%"));
-        int Diem = Integer.parseInt(message.substring(message.indexOf("%") + 1));
-        for (int i = 0; i < 4; ++i) {
-            if (Name.equals(PlayerName.get(i))) {
-                Scores[i] = Diem;
-                break;
-            }
-        }
-        //Di chuyển 4 quân bài về phía người thắng
-        move(Name);
-    }
-
-    public void thongBaoVanChoiKetThuc(String message) {
-        String[] NguoiChoi = new String[4];
-        NguoiChoi = message.split("%");
-        for (int i = 0; i < 4; ++i) {
-            String Name = message.substring(0, NguoiChoi[i].indexOf("$"));
-            int Diem = Integer.parseInt(NguoiChoi[i].substring(NguoiChoi[i].indexOf("$") + 1));
-
-            for (int j = 0; j < 4; ++j) {
-                if (Name.equals(PlayerName.get(i))) {
-                    Scores[i] = Diem;
-                    break;
-                }
-            }
-        }
-        showGameScore("Van choi ket thuc");
-    }
     /*
-     * Hiển thị lá bài một client khác vừa gửi tới (mã 6)
+     * Hiển thị lá bài một client khác vừa gửi tới
+     * Mã 6
      */
-
     public void showPlayCard(String message) {
         String Name = message.substring(0, message.indexOf("%"));
         String LaBai = message.substring(message.indexOf("%") + 1);
@@ -158,27 +196,13 @@ public class Hearts implements MouseListener, ItemListener {
         if ("".equals(chatBaiKiemTra)) {
             chatBaiKiemTra = LaBai.substring(LaBai.indexOf("_"));
         }
-
-        /*if (Name.equals(PlayerName.get(0))) {
-        for (int i = 0; i < 4; ++i) {
-        //Hiển thị lá bài nhận được
-        lblCardPlay1[i].setIcon(new ImageIcon(path));
-        lblCardPlay1[i].setVisible(true);
-        //Bỏ đi một lá trong danh sách bài
-        Random a = new Random();
-        while (true) {
-        int b = a.nextInt(13);
-        if (lblPlayCardLeft[b].isVisible()) {
-        lblPlayCardLeft[b].setVisible(false);
-        break;
-        }
-        }
-        }
-        }*/
+        //Hiển thị lá bài đánh ra - bỏ 1 lá trong danh sách
+        CenterCardIndex++;
         if (Name.equals(PlayerName.get(1))) {
             //Hiển thị lá bài nhận được
-            lblCenterCardLeft[0].setIcon(new ImageIcon(path));
-            lblCenterCardLeft[0].setVisible(true);
+
+            lblCenterCardLeft[CenterCardIndex].setIcon(new ImageIcon(path));
+            lblCenterCardLeft[CenterCardIndex].setVisible(true);
             //Bỏ đi một lá trong danh sách bài
             Random a = new Random();
             while (true) {
@@ -190,9 +214,9 @@ public class Hearts implements MouseListener, ItemListener {
             }
         }
         if (Name.equals(PlayerName.get(2))) {
-            //Hiển thị lá bài nhận được
-            lblCenterCardTop[0].setIcon(new ImageIcon(path));
-            lblCenterCardTop[0].setVisible(true);
+            //Hiển thị lá bài nhận được            
+            lblCenterCardTop[CenterCardIndex].setIcon(new ImageIcon(path));
+            lblCenterCardTop[CenterCardIndex].setVisible(true);
             //Bỏ đi một lá trong danh sách bài
             Random a = new Random();
             while (true) {
@@ -204,9 +228,9 @@ public class Hearts implements MouseListener, ItemListener {
             }
         }
         if (Name.equals(PlayerName.get(3))) {
-            //Hiển thị lá bài nhận được
-            lblCenterCardRight[0].setIcon(new ImageIcon(path));
-            lblCenterCardRight[0].setVisible(true);
+            //Hiển thị lá bài nhận được            
+            lblCenterCardRight[CenterCardIndex].setIcon(new ImageIcon(path));
+            lblCenterCardRight[CenterCardIndex].setVisible(true);
             //Bỏ đi một lá trong danh sách bài
             Random a = new Random();
             while (true) {
@@ -218,16 +242,73 @@ public class Hearts implements MouseListener, ItemListener {
             }
         }
     }
-    
+
     /*
-     * Nhận 3 lá bài sau khi đổi (mã 11)
+     * Cho biết có quyền đi quân cơ
+     * Mã 7
+     */
+    public void CoQuyenDiCo(boolean enable) {
+        chatCo = enable;
+    }
+
+    /*
+     * Thông báo ván chơi kết thúc (sau 13 lượt)
+     * Mã 8
+     */
+    public void thongBaoVanChoiKetThuc(String message) {
+        String[] NguoiChoi = new String[4];
+        NguoiChoi = message.split("%");
+        for (int i = 0; i < 4; ++i) {
+            String Name = NguoiChoi[i].substring(0, NguoiChoi[i].indexOf("$"));
+            int Diem = Integer.parseInt(NguoiChoi[i].substring(NguoiChoi[i].indexOf("$") + 1));
+
+            for (int j = 0; j < 4; ++j) {
+                if (Name.equals(PlayerName.get(j))) {
+                    Scores[j] = Diem;
+                    break;
+                }
+            }
+        }
+        showGameScore("Van choi ket thuc", true);
+    }
+
+    /*
+     * Xử lý khi trò chơi kết thúc
+     * Mã 10
+     */
+    public void xuLyKetQuaTroChoi(String message) {
+        String[] NguoiChoi = new String[4];
+        NguoiChoi = message.split("%");
+        for (int i = 0; i < 4; ++i) {
+            String Name = message.substring(0, NguoiChoi[i].indexOf("$"));
+            int Diem = Integer.parseInt(NguoiChoi[i].substring(NguoiChoi[i].indexOf("$") + 1));
+
+            for (int j = 0; j < 4; ++j) {
+                if (Name.equals(PlayerName.get(j))) {
+                    Scores[j] = Diem;
+                    break;
+                }
+            }
+        }
+        showGameScore("Tro choi ket thuc", true);
+        //Đóng kết nối
+        
+        //Chuyển sang màn hình đăng nhập
+    }
+
+    public void EnableClick(boolean enable) {
+        CLICK_ENABLE = enable;
+    }
+
+    /*
+     * Nhận 3 lá bài sau khi đổi
+     * Mã 11
      */
     public void receiveChangeCard(String message) {
         //3 lá nhận được
         String[] lstBai = new String[3];
         lstBai = message.split("%");
-
-        //pPlayerOne.clearChangeCard();
+        //Nhận 3 lá bài và đổi hình label hiển thị
         for (int i = 0; i < 3; ++i) {
             int j = pPlayerOne.get3CardPos().get(i).intValue();
             String path = Card.PICTURES_FOLDER + lstBai[i] + Card.PICTURES_EXTEND;
@@ -237,9 +318,27 @@ public class Hearts implements MouseListener, ItemListener {
         }
     }
 
+    /*
+     * Nhận loại bài kiểm tra của người đi đầu tiên trong lượt
+     * Mã 12
+     */
+    public void nhanChatBaiLuotChoi(String message) {
+        chatBaiKiemTra = message;
+        String tmp = txtDisplayMessage.getText();
+                tmp += "Chat bai kiem tra: " + chatBaiKiemTra + "\n";
+                tmp += "Luot dau = " + (pPlayerOne.getIsFirst() == true ? "1" : "0" + "\n");
+        txtDisplayMessage.setText(tmp);
+    }
+
     public void makeConnection(ConnectJFrame connectJF) {
         ConnectF = new ConnectJFrame();
         ConnectF = connectJF;
+    }
+
+    private void setVisible(JLabel[] label) {
+        for (int i = 0; i < label.length; ++i) {
+            label[i].setVisible(true);
+        }
     }
 
     public void setTitle(String title) {
@@ -247,46 +346,27 @@ public class Hearts implements MouseListener, ItemListener {
     }
 
     public void setPlayerName(int ID, String name) {
+        //Nếu là người đầu tiên thì hiển thị tên lên tiêu đề
         if (ID == 0) {
             myFrame.setTitle(name);
-            //pPlayerOne.setName(name);
-        } /*else if (ID == 1) {
-        //pPlayerTwo.setName(name);
-        } else if (ID == 2) {
-        //pPlayerThree.setName(name);
-        } else if (ID == 3) {
-        //pPlayerFour.setName(name);
-        }*/
-
+        }
+        //Lưu lại tên và hiển thị lên label
         PlayerName.set(ID, name);
         lblPlayerName[ID].setText(name);
     }
-
-    public String getPlayerName(int ID) {
-        if (ID == 0) {
-            return pPlayerOne.getName();
-        } else if (ID == 1) {
-            return pPlayerTwo.getName();
-        } else if (ID == 2) {
-            return pPlayerThree.getName();
-        } else if (ID == 3) {
-            return pPlayerFour.getName();
-        }
-
-        return "";
-    }
-    //Constructor
 
     public Hearts() {
         //Khởi tạo điểm số
         Scores = new int[4];
         for (int i = 0; i < 4; ++i) {
             Scores[i] = 0;
-        }        
-        
-        myCardList = new ArrayList<Card>();
-        RealPlayerName = new ArrayList<String>();
+        }
+        //Cấp phát danh sách 13 lá bài
+        myListCard = new ArrayList<Card>();
+        //Khởi tạo thông tin người chơi
         initPlayer();
+        //Khởi tạo giao diện
+        initFrame();
         initMenu();
         initPlayerNameLabel();
         initCenterCardLabel();
@@ -320,7 +400,7 @@ public class Hearts implements MouseListener, ItemListener {
         panel.setLayout(null);
         panel.setBackground(new Color(242, 243, 248));
         panel.setBorder(new EtchedBorder(EtchedBorder.RAISED));
-        panel.setBounds(0, 650, 250, 25);
+        panel.setBounds(0, 650, 500, 25);
         myFrame.add(panel);
 
         //noteLabel = new JLabel("*------------------------------------------------------------------------------------------------------------------------------------------------*");
@@ -480,28 +560,28 @@ public class Hearts implements MouseListener, ItemListener {
         //					 	PLAYER'S NAME LABEL 
         //====================================================================
         lblPlayerName = new JLabel[4];
-        //pJara
+        //Bottom player's name label
         lblPlayerName[0] = new JLabel(pPlayerOne.getName());
         lblPlayerName[0].setFont(new Font("Arial", Font.BOLD, 14));
         lblPlayerName[0].setSize(100, 20);
         lblPlayerName[0].setLocation(150, 600);
         lblPlayerName[0].setForeground(Color.red);
         myFrame.add(lblPlayerName[0]);
-        //pPauline
+        //Left player's name label
         lblPlayerName[1] = new JLabel("B");
         lblPlayerName[1].setFont(new Font("Arial", Font.BOLD, 14));
         lblPlayerName[1].setSize(100, 20);
         lblPlayerName[1].setLocation(40, 100);
         lblPlayerName[1].setForeground(Color.red);
         myFrame.add(lblPlayerName[1]);
-        //pMichele
+        //Top player's name label
         lblPlayerName[2] = new JLabel("C");
         lblPlayerName[2].setFont(new Font("Arial", Font.BOLD, 14));
         lblPlayerName[2].setSize(100, 20);
         lblPlayerName[2].setLocation(640, 40);
         lblPlayerName[2].setForeground(Color.red);
         myFrame.add(lblPlayerName[2]);
-        //pBen
+        //Right player's name label
         lblPlayerName[3] = new JLabel("D");
         lblPlayerName[3].setFont(new Font("Arial", Font.BOLD, 14));
         lblPlayerName[3].setSize(100, 40);
@@ -515,26 +595,14 @@ public class Hearts implements MouseListener, ItemListener {
         //					THIET LAP NGUOI CHOI
         //====================================================================
         PlayerName = new ArrayList<String>(4);
-        PlayerName.add("Alice");
-        PlayerName.add("Bill");
-        PlayerName.add("Cain");
-        PlayerName.add("David");
+        PlayerName.add("A");
+        PlayerName.add("B");
+        PlayerName.add("C");
+        PlayerName.add("D");
 
         pPlayerOne = new Player(PlayerName.get(0), Player.IS_HUMAN, Player.BOTTOM);
-//        pPlayerTwo = new Player(PlayerName.get(1), Player.IS_HUMAN, Player.LEFT);
-//        pPlayerThree = new Player(PlayerName.get(2), Player.IS_HUMAN, Player.TOP);
-//        pPlayerFour = new Player(PlayerName.get(3), Player.IS_HUMAN, Player.RIGHT);
-
-//        pPlayerOne.setNextPlayer(pPlayerTwo);
-//        pPlayerTwo.setNextPlayer(pPlayerThree);
-//        pPlayerThree.setNextPlayer(pPlayerFour);
-//        pPlayerFour.setNextPlayer(pPlayerOne);
     }
-
-    private void initMenu() {
-        //====================================================================
-        //					THIET LAP FRAME
-        //====================================================================
+    private void initFrame() {
         myFrame = new JFrame("Hearts Game Online v1.0");
         myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myFrame.setLayout(null);
@@ -543,11 +611,9 @@ public class Hearts implements MouseListener, ItemListener {
         myFrame.setLocation(0, 0);
         JPanel panelFrame = (JPanel) myFrame.getContentPane();
         panelFrame.setBackground(new Color(102, 153, 0));
-
-
-        //====================================================================
-        //					 THIET LAP MENU
-        //====================================================================
+    }
+            
+    private void initMenu() {        
         menuBar = new JMenuBar();
         myFrame.setJMenuBar(menuBar);
 
@@ -562,52 +628,10 @@ public class Hearts implements MouseListener, ItemListener {
         menuItem.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
-                showGameScore(null);
+                showGameScore(null, false);
                 //JOptionPane.showMessageDialog(null, txtScore, "Score Sheet", JOptionPane.INFORMATION_MESSAGE);
             }
         });
-        menuGame.addSeparator();	//them dau nhom item
-
-        /*final JMenuItem play = new JMenuItem("Automatic Play");
-        play.setMnemonic('A');
-        menuGame.add(play);
-        play.addActionListener(new ActionListener() {
-        
-        public void actionPerformed(ActionEvent e) {
-        if (pPlayerOne.isHuman()) {
-        pPlayerOne.setType(Player.IS_COMPUTER);
-        play.setText("Manually");
-        play.setMnemonic('M');
-        } else {
-        pPlayerOne.setType(Player.IS_HUMAN);
-        play.setText("Automatic");
-        play.setMnemonic('A');
-        }
-        }
-        });*/
-        /*
-        showcard = new JMenuItem("Show Card");
-        showcard.setMnemonic('S');
-        menuGame.add(showcard);
-        showcard.addActionListener(new ActionListener() {
-        
-        public void actionPerformed(ActionEvent e) {
-        if (showcard.getText().equals("Show Cards")) {
-        showcard.setText("Hide Cards");
-        showcard.setMnemonic('H');
-        pPlayerTwo.showListCard(true);
-        pPlayerThree.showListCard(true);
-        pPlayerFour.showListCard(true);
-        } else {
-        showcard.setText("Show Cards");
-        showcard.setMnemonic('S');
-        pPlayerTwo.showListCard(false);
-        pPlayerThree.showListCard(false);
-        pPlayerFour.showListCard(false);
-        }
-        }
-        });         
-         */
         menuGame.addSeparator();	//them dau nhom item
 
         menuItem = new JMenuItem("Exit");
@@ -634,28 +658,7 @@ public class Hearts implements MouseListener, ItemListener {
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(null, "Sinh Viên:\nTrần Hưng Thuận  0812508.\nPhan Nhật Tiến   0812515.\nHuỳnh Công Toàn   0812527.\n\nGVHD: Nguyễn Văn Khiết.", "Hearts Game", JOptionPane.INFORMATION_MESSAGE);
             }
-        });
-
-        //====================================================================
-        //					 	OPTIONS
-        //====================================================================  
-        CheckboxGroup checkGroup;
-        //add the checkboxes to the frame 
-        checkGroup = new CheckboxGroup();
-        fast = new Checkbox("Fast", checkGroup, true);
-        fast.addItemListener(this);
-
-        normal = new Checkbox("Normal", checkGroup, false);
-        normal.addItemListener(this);
-
-        slow = new Checkbox("Slow", checkGroup, false);
-        slow.addItemListener(this);
-
-        Panel north = new Panel();
-        north.add(fast);
-        north.add(normal);
-        north.add(slow);
-        menuBar.add(north, BorderLayout.WEST);
+        });        
     }
 
     public void initMenuOption() {
@@ -664,7 +667,7 @@ public class Hearts implements MouseListener, ItemListener {
         menuBar.add(menuOption);
         //--------------------Change Appearance---------------------
         menuItem = new JMenu("Change Appearance");
-        JRadioButtonMenuItem Size16 = new JRadioButtonMenuItem("Size 16");
+        JRadioButtonMenuItem Size16 = new JRadioButtonMenuItem("Type 1");
         menuItem.add(Size16);
         //menuItem.addSeparator();
         menuOption.add(menuItem);
@@ -679,7 +682,7 @@ public class Hearts implements MouseListener, ItemListener {
                 _nameLeftPlayer.showListLabelCardPlayer(false, _sizeChangeCard);*/
             }
         });
-        JRadioButtonMenuItem Size14 = new JRadioButtonMenuItem("Size 14");
+        JRadioButtonMenuItem Size14 = new JRadioButtonMenuItem("Type 2");
         menuItem.add(Size14);
         //menuItem.addSeparator();
         menuOption.add(menuItem);
@@ -694,7 +697,7 @@ public class Hearts implements MouseListener, ItemListener {
                 _nameLeftPlayer.showListLabelCardPlayer(false, _sizeChangeCard);*/
             }
         });
-        JRadioButtonMenuItem Size12 = new JRadioButtonMenuItem("Size 12");
+        JRadioButtonMenuItem Size12 = new JRadioButtonMenuItem("Type 3");
         menuItem.add(Size12);
         //menuItem.addSeparator();
         menuOption.add(menuItem);
@@ -710,175 +713,128 @@ public class Hearts implements MouseListener, ItemListener {
             }
         });
 
-        JRadioButtonMenuItem Size10 = new JRadioButtonMenuItem("Size 10");
-        menuItem.add(Size10);
-        //menuItem.addSeparator();
-        menuOption.add(menuItem);
-        Size10.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                /*_sizeChangeCard = 4;
-                _nameDownPlayer.showListLabelCardPlayer(true, _sizeChangeCard);
-                _nameTopPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
-                _nameRightPlayer.showListLabelCardPlayer(false, _sizeChangeCard);
-                _nameLeftPlayer.showListLabelCardPlayer(false, _sizeChangeCard);*/
-            }
-        });
-
         //---------------------------------Change Speed--------------
         menuItem = new JMenu("Change Speed");
-        JRadioButtonMenuItem menuItem_Quick = new JRadioButtonMenuItem("Quick");
+        //Tốc độ nhanh
+        JRadioButtonMenuItem menuItem_Quick = new JRadioButtonMenuItem("Fast");
         menuItem.add(menuItem_Quick);
-        //menuItem.addSeparator();
         menuOption.add(menuItem);
         menuItem_Quick.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                PlaySpeed = 5;
+                //PlaySpeed = 5;
                 MoveSpeed = 1;
-                /*_speedPlayCard = 10;
-                _speedMoveCard = 2;*/
             }
         });
+        //Tốc độ bình thường
         JRadioButtonMenuItem menuItem_Normal = new JRadioButtonMenuItem("Normal");
         menuItem.add(menuItem_Normal);
-        //menuItem.addSeparator();
-        menuOption.add(menuItem);
         menuItem_Normal.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                PlaySpeed = 60;
+                //PlaySpeed = 60;
                 MoveSpeed = 10;
-                //throw new UnsupportedOperationException("Not supported yet.");
             }
         });
+        //Tốc độ chậm
         JRadioButtonMenuItem menuItem_Slow = new JRadioButtonMenuItem("Slow");
         menuItem.add(menuItem_Slow);
-        //menuItem.addSeparator();
         menuOption.add(menuItem);
         menuItem_Slow.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //throw new UnsupportedOperationException("Not supported yet.");
-                PlaySpeed = 150;
+                //PlaySpeed = 150;
                 MoveSpeed = 16;
             }
         });
     }
 
-    //====================================================================
-    // 							Chia bai
-    //====================================================================
-    public void createListCard(String message) {
-        String[] lstBai = new String[Card.NUM_OF_FACE];
-        lstBai = message.split("%");
-
-        for (int i = 0; i < Card.NUM_OF_FACE; ++i) {
-            String[] FaceSuit = lstBai[i].split("_");
-            int face = Integer.parseInt(FaceSuit[0]) - 2;
-            for (int j = 0; j < Card.NUM_OF_SUIT; ++j) {
-                if (Card.Suit[j].equals(FaceSuit[1])) {
-                    Card c = new Card(face, j);
-                    myCardList.add(c);
-                    break;
-                }
-            }
-        }
-    }
-
     public void dealCard() {
-
         //Neu co xet cac truong hop dac biet
-        if (this.CASE_FLAG != 0) {
-            special_Deal_Card();
-            return;
-        }
-        //Neu khong xet cac truong hop dac biet
-        Card c;
-        for (int i = 0; i < myCardList.size(); ++i) {
-            pPlayerOne.addACard(myCardList.get(i));
+        /*if (this.CASE_FLAG != 0) {
+        special_Deal_Card();
+        return;
+        }*/
+        //Neu khong xet cac truong hop dac biet        
+        for (int i = 0; i < myListCard.size(); ++i) {
+            pPlayerOne.addACard(myListCard.get(i));
         }
 
-        //========== SHOW CARD ==========		
         pPlayerOne.showListCard(true);
-//        pPlayerTwo.showListCard(false);
-//        pPlayerThree.showListCard(false);
-//        pPlayerFour.showListCard(false);
+
     }
 
     //====================================================================
     // 							Chia bai 2
     //====================================================================
-    public void special_Deal_Card() {
-
-        ArrayList<Card> CardList = Card.creatListCard();
-
-        //Chia bai cho cac nguoi theo chat
-        for (int i = 0; i < CardList.size(); i++) {
-            Card c = CardList.get(i);
-            //Chia ca quan bai chat Co cho pJara
-            if (c.isHeart()) {
-                pPlayerOne.addACard(c);
-            }
-
-            //Chia ca quan bai chat Ro cho pPauline
-            if (c.getSuit() == Card.SUIT_DIAMOND) {
-                pPlayerTwo.addACard(c);
-            }
-
-            //Chia ca quan bai chat Chuon cho pMichele
-            if (c.getSuit() == Card.SUIT_CLUB) {
-                pPlayerThree.addACard(c);
-            }
-
-            //Chia ca quan bai chat Bich cho pBen
-            if (c.getSuit() == Card.SUIT_SPADE) {
-                pPlayerFour.addACard(c);
-            }
-        }
-
-        //========== XEP BAI ==========		
-        pPlayerOne.sortCard();
-        pPlayerTwo.sortCard();
-        pPlayerThree.sortCard();
-        pPlayerFour.sortCard();
-
-        switch (this.CASE_FLAG) {
-            //Truong hop 1: Human co 12 quan Co va Q bich
-            case 1:
-                int i1 = 0;
-                int i2 = 10;
-                Card c1 = pPlayerOne.getListCard().get(i1);
-                Card c2 = pPlayerFour.getListCard().get(i2);
-                pPlayerOne.getListCard().set(i1, c2);
-                pPlayerFour.getListCard().set(i2, c1);
-                break;
-            //Truong hop 2:	Human la nguoi danh dau tien trong vong choi	
-            case 2:
-                i1 = 0;
-                i2 = 0;
-                c1 = pPlayerOne.getListCard().get(i1);
-                c2 = pPlayerThree.getListCard().get(i2);
-                pPlayerOne.getListCard().set(i1, c2);
-                pPlayerThree.getListCard().set(i2, c1);
-                break;
-
-            //Truong hop 3: Human la nguoi Shoot The Moon
-            case 3:
-                for (int i = 0; i < Player.SOQUANBAI; i++) {
-                    c1 = pPlayerOne.getListCard().get(i);
-                    c2 = pPlayerThree.getListCard().get(i);
-                    pPlayerOne.getListCard().set(i, c2);
-                    pPlayerThree.getListCard().set(i, c1);
-                }
-                break;
-        }
+    /*public void special_Deal_Card() {
+    
+    ArrayList<Card> CardList = Card.creatListCard();
+    
+    //Chia bai cho cac nguoi theo chat
+    for (int i = 0; i < CardList.size(); i++) {
+    Card c = CardList.get(i);
+    //Chia ca quan bai chat Co cho pJara
+    if (c.isHeart()) {
+    pPlayerOne.addACard(c);
     }
-
+    
+    //Chia ca quan bai chat Ro cho pPauline
+    if (c.getSuit() == Card.SUIT_DIAMOND) {
+    pPlayerTwo.addACard(c);
+    }
+    
+    //Chia ca quan bai chat Chuon cho pMichele
+    if (c.getSuit() == Card.SUIT_CLUB) {
+    pPlayerThree.addACard(c);
+    }
+    
+    //Chia ca quan bai chat Bich cho pBen
+    if (c.getSuit() == Card.SUIT_SPADE) {
+    pPlayerFour.addACard(c);
+    }
+    }
+    
+    //========== XEP BAI ==========		
+    pPlayerOne.sortCard();
+    pPlayerTwo.sortCard();
+    pPlayerThree.sortCard();
+    pPlayerFour.sortCard();
+    
+    switch (this.CASE_FLAG) {
+    //Truong hop 1: Human co 12 quan Co va Q bich
+    case 1:
+    int i1 = 0;
+    int i2 = 10;
+    Card c1 = pPlayerOne.getListCard().get(i1);
+    Card c2 = pPlayerFour.getListCard().get(i2);
+    pPlayerOne.getListCard().set(i1, c2);
+    pPlayerFour.getListCard().set(i2, c1);
+    break;
+    //Truong hop 2:	Human la nguoi danh dau tien trong vong choi	
+    case 2:
+    i1 = 0;
+    i2 = 0;
+    c1 = pPlayerOne.getListCard().get(i1);
+    c2 = pPlayerThree.getListCard().get(i2);
+    pPlayerOne.getListCard().set(i1, c2);
+    pPlayerThree.getListCard().set(i2, c1);
+    break;
+    
+    //Truong hop 3: Human la nguoi Shoot The Moon
+    case 3:
+    for (int i = 0; i < Player.SOQUANBAI; i++) {
+    c1 = pPlayerOne.getListCard().get(i);
+    c2 = pPlayerThree.getListCard().get(i);
+    pPlayerOne.getListCard().set(i, c2);
+    pPlayerThree.getListCard().set(i, c1);
+    }
+    break;
+    }
+    }*/
     //====================================================================
     // 							notice
     //====================================================================
@@ -891,7 +847,7 @@ public class Hearts implements MouseListener, ItemListener {
     //====================================================================
     // 							Human Play
     //====================================================================
-    public static Card humanPlay(Player p) {
+    public static Card chooseACard(Player p) {
         Card c;
         while (true) {
             if (labelIndex != -1) {
@@ -914,52 +870,6 @@ public class Hearts implements MouseListener, ItemListener {
         return c;
     }
 
-    //====================================================================
-    // 							findFisrtPlayer
-    //====================================================================
-    /*public Player findFisrtPlayer() {
-    //Neu la luot danh dau tien cua vong, tim nguoi co quan 2 chuon
-    if (luotDau) {
-    if (pPlayerOne.hasTwoClub()) {
-    return pPlayerOne;
-    }
-    if (pPlayerFour.hasTwoClub()) {
-    return pPlayerFour;
-    }
-    if (pPlayerTwo.hasTwoClub()) {
-    return pPlayerTwo;
-    }
-    if (pPlayerThree.hasTwoClub()) {
-    return pPlayerThree;
-    }
-    } //Neu khong, tim nguoi thang trong luot hien tai 
-    else {
-    Card maxCard = kiemtra;
-    if (Card2.isGreatThan(maxCard)) {
-    maxCard = Card2;
-    }
-    if (Card3.isGreatThan(maxCard)) {
-    maxCard = Card3;
-    }
-    if (Card4.isGreatThan(maxCard)) {
-    maxCard = Card4;
-    }
-    
-    if (pPlayerOne.getPLayCard().equals(maxCard)) {
-    return pPlayerOne;
-    }
-    if (pPlayerFour.getPLayCard().equals(maxCard)) {
-    return pPlayerFour;
-    }
-    if (pPlayerTwo.getPLayCard().equals(maxCard)) {
-    return pPlayerTwo;
-    }
-    if (pPlayerThree.getPLayCard().equals(maxCard)) {
-    return pPlayerThree;
-    }
-    }
-    return null;
-    }*/
     //====================================================================
     //				Di chuyen cac label theo cac do dich dx, dy
     //====================================================================	
@@ -984,16 +894,31 @@ public class Hearts implements MouseListener, ItemListener {
     //====================================================================
     public void move(String winner) {
         JLabel[] lbl = new JLabel[4];
-        lbl[0] = lblCenterCardBottom[0];
-        lbl[1] = lblCenterCardLeft[0];
-        lbl[2] = lblCenterCardTop[0];
-        lbl[3] = lblCenterCardRight[0];
+        for (int i = 0; i < 4; ++i) {
+            if (lblCenterCardBottom[i].isVisible()) {
+                lbl[0] = lblCenterCardBottom[i];
+            }
+            if (lblCenterCardLeft[i].isVisible()) {
+                lbl[1] = lblCenterCardLeft[i];
+            }
+            if (lblCenterCardTop[i].isVisible()) {
+                lbl[2] = lblCenterCardTop[i];
+            }
+            if (lblCenterCardRight[i].isVisible()) {
+                lbl[3] = lblCenterCardRight[i];
+            }
+
+            /*lbl[0] = lblCenterCardBottom[0];
+            lbl[1] = lblCenterCardLeft[0];
+            lbl[2] = lblCenterCardTop[0];
+            lbl[3] = lblCenterCardRight[0];*/
+        }
 
         //Toa do ban dau cua cac label
-        Point[] point = new Point[4];
+        Point[] startingPoint = new Point[4];
         for (int i = 0; i < lbl.length; i++) {
             lbl[i].setVisible(true);
-            point[i] = lbl[i].getLocation();
+            startingPoint[i] = lbl[i].getLocation();
         }
 
         if (winner.equals(PlayerName.get(0))) {
@@ -1010,7 +935,7 @@ public class Hearts implements MouseListener, ItemListener {
         }
         for (int i = 0; i < lbl.length; i++) {
             lbl[i].setVisible(false);
-            lbl[i].setLocation(point[i]);
+            lbl[i].setLocation(startingPoint[i]);
         }
     }
 
@@ -1094,45 +1019,6 @@ public class Hearts implements MouseListener, ItemListener {
     return false;
     }*/
     //====================================================================
-    //						Print The Score
-    //====================================================================
-    /*public void printTheScore() {
-    Player p = pPlayerOne;
-    System.out.println(p.getName() + "'s score is " + p.getScore());
-    
-    p = p.getNextPlayer();
-    System.out.println(p.getName() + "'s score is " + p.getScore());
-    
-    p = p.getNextPlayer();
-    System.out.println(p.getName() + "'s score is " + p.getScore());
-    
-    p = p.getNextPlayer();
-    System.out.println(p.getName() + "'s score is " + p.getScore());
-    
-    System.out.println("=====================================");
-    }*/
-    //====================================================================
-    //							setTxtScore
-    //====================================================================
-    /*public void setTxtScore() {
-    txtScore += "  " + ((pPlayerOne.getScore() < 10) ? ("  " + pPlayerOne.getScore()) : (pPlayerOne.getScore())) + "                ";
-    txtScore += (pPlayerTwo.getScore() < 10 ? ("  " + pPlayerTwo.getScore()) : (pPlayerTwo.getScore())) + "                 ";
-    txtScore += (pPlayerThree.getScore() < 10 ? ("  " + pPlayerThree.getScore()) : (pPlayerThree.getScore())) + "                ";//
-    txtScore += (pPlayerFour.getScore() < 10 ? ("  " + pPlayerFour.getScore()) : (pPlayerFour.getScore())) + "\n";
-    }*/
-    //====================================================================
-    //							Show Game Score
-    //====================================================================
-    public void showGameScore(String s) {
-        notice(s);
-        txtScore += "  " + ((Scores[0] < 10) ? ("  " + Scores[0]) : (Scores[0])) + "                ";
-        txtScore += (Scores[1] < 10 ? ("  " + Scores[1]) : (Scores[1])) + "                 ";
-        txtScore += (Scores[2] < 10 ? ("  " + Scores[2]) : (Scores[2])) + "                ";
-        txtScore += (Scores[3] < 10 ? ("  " + Scores[3]) : (Scores[3])) + "\n";
-        JOptionPane.showMessageDialog(null, txtScore, "Score Sheet", JOptionPane.INFORMATION_MESSAGE);
-    }
-
-    //====================================================================
     //							SCORING
     //====================================================================
     /*public void scoring() {
@@ -1152,7 +1038,7 @@ public class Hearts implements MouseListener, ItemListener {
     }
     }*/
     //
-    public static ArrayList<Integer> humanChose3Card() {
+    public static ArrayList<Integer> changeThreeCards() {
         labelIndex = -1;
         CLICK_ENABLE = true;
         get3card = true;
@@ -1184,42 +1070,9 @@ public class Hearts implements MouseListener, ItemListener {
         return pos;
     }
 
-    public void continueCheckStartNewRound() {
-        //Neu khong xet cac truong hop dac biet
-        if (this.CASE_FLAG == 0) {
-
-            String txt = "Chon 3 la bai de doi cho ";
-            PASS_NUMBER = (++PASS_NUMBER) % 4;
-
-            switch (PASS_NUMBER) {
-                case 0:
-                    txt += PlayerName.get(1);
-                    newRoundButton.setText("Pass Left");
-                    break;
-
-                case 1:
-                    txt += PlayerName.get(3);
-                    newRoundButton.setText("Pass Right");
-                    break;
-
-                case 2:
-                    txt += PlayerName.get(2);
-                    newRoundButton.setText("Pass Cross");
-                    break;
-            }
-            notice(txt);
-            newRoundButton.setVisible(true);
-
-            //Thus hien pass card
-            if (PASS_NUMBER >= 0 && PASS_NUMBER <= 2) {
-                pPlayerOne.passCard(PASS_NUMBER);
-            }
-        }
-    }
     //====================================================================
     // 						Check Start New Round
     //====================================================================
-
     public void checkStartNewRound() {
 
         //chia bai
@@ -1308,14 +1161,6 @@ public class Hearts implements MouseListener, ItemListener {
 //        pPlayerTwo.sortCard();
 //        pPlayerThree.sortCard();
 //        pPlayerFour.sortCard();
-    }
-
-    public void EnableClick(boolean enable) {
-        CLICK_ENABLE = enable;
-    }
-
-    public void CoQuyenDiCo(boolean enable) {
-        chatCo = enable;
     }
 
     public void continueNewRound() {
@@ -1448,7 +1293,14 @@ public class Hearts implements MouseListener, ItemListener {
 
         //showcard.setEnabled(false);
         //showcard.setText("Show Cards");
-
+        CenterCardIndex = -1;
+        chatBaiKiemTra = "";
+        chatCo = false;
+        luotDau = false;
+        
+        setVisible(lblListCardLeft);
+        setVisible(lblListCardTop);
+        setVisible(lblListCardRight);
         pPlayerOne.newRound();
         //pPlayerTwo.newRound();
         //pPlayerThree.newRound();
@@ -1576,14 +1428,59 @@ public class Hearts implements MouseListener, ItemListener {
 //        //Tinh diem, kiem tra de bat dau vong moi
 //        this.scoring();
     }
+//====================================================================
+    //							Show Game Score
+    //====================================================================
 
+    public void showGameScore(String s, boolean  saved) {
+        //notice(s);
+        String temp = txtScore;
+        temp += Scores[0] + "           ";
+        if (Scores[0] < 100) {
+            temp += "  ";
+        }
+        if (Scores[0] < 10) {
+            temp += "  ";
+        }
+        for (int i = 0; i < PlayerName.get(0).length(); ++i) {
+            temp += " ";
+        }
+        temp += Scores[1] + "           ";
+        if (Scores[1] < 100) {
+            temp += "  ";
+        }
+        if (Scores[1] < 10) {
+            temp += "  ";
+        }
+        for (int i = 0; i < PlayerName.get(1).length(); ++i) {
+            temp += " ";
+        }
+        temp += Scores[2] + "           ";
+        if (Scores[2] < 100) {
+            temp += "  ";
+        }
+        if (Scores[2] < 10) {
+            temp += "  ";
+        }
+        for (int i = 0; i < PlayerName.get(2).length(); ++i) {
+            temp += " ";
+        }
+        temp += Scores[3];
+        for (int i = 0; i < PlayerName.get(3).length(); ++i) {
+            temp += " ";
+        }
+        if(saved)
+            txtScore = temp;
+        JOptionPane.showMessageDialog(null, temp, "Score Sheet", JOptionPane.INFORMATION_MESSAGE);
+    }
     //====================================================================
     // 							New Game
     //====================================================================
+
     public void newGame() {
-        txtScore = PlayerName.get(0) + "             "
-                + PlayerName.get(1) + "             "
-                + PlayerName.get(2) + "             "
+        txtScore = PlayerName.get(0) + "                "
+                + PlayerName.get(1) + "                "
+                + PlayerName.get(2) + "                "
                 + PlayerName.get(3) + "\n";
         pPlayerOne.newGame();
         //pPlayerTwo.newGame();
@@ -1694,29 +1591,12 @@ public class Hearts implements MouseListener, ItemListener {
 
     @Override
     public void itemStateChanged(ItemEvent ie) {
-        // TODO Auto-generated method stub
-        if (this.fast.getState()) {
-            //Fast speed
-            this.PlaySpeed = 5;
-            this.MoveSpeed = 1;
-        }
-
-        if (this.normal.getState()) {
-            //Normal speed
-            this.PlaySpeed = 30;
-            this.MoveSpeed = 5;
-        }
-
-        if (this.slow.getState()) {
-            //Slow speed
-            this.PlaySpeed = 70;
-            this.MoveSpeed = 7;
-        }
+        // TODO Auto-generated method stub        
     }
 
     private void initChatField() {
         //Hien thi hang noi dung chat
-        txtDisplayMessage = new JTextArea("Nội dung chat");
+        txtDisplayMessage = new JTextArea("Nội dung chat\n");
         txtDisplayMessage.setSize(200, 550);
         txtDisplayMessage.setLocation(800, 10);
 
@@ -1738,6 +1618,8 @@ public class Hearts implements MouseListener, ItemListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //txtDisplayMessage.setText(pPlayerOne.getName() + ": " + txtSendMessage.getText().trim());
+                String tmp = txtDisplayMessage.getText() + "Luot dau = " + (pPlayerOne.getIsFirst() == true ? "1" : "0");
+                txtDisplayMessage.setText(tmp);
                 Hearts.notice("2%" + txtSendMessage.getText().trim());
                 ConnectF.sendMessage("2%" + txtSendMessage.getText().trim());
             }
@@ -1753,7 +1635,7 @@ public class Hearts implements MouseListener, ItemListener {
         Message += message;
         txtDisplayMessage.setText(Message);
     }
-    
+
     //====================================================================
     // 							 Main method
     //====================================================================
@@ -1761,7 +1643,9 @@ public class Hearts implements MouseListener, ItemListener {
         // TODO Auto-generated method stub
         Hearts myGame = new Hearts();
         myGame.newGame();
-        
-        myGame.showGameScore("Game Over");
+
+        myGame.showGameScore("Game Over", false);
+        String mes = "A$3%B$3%C$16%D$4";
+        myGame.thongBaoVanChoiKetThuc(mes);
     }
 }

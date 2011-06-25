@@ -98,7 +98,7 @@ public class GameThread extends Thread {
                 }
                 //Gui Chuoi Bai Cho 4 Client
                 for (int i = 0; i < 4; i++) {
-                    ListenT.ListClient[i].BuffWriter.write(ChuoiBaiGuiClient[i]+"\n");
+                    ListenT.ListClient[i].BuffWriter.write(ChuoiBaiGuiClient[i] + "\n");
                     ListenT.ListClient[i].BuffWriter.flush();
                 }
                 //Xem Co Trao Doi Bai Khong
@@ -109,7 +109,7 @@ public class GameThread extends Thread {
                         MessageClient[i] = "";
                     }
                 }
-                
+
                 String LoaiBai = "";
                 String BaiClient[] = new String[4];
                 boolean DiCo = false;
@@ -203,20 +203,19 @@ public class GameThread extends Thread {
                     ListenT.ListClient[i].BuffWriter.flush();
                     ListenT.ListClient[i].TongDiem += DiemVanHienTai[i];
                 }
-
-                // Kết thúc trò chơi
-                for (int i = 0; i < 4; i++) {
-
-                    ListenT.ListClient[i].BuffWriter.write("10%" + ListenT.ListClient[0].Name + "$" + ListenT.ListClient[0].TongDiem + "%" + ListenT.ListClient[1].Name + "$" + ListenT.ListClient[1].TongDiem + "%" + ListenT.ListClient[2].Name + "$" + ListenT.ListClient[2].TongDiem + "%" + ListenT.ListClient[3].Name + "$" + ListenT.ListClient[3].TongDiem + "\n");
-                    ListenT.ListClient[i].BuffWriter.flush();
-                    Thread.sleep(2000);
-                    ListenT.ListListenClientT[i].stop();
-                    ListenT.ListClient[i].BuffWriter.close();
-                    ListenT.ListListenClientT[i].BuffReader.close();
-                    ListenT.ListClient[i].Soc.close();
-                }
-                ListenT.SoClient = 0;
             }
+            // Kết thúc trò chơi
+            for (int i = 0; i < 4; i++) {
+
+                ListenT.ListClient[i].BuffWriter.write("10%" + ListenT.ListClient[0].Name + "$" + ListenT.ListClient[0].TongDiem + "%" + ListenT.ListClient[1].Name + "$" + ListenT.ListClient[1].TongDiem + "%" + ListenT.ListClient[2].Name + "$" + ListenT.ListClient[2].TongDiem + "%" + ListenT.ListClient[3].Name + "$" + ListenT.ListClient[3].TongDiem + "\n");
+                ListenT.ListClient[i].BuffWriter.flush();
+                Thread.sleep(2000);
+                ListenT.ListListenClientT[i].stop();
+                ListenT.ListClient[i].BuffWriter.close();
+                ListenT.ListListenClientT[i].BuffReader.close();
+                ListenT.ListClient[i].Soc.close();
+            }
+            ListenT.SoClient = 0;
         } catch (InterruptedException ex) {
             Logger.getLogger(GameThread.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -321,14 +320,14 @@ public class GameThread extends Thread {
                     }
                 }
             }
-            
+
             /*for (int i = 0; i < 4; ++i) {
             for (int j = 0; j < 4; ++j) {
             ListenT.ListClient[i].BuffWriter.write("11%" + ListenT.ListClient[j].Name + "%" + MessageClient[j] + "\n");
             ListenT.ListClient[i].BuffWriter.flush();
             }
             }*/
-            
+
             //Gui bài lại cho client
             //Các Trường hợp tùy theo số thự tự ván hiện tại
             if (VanBai % 4 == 1) {
