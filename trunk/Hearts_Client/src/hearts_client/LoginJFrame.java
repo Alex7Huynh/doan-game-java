@@ -123,6 +123,8 @@ public class LoginJFrame extends javax.swing.JFrame {
         else{
           ConnectF.sendMessage("1%"+jTextUserName.getText());
           ConnectF.MyName=jTextUserName.getText();
+          jTextUserName.setEnabled(false);
+          jButtonDangKy.setEnabled(false);
         }
     }//GEN-LAST:event_jButtonDangKyMouseClicked
 
