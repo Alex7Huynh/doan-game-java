@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package hearts_client;
 
 import java.io.BufferedReader;
@@ -11,20 +7,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
 import mypackage.Hearts;
 
-/**
- *
- * @author Czytelnik
- */
 public class ListenThread extends Thread {
-
     Socket ClientS;
     BufferedReader BuffReader;
     ConnectJFrame ConnectF;
     LoginJFrame LoginF;
-    //GameJFrame GameF;
     Hearts myHearts;
     boolean Running;
     int LanGui = 0;
@@ -49,8 +38,7 @@ public class ListenThread extends Thread {
                 switch (Co) {
                     case 1: {
                         if (NoiDung.equals("ChuaDuNguoiChoi")) {
-                            JOptionPane.showMessageDialog(new JFrame(), "Hiện chưa đủ người chơi. Bạn vui lòng đợt trong giây lát. ", null, JOptionPane.INFORMATION_MESSAGE);
-                            // ConnectF.setVisible(false);
+                            JOptionPane.showMessageDialog(new JFrame(), "Hiện chưa đủ người chơi. Bạn vui lòng đợt trong giây lát. ", null, JOptionPane.INFORMATION_MESSAGE);                            
                         }
                         if (NoiDung.equals("DaDuNguoiChoi")) {
                             JOptionPane.showMessageDialog(new JFrame(), "Hiện đã đủ người chơi. Hẹn bạn lần sau.. ", null, JOptionPane.INFORMATION_MESSAGE);
@@ -59,28 +47,22 @@ public class ListenThread extends Thread {
                             Running = false;
                             ConnectF.setVisible(true);
                         }
-                        if (NoiDung.equals("YeuCauUserName")) {
-                            //ConnectF.setVisible(false);
+                        if (NoiDung.equals("YeuCauUserName")) {                            
                             LoginF = new LoginJFrame(ConnectF);
                             LoginF.setVisible(true);
-
                         }
                         if (NoiDung.equals("UserNameDaCo")) {
                             JOptionPane.showMessageDialog(new JFrame(), "UserName đã có người dùng. Mời bạn chọn UserName khác. ", null, JOptionPane.INFORMATION_MESSAGE);
                             ConnectF.setVisible(true);
                         }
                         if (NoiDung.startsWith("BatDauChoi")) {
-                            LoginF.setVisible(false);
-                            //GameF = new GameJFrame(ConnectF);
+                            LoginF.setVisible(false);                            
 
                             myHearts = new Hearts();
-                            myHearts.makeConnection(ConnectF);
-
-                            //GameF.MyName= ConnectF.MyName;
-                            //GameF.setPlayerName(0, ConnectF.MyName);
-                            myHearts.setPlayerName(0, ConnectF.MyName);
-                            //GameF.setTitle(ConnectF.MyName);
+                            myHearts.makeConnection(ConnectF);                            
+                            myHearts.setPlayerName(0, ConnectF.MyName);                            
                             myHearts.setTitle(ConnectF.MyName);
+                            
                             NoiDung = NoiDung.substring(NoiDung.indexOf("%") + 1);
                             String temp[] = NoiDung.split("%");
                             int dem = 0;
@@ -90,86 +72,61 @@ public class ListenThread extends Thread {
                                     break;
                                 }
                             }
-                            for (int i = 0; i < 3; i++) {
-                                //GameF.YourName[i]=temp[++dem%4];
-                                //GameF.setPlayerName(i + 1, temp[++dem % 4]);
+                            for (int i = 0; i < 3; i++) {                                
                                 myHearts.setPlayerName(i + 1, temp[++dem % 4]);
                             }
-//                            GameF.LabMy.setText(GameF.MyName);
-//                            GameF.LabYou1.setText(GameF.YourName[0]);
-//                            GameF.LabYou2.setText(GameF.YourName[1]);
-//                            GameF.LabYou3.setText(GameF.YourName[2]);
-
-                            //GameF.setVisible(true);
-                            //GameF.myGame.newGame();
-
                         }
                         break;
                     }
-                    case 2: {
-                        //GameF.LabMeg.setText(NoiDung);
+                    case 2: {                        
                         Hearts.notice(NoiDung);
                         myHearts.xuLyKetQuaLuotChuoi(NoiDung);
                         break;
                     }
-                    case 3: {
-                        //GameF.LabBai.setText(NoiDung);
-                        //GameF.createListCard(NoiDung);
+                    case 3: {                        
                         myHearts.createListCard(NoiDung);
                         myHearts.newGame();
 
                         break;
                     }
-                    case 4: {
-                        //GameF.LabMeg.setText(NoiDung);
+                    case 4: {                        
                         Hearts.notice(NoiDung);
                         myHearts.passCard();
                         break;
                     }
-                    case 5: {
-                        //GameF.LabMeg.setText(NoiDung);
-                        //GameF.ToiLuotChoi();
+                    case 5: {                        
                         Hearts.notice(NoiDung);                        
                         myHearts.playCard();
                         break;
                     }
-                    case 6: {
-                        //GameF.LabMeg.setText(NoiDung);
+                    case 6: {                        
                         Hearts.notice(NoiDung);
                         myHearts.showPlayCard(NoiDung);
                         break;
                     }
-                    case 7: {
-                        //GameF.LabMeg.setText(NoiDung);
+                    case 7: {                        
                         Hearts.notice(NoiDung);
                         myHearts.CoQuyenDiCo(true);
                         break;
                     }
                     case 8: {
-                        //GameF.LabMeg.setText(NoiDung);
                         Hearts.notice("8%"+NoiDung);
                         myHearts.thongBaoVanChoiKetThuc(NoiDung);
                         break;
                     }
-                    case 9: {
-                        //GameF.LabMeg.setText(NoiDung);
+                    case 9: {                        
                         Hearts.notice(NoiDung);
                         break;
                     }
-                    case 10: {
-                        //GameF.LabMeg.setText(NoiDung);
+                    case 10: {                        
                         Hearts.notice("8%"+NoiDung);
                         break;
                     }
-                    case 11: {
-                        //GameF.LabMeg.setText(NoiDung);
+                    case 11: {                        
                         Hearts.notice(NoiDung);
-                        myHearts.receiveChangeCard(NoiDung);
-
-                        //myHearts.continuePassCard();
+                        myHearts.receiveChangeCard(NoiDung);                        
                         myHearts.continueCheckStartNewRound2();
                         myHearts.continueNewRound();
-
                         break;
                     }
                     case 12: {

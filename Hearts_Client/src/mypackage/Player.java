@@ -1,9 +1,7 @@
 package mypackage;
 
-import com.sun.org.apache.bcel.internal.generic.LSTORE;
 import java.util.ArrayList;
 import java.util.Random;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -50,12 +48,7 @@ public class Player {
             int tmp = randomIndex[i];
             randomIndex[i] = randomIndex[j];
             randomIndex[j] = tmp;
-        }
-
-        /*System.out.println("");
-        for(int i=0; i<SOQUANBAI; i++)
-        System.out.print(randomIndex[i] + " ");
-         */
+        }        
     }
 
     //setName
@@ -148,9 +141,9 @@ public class Player {
         return (this.type == IS_HUMAN);
     }
 
-    //========================================================================
-    //					hasTwoClub
-    //========================================================================
+    /*
+     * Player has two-club card
+     */
     public boolean hasTwoClub() {
         for (int i = 0; i < listCard.size(); i++) {
             if (listCard.get(i).isTwoClub()) {
@@ -159,13 +152,10 @@ public class Player {
         }
         return false;
     }
-
-    //========================================================================
-    //		Kiem tra mot la bai c co hop le khong
-    //		chatCo = true: o luot truoc co quan bai chat co
-    //		luotDau = true: luot danh dau tien cua vong hien tai
-    //		kiemtra: la bai cua nguoi danh dau tien trong luot do
-    //========================================================================
+    
+    /*
+     * Check valid chosen card
+     */
     public boolean isValid(Card c, boolean chatCo, boolean luotDau, String chatBaiKiemTra) {
 
         if (c == null) {
@@ -173,9 +163,8 @@ public class Player {
         }
         if("".equals(chatBaiKiemTra))
             isFirst = true;
-        //Neu la nguoi danh dau tien trong luot hien tai
-        if (isFirst) {
-            //Neu la luot dau tien cua vong ma khong phai la quan 2 chuon thi ko hop le
+        
+        if (isFirst) {            
             if (luotDau) {
                 if (c.isTwoClub()) {
                     return true;
@@ -186,7 +175,6 @@ public class Player {
                     return false;
                 }
             }
-
             //Neu khong phai la chat co
             if (c.getSuit() != Card.SUIT_HEART) {
                 return true;
@@ -283,9 +271,9 @@ public class Player {
         }
     }
 
-    //========================================================================
-    //							play	
-    //========================================================================
+    /*
+     * Choose a card
+     */
     public void play(boolean chatCo, boolean luotDau, String chatBaiKiemTra) {
         switch (type) {
             case IS_COMPUTER:
@@ -308,11 +296,11 @@ public class Player {
         }
     }
 
-    //========================================================================
-    //								xepBai
-    //========================================================================
+    /*
+     * Sort cards
+     */
     public void sortCard() {
-        //Sap xep theo chat
+        //Sắp xếp theo chất
         for (int i = 0; i < listCard.size() - 1; i++) {
             for (int j = i + 1; j < listCard.size(); j++) {
                 if (listCard.get(i).getSuit() > listCard.get(j).getSuit()) {
@@ -322,7 +310,7 @@ public class Player {
                 }
             }
         }
-        //Sap sep theo nuoc cua tung chat
+        //Sắp xếp theo nước của từng chất
         for (int i = 0; i < listCard.size() - 1; i++) {
             for (int j = i + 1; j < listCard.size(); j++) {
                 if ((listCard.get(i).getSuit() == listCard.get(j).getSuit()) && (listCard.get(i).getFace() > listCard.get(j).getFace())) {
@@ -334,43 +322,18 @@ public class Player {
         }
     }
 
-    //========================================================================
-    //addACard: Them 1 la bai vao bo bai cua nguoi choi
-    //========================================================================
+    /*
+     * Add a card to list of cards
+     */
     public void addACard(Card c) {
         if(listCard.size() == 13)
             listCard.clear();
         listCard.add(c);
     }
 
-    //========================================================================
-    //						them 1 quan bai thang duoc
-    //========================================================================
-    public void addAScoreCard(Card arg0) {//, Card arg1, Card arg2, Card arg3) {
-        if (arg0.isHeart() || arg0.isQueenSpade()) {
-            scoreCard.add(arg0);
-            if (arg0.isHeart()) {
-                score += 1;
-            }
-            if (arg0.isQueenSpade()) {
-                score += 13;
-            }
-        }
-    }
-
-    //========================================================================
-    //					shoot the moon
-    //========================================================================
-    public boolean isShootTheMoon() {
-        if (scoreCard.size() == SOQUANBAI + 1) {
-            return true;
-        }
-        return false;
-    }
-
-    //========================================================================
-    //					hien thi label quan bai danh ra
-    //========================================================================
+    /*
+     * Show play card's label
+     */
     public void showPlayCardLabel(int i, Card c) {
         if (i < 0 || i > playCardLabel.length) {
             return;
@@ -378,11 +341,20 @@ public class Player {
         this.playCardLabel[i].setVisible(true);
         this.playCardLabel[i].setIcon(new ImageIcon(c.creatIconFile()));
     }
-
-    //========================================================================
-    //					hien thi cac quan bai tren tay nguoi choi
-    //========================================================================
-    public void showListCard(boolean show) {
+    
+    /*
+     * Show list of cards
+     */
+    public void showListCard(boolean show, int type) {
+        if(type == 1)
+            Card.PICTURES_FOLDER = "resources/pictures_1/";
+        else if(type == 2)
+            Card.PICTURES_FOLDER = "resources/pictures_2/";
+        else if(type == 3)
+            Card.PICTURES_FOLDER = "resources/pictures_3/";
+        else if(type == 4)
+            Card.PICTURES_FOLDER = "resources/pictures_4/";
+        
         int i;
         for (i = 0; i < listCard.size(); i++) {
             Card c = listCard.get(i);
@@ -395,214 +367,45 @@ public class Player {
                 this.listCardLabel[i].setVisible(true);
             }
         }
-
-        //this.listCardLabel[Player.SOQUANBAI].setIcon(new ImageIcon(Card.BACK_PICTURE));
-        //this.listCardLabel[Player.SOQUANBAI].setVisible(false);
     }
 
-    //========================================================================
-    //					hien thi cac la bai thang duoc cua nguoi choi
-    //========================================================================
-    public void showListScoreCard() {
-        if (scoreCard == null || scoreCard.size() == 0) {
-            return;
-        }
 
-        for (int i = 0; i < scoreCard.size(); i++) {
-            Card c = scoreCard.get(i);
-            this.listCardLabel[i].setIcon(new ImageIcon(c.creatIconFile()));
-            this.listCardLabel[i].setVisible(true);
-        }
-
-        for (int i = scoreCard.size(); i < listCardLabel.length; i++) {
-            this.listCardLabel[i].setVisible(false);
-        }
-
-        if (scoreCard.size() > listCardLabel.length) {
-            this.listCardLabel[SOQUANBAI].setVisible(false);
-        }
-    }
-
-    //getList3Card
+    /*
+     * get list3Card
+     */
     public ArrayList<Integer> get3CardPos() {
         return list3Card;
     }
 
-    //========================================================================
-    //					Chose 3 random Card
-    //========================================================================
+    /*
+     * Choose 3 cards to exchange
+     */
     public void chose3Card() {
-
-        switch (type) {
-            //IS_COMPUTER
-            case IS_COMPUTER:
-                //Lay ngau nhien 3 vi tri cac quan bai tren tay nguoi choi
-                Random random = new Random();
-
-                ArrayList<Integer> listPos = new ArrayList<Integer>(SOQUANBAI);
-                for (int i = 0; i < SOQUANBAI; i++) {
-                    listPos.add(new Integer(i));
-                }
-
-                for (int i = 0; i < SOQUANBAI; i++) {
-                    int j = random.nextInt(SOQUANBAI);
-                    Integer t = listPos.get(i);
-                    listPos.set(i, listPos.get(j));
-                    listPos.set(j, t);
-                }
-
-                //Hien thi lai vi tri cua cac la bai duoc chon
-                int dx = 0;
-                int dy = 0;
-                switch (this.position) {
-
-                    case BOTTOM:
-                        dy = -20;
-                        break;
-
-                    case LEFT:
-                        dx = 20;
-                        break;
-
-                    case TOP:
-                        dy = 20;
-                        break;
-
-                    case RIGHT:
-                        dx = -20;
-                        break;
-                }
-
-                ArrayList<Integer> tmp = new ArrayList<Integer>(3);
-                for (int i = 0; i < 3; i++) {
-                    int pos = listPos.get(i).intValue();
-                    tmp.add(listPos.get(i));
-                    JLabel lbl = this.listCardLabel[pos];
-                    lbl.setLocation(lbl.getLocation().x + dx, lbl.getLocation().y + dy);
-                }
-
-                this.list3Card = tmp;
-                break;
-
-            //IS_HUMAN
+        switch (type) {            
             case IS_HUMAN:
-                this.list3Card = Hearts.changeThreeCards();
+                this.list3Card = Hearts.chooseThreeCards();
                 break;
         }
     }
-
-    //
-    public void change3CardToOther(Player p) {
-
-        ArrayList<Integer> myList = this.get3CardPos();
-        ArrayList<Integer> yourList = p.get3CardPos();
-        
-        Card myCard, yourCard;
-        int j, k;
-
-        for (int i = 0; i < 3; i++) {
-            //my card
-            j = myList.get(i).intValue();
-            myCard = this.getListCard().get(j);
-
-            //your card
-            k = yourList.get(i).intValue();
-            yourCard = p.getListCard().get(k);
-
-            //change 2 card
-            this.getListCard().set(j, yourCard);
-            p.getListCard().set(k, myCard);
-
-            if (this.isHuman()) {
-                this.getListCardLabel()[j].setIcon(new ImageIcon(yourCard.creatIconFile()));
-            } else {
-                this.getListCardLabel()[j].setIcon(new ImageIcon(Card.BACK_PICTURE));
-            }
-
-            if (p.isHuman()) {
-                p.getListCardLabel()[k].setIcon(new ImageIcon(myCard.creatIconFile()));
-            } else {
-                p.getListCardLabel()[k].setIcon(new ImageIcon(Card.BACK_PICTURE));
-            }
-        }
-    }
-        
-    public void passCard(int turn) {
-        /*	SO DO DOI
-         * 					cross
-         *          left				right
-         *             		this
-         */
-//        Player left, cross, right;
-//        left = this.getNextPlayer();
-//        cross = left.getNextPlayer();
-//        right = cross.getNextPlayer();
-
-        //left.chose3Card();
-        //cross.chose3Card();
-        //right.chose3Card();
+     
+    /*
+     * Pass card
+     */
+    public void passCard(int turn) {        
         this.chose3Card();
         String Message = "1%" + listCard.get(list3Card.get(0)).toString()
                 + "%" + listCard.get(list3Card.get(1)).toString()
                 + "%" + listCard.get(list3Card.get(2)).toString();
-                Hearts.ConnectF.sendMessage(Message);
-                
-        /*switch (turn) {
-            //Pass Left
-            case 0:
-                this.change3CardToOther(left);
-                cross.change3CardToOther(right);
-                break;
-
-            //Pass Right
-            case 1:
-                this.change3CardToOther(right);
-                cross.change3CardToOther(left);
-                break;
-
-            //Pass Cross	
-            case 2:
-                this.change3CardToOther(cross);
-                left.change3CardToOther(right);
-                break;
-        }*/
+                Hearts.ConnectF.sendMessage(Message);        
     }
-    /*public void continuepassCard(int turn)
-    {
-        Player left, cross, right;
-        left = this.getNextPlayer();
-        cross = left.getNextPlayer();
-        right = cross.getNextPlayer();
-        
-        switch (turn) {
-            //Pass Left
-            case 0:
-                this.change3CardToOther(left);
-                cross.change3CardToOther(right);
-                break;
-
-            //Pass Right
-            case 1:
-                this.change3CardToOther(right);
-                cross.change3CardToOther(left);
-                break;
-
-            //Pass Cross	
-            case 2:
-                this.change3CardToOther(cross);
-                left.change3CardToOther(right);
-                break;
-        }
-    }*/
-
-    //
-    public void repaintChangeCard() {
-
-        //Hien thi lai vi tri cua cac la bai duoc chon
+    
+    /*
+     * Repaint change card after exchanged
+     */
+    public void repaintChangeCard() {        
         int dx = 0;
         int dy = 0;
         switch (this.position) {
-
             case BOTTOM:
                 dy = 20;
                 break;
@@ -628,31 +431,19 @@ public class Player {
         }
     }
 
-    //========================================================================
-    //							newRound
-    //========================================================================
+    /*
+     * Start new round
+     */
     public void newRound() {
         this.listCard = new ArrayList<Card>(SOQUANBAI);
         this.scoreCard = new ArrayList<Card>();
     }
-
-    //========================================================================
-    //					newGame
-    //========================================================================
+    
+    /*
+     * Start new game
+     */
     public void newGame() {
         this.score = 0;
         this.newRound();
-    }
-    
-    public void clearChangeCard()
-    {
-        if(list3Card != null)
-            list3Card.clear();
-        else
-            list3Card = new ArrayList<Integer>();
-    }
-    public void setChangeCard(int ID)
-    {        
-        list3Card.add(new Integer(ID));     
-    }
+    }   
 }

@@ -203,6 +203,7 @@ public class GameThread extends Thread {
                     ListenT.ListClient[i].BuffWriter.flush();
                     ListenT.ListClient[i].TongDiem += DiemVanHienTai[i];
                 }
+                VanBai++;
             }
             // Kết thúc trò chơi
             for (int i = 0; i < 4; i++) {
